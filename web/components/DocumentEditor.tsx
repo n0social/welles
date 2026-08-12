@@ -4,8 +4,14 @@ import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Highlight from "@tiptap/extension-highlight";
 import Placeholder from "@tiptap/extension-placeholder";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styles from "./DocumentEditor.module.css";
+
+type RewriteBubble = {
+  top: number;
+  left: number;
+  text: string;
+};
 
 type Props = {
   html: string;
@@ -15,6 +21,7 @@ type Props = {
   expanded?: boolean;
   onToggleExpand?: () => void;
   onAddPage?: () => void;
+  onRewriteSelection?: (text: string) => void;
 };
 
 export default function DocumentEditor({
@@ -25,7 +32,10 @@ export default function DocumentEditor({
   expanded,
   onToggleExpand,
   onAddPage,
+  onRewriteSelection,
 }: Props) {
+  const [rewriteBubble, setRewriteBubble] = useState<RewriteBubble | null>(null);
+
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -69,6 +79,64 @@ export default function DocumentEditor({
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [expanded, onToggleExpand]);
+
+  useEffect(() => {
+    if (!editor || !onRewriteSelection) return;
+
+    const syncBubble = () => {
+      if (writing) {
+        setRewriteBubble(null);
+        return;
+      }
+      const { from, to, empty } = editor.state.selection;
+      if (empty) {
+        setRewriteBubble(null);
+        return;
+      }
+      const text = editor.state.doc.textBetween(from, to, " ").replace(/\s+/g, " ").trim();
+      if (text.length < 2) {
+        setRewriteBubble(null);
+        return;
+      }
+      const domSel = window.getSelection();
+      if (!domSel || domSel.rangeCount === 0 || domSel.isCollapsed) {
+        setRewriteBubble(null);
+        return;
+      }
+      const rect = domSel.getRangeAt(0).getBoundingClientRect();
+      if (rect.width === 0 && rect.height === 0) {
+        setRewriteBubble(null);
+        return;
+      }
+      setRewriteBubble({
+        top: rect.top,
+        left: rect.left + rect.width / 2,
+        text,
+      });
+    };
+
+    let blurTimer = 0;
+    const onBlur = () => {
+      window.clearTimeout(blurTimer);
+      blurTimer = window.setTimeout(() => {
+        if (!window.getSelection()?.toString().trim()) setRewriteBubble(null);
+      }, 180);
+    };
+
+    const onScroll = () => syncBubble();
+    editor.on("selectionUpdate", syncBubble);
+    editor.on("blur", onBlur);
+    window.addEventListener("scroll", onScroll, true);
+    window.addEventListener("resize", onScroll);
+
+    return () => {
+      window.clearTimeout(blurTimer);
+      editor.off("selectionUpdate", syncBubble);
+      editor.off("blur", onBlur);
+      window.removeEventListener("scroll", onScroll, true);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [editor, onRewriteSelection, writing]);
 
   if (!editor) return <div className={styles.sheet} />;
 
@@ -151,6 +219,22 @@ export default function DocumentEditor({
           </button>
         ) : null}
       </div>
+
+      {rewriteBubble && onRewriteSelection && !writing ? (
+        <button
+          type="button"
+          className={styles.rewriteBubble}
+          style={{ top: rewriteBubble.top, left: rewriteBubble.left }}
+          onMouseDown={(e) => e.preventDefault()}
+          onClick={() => {
+            onRewriteSelection(rewriteBubble.text);
+            setRewriteBubble(null);
+            editor.commands.setTextSelection(editor.state.selection.to);
+          }}
+        >
+          Rewrite?
+        </button>
+      ) : null}
     </div>
   );
 }

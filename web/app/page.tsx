@@ -1,5 +1,6 @@
 "use client";
 
+import DeletedPagesOverlay from "@/components/DeletedPagesOverlay";
 import DocumentEditor, { appendPlainAsHtml } from "@/components/DocumentEditor";
 import HowItWorksPanel from "@/components/HowItWorks";
 import PageGrid from "@/components/PageGrid";
@@ -54,6 +55,7 @@ export default function HomePage() {
   const [error, setError] = useState("");
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [howOpen, setHowOpen] = useState(false);
+  const [deletedOpen, setDeletedOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
   useEffect(() => {
@@ -196,6 +198,10 @@ export default function HomePage() {
     setActiveDocId(item.documentId);
   }
 
+  function purgeDeletedPage(id: string) {
+    setDeletedPages((prev) => prev.filter((p) => p.id !== id));
+  }
+
   async function onUploadFiles(files: FileList) {
     const incoming: Page[] = [];
     for (const file of Array.from(files)) {
@@ -281,6 +287,16 @@ export default function HomePage() {
     );
   }
 
+  function onRewriteSelection(text: string) {
+    const passage = text.trim();
+    if (!passage) return;
+    setRewritePassage(passage);
+    void runGenerate(
+      "Rewrite",
+      `REWRITE. Restage this passage a different way. Keep the substance.\n\n${passage}`,
+    );
+  }
+
   if (!ready || !activePage) {
     return <div className={styles.boot}>Opening the desk…</div>;
   }
@@ -329,6 +345,16 @@ export default function HomePage() {
               All pages
             </button>
           </div>
+          <button
+            type="button"
+            className={styles.deletedBtn}
+            onClick={() => setDeletedOpen(true)}
+          >
+            Deleted pages
+            {docDeleted.length > 0 ? (
+              <span className={styles.deletedCount}>{docDeleted.length}</span>
+            ) : null}
+          </button>
         </header>
 
         <div className={styles.stage}>
@@ -340,20 +366,27 @@ export default function HomePage() {
               expanded={expanded}
               onToggleExpand={() => setExpanded((v) => !v)}
               onAddPage={addPage}
+              onRewriteSelection={onRewriteSelection}
             />
           ) : (
             <PageGrid
               pages={docPages}
-              deletedPages={docDeleted}
               activeId={activePage.id}
               onSelect={selectPage}
               onAdd={addPage}
               onDelete={deletePage}
-              onRestore={restorePage}
             />
           )}
         </div>
       </section>
+
+      <DeletedPagesOverlay
+        open={deletedOpen}
+        pages={docDeleted}
+        onClose={() => setDeletedOpen(false)}
+        onRestore={restorePage}
+        onPurge={purgeDeletedPage}
+      />
 
       <Settings
         open={settingsOpen}

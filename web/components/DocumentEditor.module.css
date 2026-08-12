@@ -188,6 +188,37 @@
   bottom: 1.35rem;
 }
 
+.rewriteBubble {
+  position: fixed;
+  z-index: 60;
+  transform: translate(-50%, calc(-100% - 0.55rem));
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  padding: 0.35rem 0.7rem;
+  cursor: pointer;
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+  box-shadow: 0 8px 20px rgba(20, 17, 14, 0.16);
+  animation: riseBubble 0.16s ease both;
+}
+
+.rewriteBubble:hover {
+  border-color: var(--ink);
+}
+
+@keyframes riseBubble {
+  from {
+    opacity: 0;
+    transform: translate(-50%, calc(-100% - 0.2rem));
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, calc(-100% - 0.55rem));
+  }
+}
+
 @keyframes pulse {
   0%,
   100% {

@@ -1,38 +1,17 @@
 "use client";
 
-import {
-  DELETED_PAGE_TTL_MS,
-  cardSnippet,
-  pageLabel,
-  type DeletedPage,
-  type Page,
-} from "@/lib/types";
+import { cardSnippet, pageLabel, type Page } from "@/lib/types";
 import styles from "./PageGrid.module.css";
 
 type Props = {
   pages: Page[];
-  deletedPages: DeletedPage[];
   activeId: string;
   onSelect: (id: string) => void;
   onAdd: () => void;
   onDelete: (id: string) => void;
-  onRestore: (id: string) => void;
 };
 
-function daysLeft(deletedAt: number): number {
-  const left = DELETED_PAGE_TTL_MS - (Date.now() - deletedAt);
-  return Math.max(1, Math.ceil(left / (24 * 60 * 60 * 1000)));
-}
-
-export default function PageGrid({
-  pages,
-  deletedPages,
-  activeId,
-  onSelect,
-  onAdd,
-  onDelete,
-  onRestore,
-}: Props) {
+export default function PageGrid({ pages, activeId, onSelect, onAdd, onDelete }: Props) {
   return (
     <div className={styles.gridWrap}>
       <div className={styles.grid}>
@@ -73,36 +52,6 @@ export default function PageGrid({
           + New page
         </button>
       </div>
-
-      <section className={styles.trash}>
-        <div className={styles.trashHead}>
-          <h3>Deleted pages</h3>
-          <p>Recoverable for about 30 days (while this browser keeps local storage).</p>
-        </div>
-        {deletedPages.length === 0 ? (
-          <p className={styles.trashEmpty}>No recently deleted pages.</p>
-        ) : (
-          <div className={styles.grid}>
-            {deletedPages.map((page) => (
-              <div key={page.id} className={styles.trashCard}>
-                <div className={styles.cardHit}>
-                  <span className={styles.num}>{page.documentName}</span>
-                  <span className={styles.title}>{pageLabel(page)}</span>
-                  <span className={styles.preview}>{cardSnippet(page.html)}</span>
-                  <span className={styles.ttl}>{daysLeft(page.deletedAt)}d left</span>
-                </div>
-                <button
-                  type="button"
-                  className={styles.restore}
-                  onClick={() => onRestore(page.id)}
-                >
-                  Recover
-                </button>
-              </div>
-            ))}
-          </div>
-        )}
-      </section>
     </div>
   );
 }
