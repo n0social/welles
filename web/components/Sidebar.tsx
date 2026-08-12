@@ -17,7 +17,6 @@ type Props = {
   error: string;
   onWrite: () => void;
   onRewrite: () => void;
-  onAddPage: () => void;
   onOpenSettings: () => void;
 };
 
@@ -35,7 +34,6 @@ export default function Sidebar({
   error,
   onWrite,
   onRewrite,
-  onAddPage,
   onOpenSettings,
 }: Props) {
   return (
@@ -109,10 +107,6 @@ export default function Sidebar({
           ))}
         </div>
         <p className={styles.hint}>{TOKEN_PRESETS.find((p) => p.id === tokenPreset)?.hint}</p>
-
-        <button className={styles.ghost} type="button" onClick={onAddPage}>
-          New page
-        </button>
 
         {error ? <p className={styles.error}>{error}</p> : null}
       </div>

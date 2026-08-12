@@ -250,7 +250,6 @@ export default function HomePage() {
         error={error}
         onWrite={onWrite}
         onRewrite={onRewrite}
-        onAddPage={addPage}
         onOpenSettings={() => setSettingsOpen(true)}
       />
 
@@ -289,6 +288,7 @@ export default function HomePage() {
               writing={writing || loading}
               expanded={expanded}
               onToggleExpand={() => setExpanded((v) => !v)}
+              onAddPage={addPage}
             />
           ) : (
             <PageGrid

@@ -40,6 +40,29 @@
   background: rgba(20, 17, 14, 0.12);
 }
 
+.toolWide {
+  border: none;
+  background: transparent;
+  color: var(--ink);
+  height: 1.85rem;
+  padding: 0 0.55rem;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-family: var(--font-body), system-ui, sans-serif;
+  letter-spacing: 0.02em;
+  border-radius: 0.2rem;
+  margin-left: 0.25rem;
+}
+
+.toolWide:hover:not(:disabled) {
+  background: rgba(20, 17, 14, 0.08);
+}
+
+.toolWide:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
 .hi {
   background: rgba(212, 175, 55, 0.55);
   padding: 0 0.15rem;

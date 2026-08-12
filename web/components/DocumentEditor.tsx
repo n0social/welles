@@ -14,6 +14,7 @@ type Props = {
   writing?: boolean;
   expanded?: boolean;
   onToggleExpand?: () => void;
+  onAddPage?: () => void;
 };
 
 export default function DocumentEditor({
@@ -23,6 +24,7 @@ export default function DocumentEditor({
   writing,
   expanded,
   onToggleExpand,
+  onAddPage,
 }: Props) {
   const editor = useEditor({
     extensions: [
@@ -117,6 +119,18 @@ export default function DocumentEditor({
           >
             Tx
           </button>
+          {onAddPage ? (
+            <button
+              type="button"
+              title="New page"
+              aria-label="New page"
+              className={styles.toolWide}
+              onClick={onAddPage}
+              disabled={writing}
+            >
+              New page
+            </button>
+          ) : null}
         </div>
       ) : null}
 
