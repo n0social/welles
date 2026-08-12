@@ -10,6 +10,14 @@ export type Page = {
   pageInChapter: number;
 };
 
+/** Soft-deleted page kept in localStorage until TTL expires. */
+export type DeletedPage = Page & {
+  deletedAt: number;
+};
+
+/** Soft-delete window (~local persistence); pruned on load/save. */
+export const DELETED_PAGE_TTL_MS = 30 * 24 * 60 * 60 * 1000;
+
 export type DocumentMeta = {
   id: string;
   name: string;
@@ -165,4 +173,70 @@ export function pagesFromManuscript(filename: string, raw: string): Page[] {
   });
 
   return pages.length ? pages : [newBlankPage({ documentId, documentName })];
+}
+
+export function renumberChapter(
+  pages: Page[],
+  documentId: string,
+  chapterIndex: number,
+): Page[] {
+  const chapter = pages
+    .filter((p) => p.documentId === documentId && p.chapterIndex === chapterIndex)
+    .sort((a, b) => a.pageInChapter - b.pageInChapter);
+  const order = new Map(chapter.map((p, i) => [p.id, i + 1]));
+  return pages.map((p) => {
+    const next = order.get(p.id);
+    return next === undefined ? p : { ...p, pageInChapter: next };
+  });
+}
+
+export function softDeletePage(
+  pages: Page[],
+  pageId: string,
+): { pages: Page[]; deleted: DeletedPage | null } {
+  const target = pages.find((p) => p.id === pageId);
+  if (!target) return { pages, deleted: null };
+
+  let next = pages.filter((p) => p.id !== pageId);
+  next = renumberChapter(next, target.documentId, target.chapterIndex);
+
+  const stillHasDoc = next.some((p) => p.documentId === target.documentId);
+  if (!stillHasDoc) {
+    next = [
+      ...next,
+      newBlankPage({
+        documentId: target.documentId,
+        documentName: target.documentName,
+      }),
+    ];
+  }
+
+  const deleted: DeletedPage = { ...target, deletedAt: Date.now() };
+  return { pages: next, deleted };
+}
+
+export function restoreDeletedPage(pages: Page[], item: DeletedPage): Page[] {
+  const { deletedAt: _deletedAt, ...rest } = item;
+  const restored: Page = { ...rest };
+
+  const next = pages.map((p) => {
+    if (
+      p.documentId === restored.documentId &&
+      p.chapterIndex === restored.chapterIndex &&
+      p.pageInChapter >= restored.pageInChapter
+    ) {
+      return { ...p, pageInChapter: p.pageInChapter + 1 };
+    }
+    return p;
+  });
+
+  return renumberChapter(
+    [...next, restored],
+    restored.documentId,
+    restored.chapterIndex,
+  );
+}
+
+export function pruneDeletedPages(items: DeletedPage[], now = Date.now()): DeletedPage[] {
+  return items.filter((p) => now - p.deletedAt < DELETED_PAGE_TTL_MS);
 }

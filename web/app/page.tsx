@@ -10,11 +10,13 @@ import {
   loadActiveDocId,
   loadActiveId,
   loadApiUrl,
+  loadDeletedPages,
   loadPages,
   loadView,
   saveActiveDocId,
   saveActiveId,
   saveApiUrl,
+  saveDeletedPages,
   savePages,
   saveView,
 } from "@/lib/storage";
@@ -22,6 +24,9 @@ import {
   TOKEN_PRESETS,
   newBlankPage,
   pagesFromManuscript,
+  restoreDeletedPage,
+  softDeletePage,
+  type DeletedPage,
   type Page,
   type TokenPresetId,
   type ViewMode,
@@ -36,6 +41,7 @@ function sleep(ms: number) {
 export default function HomePage() {
   const [ready, setReady] = useState(false);
   const [pages, setPages] = useState<Page[]>([newBlankPage()]);
+  const [deletedPages, setDeletedPages] = useState<DeletedPage[]>([]);
   const [activeId, setActiveId] = useState("");
   const [activeDocId, setActiveDocId] = useState("");
   const [view, setView] = useState<ViewMode>("single");
@@ -53,6 +59,7 @@ export default function HomePage() {
   useEffect(() => {
     const loaded = loadPages();
     setPages(loaded);
+    setDeletedPages(loadDeletedPages());
     setActiveId(loadActiveId(loaded));
     setActiveDocId(loadActiveDocId(loaded));
     setView(loadView());
@@ -64,6 +71,11 @@ export default function HomePage() {
     if (!ready) return;
     savePages(pages);
   }, [pages, ready]);
+
+  useEffect(() => {
+    if (!ready) return;
+    saveDeletedPages(deletedPages);
+  }, [deletedPages, ready]);
 
   useEffect(() => {
     if (!ready || !activeId) return;
@@ -83,8 +95,22 @@ export default function HomePage() {
   const documents = useMemo(() => documentsFromPages(pages), [pages]);
 
   const docPages = useMemo(
-    () => pages.filter((p) => p.documentId === activeDocId),
+    () =>
+      pages
+        .filter((p) => p.documentId === activeDocId)
+        .sort(
+          (a, b) =>
+            a.chapterIndex - b.chapterIndex || a.pageInChapter - b.pageInChapter,
+        ),
     [pages, activeDocId],
+  );
+
+  const docDeleted = useMemo(
+    () =>
+      deletedPages
+        .filter((p) => p.documentId === activeDocId)
+        .sort((a, b) => b.deletedAt - a.deletedAt),
+    [deletedPages, activeDocId],
   );
 
   const activePage = useMemo(() => {
@@ -143,6 +169,31 @@ export default function HomePage() {
     if (first) setActiveId(first.id);
     setSettingsOpen(false);
     setView("pages");
+  }
+
+  function deletePage(id: string) {
+    const { pages: nextPages, deleted } = softDeletePage(pages, id);
+    if (!deleted) return;
+    setPages(nextPages);
+    setDeletedPages((prev) => [deleted, ...prev.filter((p) => p.id !== id)]);
+    if (activeId === id) {
+      const fallback =
+        nextPages.find((p) => p.documentId === deleted.documentId) || nextPages[0];
+      if (fallback) {
+        setActiveId(fallback.id);
+        setActiveDocId(fallback.documentId);
+      }
+    }
+  }
+
+  function restorePage(id: string) {
+    const item = deletedPages.find((p) => p.id === id);
+    if (!item) return;
+    const nextPages = restoreDeletedPage(pages, item);
+    setPages(nextPages);
+    setDeletedPages((prev) => prev.filter((p) => p.id !== id));
+    setActiveId(item.id);
+    setActiveDocId(item.documentId);
   }
 
   async function onUploadFiles(files: FileList) {
@@ -293,9 +344,12 @@ export default function HomePage() {
           ) : (
             <PageGrid
               pages={docPages}
+              deletedPages={docDeleted}
               activeId={activePage.id}
               onSelect={selectPage}
               onAdd={addPage}
+              onDelete={deletePage}
+              onRestore={restorePage}
             />
           )}
         </div>

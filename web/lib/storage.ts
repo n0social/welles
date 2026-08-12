@@ -1,7 +1,15 @@
-import { newBlankPage, type DocumentMeta, type Page, type ViewMode } from "./types";
+import {
+  newBlankPage,
+  pruneDeletedPages,
+  type DeletedPage,
+  type DocumentMeta,
+  type Page,
+  type ViewMode,
+} from "./types";
 
 const PAGES_KEY = "welles_pages_v2";
 const LEGACY_PAGES_KEY = "welles_pages_v1";
+const DELETED_KEY = "welles_deleted_pages_v1";
 const ACTIVE_KEY = "welles_active_page_v1";
 const VIEW_KEY = "welles_view_v1";
 const API_KEY = "welles_colab_api_url";
@@ -58,6 +66,25 @@ export function loadPages(): Page[] {
 
 export function savePages(pages: Page[]) {
   window.localStorage.setItem(PAGES_KEY, JSON.stringify(pages));
+}
+
+export function loadDeletedPages(): DeletedPage[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = window.localStorage.getItem(DELETED_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw) as DeletedPage[];
+    if (!Array.isArray(parsed)) return [];
+    const kept = pruneDeletedPages(parsed);
+    if (kept.length !== parsed.length) saveDeletedPages(kept);
+    return kept;
+  } catch {
+    return [];
+  }
+}
+
+export function saveDeletedPages(items: DeletedPage[]) {
+  window.localStorage.setItem(DELETED_KEY, JSON.stringify(pruneDeletedPages(items)));
 }
 
 export function documentsFromPages(pages: Page[]): DocumentMeta[] {
