@@ -1,0 +1,102 @@
+.wrap {
+  display: grid;
+  gap: 0.75rem;
+  min-height: 0;
+  height: 100%;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.tool,
+.toolOn {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  padding: 0.4rem 0.75rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+}
+
+.tool:hover:not(:disabled) {
+  border-color: var(--ink);
+}
+
+.tool:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.toolOn {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
+.sheet {
+  position: relative;
+  background: #f4efe6;
+  border: 1px solid var(--line);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.35) inset,
+    0 18px 40px rgba(20, 17, 14, 0.12);
+  min-height: min(70vh, 52rem);
+  overflow: auto;
+  padding: clamp(1.5rem, 4vw, 2.75rem) clamp(1.25rem, 4vw, 3rem);
+}
+
+.writing {
+  outline: 1px solid rgba(138, 28, 28, 0.35);
+}
+
+.prose {
+  outline: none;
+  min-height: 24rem;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+  line-height: 1.7;
+  color: var(--ink);
+}
+
+.prose :global(p) {
+  margin: 0 0 1em;
+}
+
+.prose :global(p.is-editor-empty:first-child::before) {
+  color: var(--muted);
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+.prose :global(mark) {
+  background: rgba(212, 175, 55, 0.45);
+  color: inherit;
+  padding: 0 0.1em;
+}
+
+.live {
+  position: sticky;
+  bottom: 0.5rem;
+  margin: 1rem 0 0;
+  color: var(--accent);
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  animation: pulse 1.4s ease infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}

@@ -9,6 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tiptap/extension-highlight": "^2.11.5",
+    "@tiptap/extension-placeholder": "^2.11.5",
+    "@tiptap/pm": "^2.11.5",
+    "@tiptap/react": "^2.11.5",
+    "@tiptap/starter-kit": "^2.11.5",
     "next": "^15.3.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"

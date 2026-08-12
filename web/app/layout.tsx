@@ -14,7 +14,7 @@ const body = Outfit({
 
 export const metadata: Metadata = {
   title: "Welles",
-  description: "Write in the tone of Orson Welles — oratorical, cinematic, deliberate.",
+  description: "Document desk for writing in the tone of Orson Welles.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -23,14 +23,15 @@ body {
   color: var(--ink);
   font-family: var(--font-body), system-ui, sans-serif;
   background:
-    radial-gradient(ellipse 90% 70% at 50% -10%, var(--glow), transparent 55%),
-    radial-gradient(ellipse 60% 50% at 100% 100%, rgba(138, 28, 28, 0.12), transparent 50%),
-    linear-gradient(165deg, #ebe6dc 0%, var(--paper) 45%, var(--paper-deep) 100%);
+    radial-gradient(ellipse 80% 55% at 70% 0%, var(--glow), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 0% 100%, rgba(138, 28, 28, 0.1), transparent 50%),
+    linear-gradient(165deg, #ebe6dc 0%, var(--paper) 50%, var(--paper-deep) 100%);
   background-attachment: fixed;
 }
 
 button,
 textarea,
+input,
 select {
   font: inherit;
 }

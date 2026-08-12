@@ -1,0 +1,113 @@
+.side {
+  display: grid;
+  align-content: start;
+  gap: 0.7rem;
+  padding: 1.25rem 1.1rem 1.5rem;
+  border-right: 1px solid var(--line);
+  background: rgba(244, 239, 230, 0.55);
+  backdrop-filter: blur(8px);
+  overflow: auto;
+}
+
+.brand {
+  margin-bottom: 0.35rem;
+}
+
+.mark {
+  margin: 0;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(2.2rem, 4vw, 2.8rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+.tag {
+  margin: 0.35rem 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.label {
+  margin-top: 0.35rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.input,
+.area {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.28);
+  color: var(--ink);
+  padding: 0.65rem 0.75rem;
+  outline: none;
+}
+
+.area {
+  resize: vertical;
+  line-height: 1.45;
+}
+
+.input:focus,
+.area:focus {
+  border-color: var(--ink);
+}
+
+.modes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.mode,
+.modeOn {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  padding: 0.4rem 0.7rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.modeOn {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
+.slider {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+.go,
+.ghost {
+  border: none;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  letter-spacing: 0.03em;
+}
+
+.go {
+  background: var(--accent);
+  color: #f6efe6;
+}
+
+.go:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+
+.ghost {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--ink);
+}
+
+.error {
+  margin: 0;
+  color: var(--accent);
+  font-size: 0.9rem;
+}
