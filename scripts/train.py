@@ -1,4 +1,4 @@
-"""QLoRA SFT for Welles the Architect on Qwen3-8B. Cloud GPU only (e.g. RunPod 4090)."""
+"""QLoRA SFT for Welles on Qwen3-8B. Cloud GPU only (e.g. RunPod / Colab T4)."""
 
 from __future__ import annotations
 
@@ -28,13 +28,13 @@ def main() -> None:
         args=SFTConfig(
             output_dir=str(OUT),
             learning_rate=2e-4,
-            num_train_epochs=1,
+            num_train_epochs=3,
             per_device_train_batch_size=1,
             gradient_accumulation_steps=8,
             gradient_checkpointing=True,
-            max_length=4096,
+            max_length=1024,
             logging_steps=10,
-            save_steps=200,
+            save_steps=100,
             bf16=True,
             assistant_only_loss=True,
             model_init_kwargs={"dtype": "auto"},

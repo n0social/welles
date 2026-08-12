@@ -89,24 +89,32 @@ Browser → Vercel (web/) → Colab ngrok or Modal → n0social/welles + Qwen3-8
 
 HF Gradio GPU Spaces need a paid plan. Modal is optional for a URL that stays up without a browser tab — see `web/README.md`.
 
-## Training (v1)
+## Training (v2 recipe)
 
 | Item | Value |
 |---|---|
 | Base | `Qwen/Qwen3-8B` (Apache 2.0) |
 | Method | QLoRA (4-bit NF4) + LoRA |
-| LoRA | `r=8`, `alpha=16`, dropout `0.05` |
+| LoRA | `r=16`, `alpha=32`, dropout `0.05` |
 | Hardware | Google Colab Tesla T4 (16 GB) |
-| Precision | float16 compute |
 | Sequence length | 1024 |
-| Epochs | 1 |
-| Steps | 58 |
-| Batch | 1 × 8 gradient accumulation |
-| Optimizer | paged AdamW 8-bit |
+| Epochs | 3 |
+| Data mix | `data/welles_gold.jsonl` (×3) + style samples + capped LongWriter |
 
-Data: long-form English writing mixture (including a capped subset of [`zai-org/LongWriter-6k`](https://huggingface.co/datasets/zai-org/LongWriter-6k)) plus curated style material for a Welles-like register.
+```bash
+python scripts/build_welles_gold.py
+python scripts/prepare_data.py --max-examples 150 --gold-repeat 3
+```
 
-Train again from this repo with `notebooks/welles_colab.ipynb`.
+Train from `notebooks/welles_colab.ipynb`. Eval before Hub push: `data/eval_checklist.md`.
+
+## Training (v1 — shipped)
+
+| Item | Value |
+|---|---|
+| LoRA | `r=8`, `alpha=16` |
+| Epochs | 1 (~58 steps) |
+| Data | LongWriter-heavy + thin gold |
 
 ## Intended use
 

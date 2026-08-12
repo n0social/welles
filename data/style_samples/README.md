@@ -1,11 +1,17 @@
-# Style samples (optional, high value)
+# Style samples (high value for voice)
 
-Primary sample lives at the project root: `Copy of The Working Bee - Updated 10_29_2025 .txt`. `prepare_data.py` will pick it up automatically.
+Drop `.txt` / `.md` excerpts here. `scripts/prepare_data.py` chunks them into SFT rows.
 
-Drop additional `.txt` / `.md` excerpts here.
+Included: `welles_register.md` — original Welles-tone pastiche (camera, mic, silence, city).
 
-- `.txt` or `.md` files
-- A few pages is enough (even 1,000–3,000 words total)
-- Prefer the voice you want Welles to learn: direct, stern, instructional
+Tips:
+- Prefer the voice you want: oratorical, cinematic, concrete first
+- A few strong pages beat a pile of generic prose
+- Optional private manuscripts at the repo root are no longer auto-ingested by the v2 prep mix (gold + style + light LongWriter)
 
-These are not required to start training on LongWriter-6k. They are the fastest way to make Welles sound like you instead of generic long-form AI.
+Rebuild gold anytime:
+
+```bash
+python scripts/build_welles_gold.py
+python scripts/prepare_data.py --max-examples 150 --gold-repeat 3
+```

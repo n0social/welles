@@ -1,0 +1,42 @@
+[
+  {
+    "id": "write_camera",
+    "mode": "WRITE",
+    "prompt": "WRITE. New prose in Welles's voice.\n\nWrite a short essay on the camera as a witness."
+  },
+  {
+    "id": "write_microphone",
+    "mode": "WRITE",
+    "prompt": "WRITE. New prose in Welles's voice.\n\nDescribe a radio microphone in a dark studio."
+  },
+  {
+    "id": "write_silence",
+    "mode": "WRITE",
+    "prompt": "WRITE. New prose in Welles's voice.\n\nOn silence in performance."
+  },
+  {
+    "id": "rewrite_city",
+    "mode": "REWRITE",
+    "prompt": "REWRITE. Restage this passage a different way. Keep the substance.\n\nThe city looks pretty at night with all the lights on."
+  },
+  {
+    "id": "rewrite_speech",
+    "mode": "REWRITE",
+    "prompt": "REWRITE. Restage this passage a different way. Keep the substance.\n\nHe gave a speech and everyone clapped because it was inspiring."
+  },
+  {
+    "id": "rewrite_short",
+    "mode": "REWRITE",
+    "prompt": "REWRITE. Restage this passage a different way. Keep the substance.\n\nThe night was dark and scary."
+  },
+  {
+    "id": "continue_mic",
+    "mode": "CONTINUE",
+    "prompt": "CONTINUE. Extend from these last lines without restarting.\n\nThe microphone does not flinch. It waits."
+  },
+  {
+    "id": "continue_bridge",
+    "mode": "CONTINUE",
+    "prompt": "CONTINUE. Extend from these last lines without restarting.\n\nMid-span, he paused, with the city split like an argument."
+  }
+]

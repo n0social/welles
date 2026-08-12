@@ -88,7 +88,18 @@ out = model.generate(**inputs, max_new_tokens=1024, do_sample=True, temperature=
 print(tokenizer.decode(out[0][inputs["input_ids"].shape[-1]:], skip_special_tokens=True))
 ```
 
-## Training (v1)
+## Training (v2 recipe in this monorepo)
+
+| Item | Value |
+|---|---|
+| Method | QLoRA + LoRA on `Qwen/Qwen3-8B` |
+| LoRA | `r=16`, `alpha=32` |
+| Epochs | 3 |
+| Mix | Welles gold (×3) + style samples + capped LongWriter |
+
+See the GitHub README and `notebooks/welles_colab.ipynb`. Eval with `data/eval_checklist.md` before overwriting Hub weights.
+
+## Training (v1 — first Hub upload)
 
 | Item | Value |
 |---|---|
