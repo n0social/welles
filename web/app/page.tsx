@@ -48,6 +48,7 @@ export default function HomePage() {
   const [error, setError] = useState("");
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [howOpen, setHowOpen] = useState(false);
+  const [expanded, setExpanded] = useState(false);
 
   useEffect(() => {
     const loaded = loadPages();
@@ -218,6 +219,7 @@ export default function HomePage() {
         onAddPage={addPage}
         onOpenSettings={() => setSettingsOpen(true)}
         manuscriptName={activePage.documentName}
+        pageLocation={pageLabel(activePage)}
       />
 
       <section className={styles.workspace}>
@@ -237,16 +239,14 @@ export default function HomePage() {
               role="tab"
               aria-selected={view === "pages"}
               className={view === "pages" ? styles.tabOn : styles.tab}
-              onClick={() => setView("pages")}
+              onClick={() => {
+                setExpanded(false);
+                setView("pages");
+              }}
             >
               All pages
             </button>
           </div>
-          <p className={styles.crumb}>
-            {view === "single"
-              ? pageLabel(activePage)
-              : `${docPages.length} page${docPages.length === 1 ? "" : "s"} · ${activePage.documentName}`}
-          </p>
         </header>
 
         <div className={styles.stage}>
@@ -255,6 +255,8 @@ export default function HomePage() {
               html={activePage.html}
               onChange={(html) => updateActive({ html })}
               writing={writing || loading}
+              expanded={expanded}
+              onToggleExpand={() => setExpanded((v) => !v)}
             />
           ) : (
             <PageGrid

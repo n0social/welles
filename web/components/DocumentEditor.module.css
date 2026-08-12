@@ -1,45 +1,76 @@
 .wrap {
+  position: relative;
   display: grid;
-  gap: 0.75rem;
+  grid-template-rows: auto 1fr;
+  gap: 0.55rem;
   min-height: 0;
   height: 100%;
 }
 
+.wrapExpanded {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  padding: 1.25rem 1.25rem 3.5rem;
+  background: rgba(20, 17, 14, 0.55);
+  height: 100dvh;
+}
+
+.wrapExpanded .sheet {
+  max-width: min(52rem, 100%);
+  margin: 0 auto;
+  min-height: calc(100dvh - 6rem);
+  max-height: calc(100dvh - 6rem);
+}
+
 .toolbar {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
+  align-items: center;
+  gap: 0.1rem;
+}
+
+.wrapExpanded .toolbar {
+  max-width: min(52rem, 100%);
+  margin: 0 auto;
+  width: 100%;
 }
 
 .tool,
 .toolOn {
-  border: 1px solid var(--line);
+  border: none;
   background: transparent;
-  color: var(--ink);
-  padding: 0.4rem 0.75rem;
+  color: #000;
+  width: 1.85rem;
+  height: 1.85rem;
+  padding: 0;
   cursor: pointer;
-  font-size: 0.85rem;
-  letter-spacing: 0.03em;
+  font-size: 0.95rem;
+  font-family: "Times New Roman", Times, serif;
+  border-radius: 0.2rem;
+  line-height: 1;
 }
 
 .tool:hover:not(:disabled) {
-  border-color: var(--ink);
+  background: rgba(20, 17, 14, 0.08);
 }
 
 .tool:disabled {
-  opacity: 0.45;
+  opacity: 0.4;
   cursor: not-allowed;
 }
 
 .toolOn {
-  background: var(--ink);
-  color: var(--paper);
-  border-color: var(--ink);
+  background: rgba(20, 17, 14, 0.12);
+}
+
+.hi {
+  background: rgba(212, 175, 55, 0.55);
+  padding: 0 0.15rem;
 }
 
 .sheet {
   position: relative;
-  background: #f4efe6;
+  background: #fff;
   border: 1px solid var(--line);
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.35) inset,
@@ -56,27 +87,44 @@
 .prose {
   outline: none;
   min-height: 24rem;
-  font-family: var(--font-display), Georgia, serif;
-  font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+  font-family: "Times New Roman", Times, serif;
+  font-size: 12pt;
   line-height: 1.7;
-  color: var(--ink);
+  color: #000;
+}
+
+.prose :global(p),
+.prose :global(h1),
+.prose :global(h2),
+.prose :global(h3) {
+  color: #000;
+  font-family: "Times New Roman", Times, serif;
 }
 
 .prose :global(p) {
   margin: 0 0 1em;
 }
 
+.prose :global(h1),
+.prose :global(h2),
+.prose :global(h3) {
+  margin: 0 0 0.75em;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
 .prose :global(p.is-editor-empty:first-child::before) {
-  color: var(--muted);
+  color: #777;
   content: attr(data-placeholder);
   float: left;
   height: 0;
   pointer-events: none;
+  font-family: "Times New Roman", Times, serif;
 }
 
 .prose :global(mark) {
   background: rgba(212, 175, 55, 0.45);
-  color: inherit;
+  color: #000;
   padding: 0 0.1em;
 }
 
@@ -85,10 +133,33 @@
   bottom: 0.5rem;
   margin: 1rem 0 0;
   color: var(--accent);
+  font-family: var(--font-body), system-ui, sans-serif;
   font-size: 0.85rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   animation: pulse 1.4s ease infinite;
+}
+
+.expand {
+  position: absolute;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  z-index: 2;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--ink);
+  padding: 0.45rem 0.75rem;
+  cursor: pointer;
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+  box-shadow: 0 6px 16px rgba(20, 17, 14, 0.12);
+}
+
+.wrapExpanded .expand {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
 }
 
 @keyframes pulse {

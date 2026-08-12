@@ -12,9 +12,18 @@ type Props = {
   editable?: boolean;
   onChange: (html: string) => void;
   writing?: boolean;
+  expanded?: boolean;
+  onToggleExpand?: () => void;
 };
 
-export default function DocumentEditor({ html, editable = true, onChange, writing }: Props) {
+export default function DocumentEditor({
+  html,
+  editable = true,
+  onChange,
+  writing,
+  expanded,
+  onToggleExpand,
+}: Props) {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -50,48 +59,80 @@ export default function DocumentEditor({ html, editable = true, onChange, writin
     editor.setEditable(editable && !writing);
   }, [editable, writing, editor]);
 
+  useEffect(() => {
+    if (!expanded || !onToggleExpand) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onToggleExpand();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [expanded, onToggleExpand]);
+
   if (!editor) return <div className={styles.sheet} />;
 
   return (
-    <div className={styles.wrap}>
+    <div className={`${styles.wrap} ${expanded ? styles.wrapExpanded : ""}`}>
       <div className={styles.toolbar} role="toolbar" aria-label="Format">
         <button
           type="button"
+          title="Bold (Ctrl+B)"
+          aria-label="Bold"
+          aria-pressed={editor.isActive("bold")}
           className={editor.isActive("bold") ? styles.toolOn : styles.tool}
           onClick={() => editor.chain().focus().toggleBold().run()}
           disabled={writing}
         >
-          Bold
+          <b>B</b>
         </button>
         <button
           type="button"
+          title="Italic (Ctrl+I)"
+          aria-label="Italic"
+          aria-pressed={editor.isActive("italic")}
           className={editor.isActive("italic") ? styles.toolOn : styles.tool}
           onClick={() => editor.chain().focus().toggleItalic().run()}
           disabled={writing}
         >
-          Italic
+          <i>I</i>
         </button>
         <button
           type="button"
+          title="Highlight"
+          aria-label="Highlight"
+          aria-pressed={editor.isActive("highlight")}
           className={editor.isActive("highlight") ? styles.toolOn : styles.tool}
           onClick={() => editor.chain().focus().toggleHighlight().run()}
           disabled={writing}
         >
-          Highlight
+          <span className={styles.hi}>H</span>
         </button>
         <button
           type="button"
+          title="Clear formatting"
+          aria-label="Clear formatting"
           className={styles.tool}
           onClick={() => editor.chain().focus().unsetAllMarks().run()}
           disabled={writing}
         >
-          Clear marks
+          T̲ₓ
         </button>
       </div>
+
       <div className={`${styles.sheet} ${writing ? styles.writing : ""}`}>
         <EditorContent editor={editor} />
         {writing ? <p className={styles.live}>Welles is on the page…</p> : null}
       </div>
+
+      {onToggleExpand ? (
+        <button
+          type="button"
+          className={styles.expand}
+          onClick={onToggleExpand}
+          title={expanded ? "Exit expand" : "Expand page"}
+        >
+          {expanded ? "Close" : "Expand page"}
+        </button>
+      ) : null}
     </div>
   );
 }
