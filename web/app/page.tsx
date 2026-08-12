@@ -22,7 +22,6 @@ import {
   TOKEN_PRESETS,
   newBlankPage,
   pagesFromManuscript,
-  type Mode,
   type Page,
   type TokenPresetId,
   type ViewMode,
@@ -41,8 +40,8 @@ export default function HomePage() {
   const [activeDocId, setActiveDocId] = useState("");
   const [view, setView] = useState<ViewMode>("single");
   const [apiUrl, setApiUrl] = useState("");
-  const [mode, setMode] = useState<Mode>("Write");
-  const [prompt, setPrompt] = useState("");
+  const [ideaPrompt, setIdeaPrompt] = useState("");
+  const [rewritePassage, setRewritePassage] = useState("");
   const [tokenPreset, setTokenPreset] = useState<TokenPresetId>("novelist");
   const [loading, setLoading] = useState(false);
   const [writing, setWriting] = useState(false);
@@ -96,6 +95,21 @@ export default function HomePage() {
   function updateActive(patch: Partial<Page>) {
     if (!activePage) return;
     setPages((prev) => prev.map((p) => (p.id === activePage.id ? { ...p, ...patch } : p)));
+  }
+
+  function renameManuscript(name: string) {
+    if (!activePage) return;
+    const docId = activePage.documentId;
+    setPages((prev) =>
+      prev.map((p) => (p.documentId === docId ? { ...p, documentName: name } : p)),
+    );
+  }
+
+  function commitManuscriptName() {
+    if (!activePage) return;
+    if (!activePage.documentName.trim()) {
+      renameManuscript("Untitled manuscript");
+    }
   }
 
   function addPage() {
@@ -163,7 +177,7 @@ export default function HomePage() {
     setWriting(false);
   }
 
-  async function onGenerate() {
+  async function runGenerate(mode: "Write" | "Rewrite", prompt: string) {
     setError("");
     const endpoint = apiUrl.trim();
     if (!endpoint) {
@@ -172,14 +186,13 @@ export default function HomePage() {
       return;
     }
     if (!prompt.trim()) {
-      setError("Give Welles a brief.");
+      setError(mode === "Rewrite" ? "Paste a passage to rewrite." : "Add a prompt first.");
       return;
     }
 
     saveApiUrl(endpoint);
     setLoading(true);
-    const maxNewTokens =
-      TOKEN_PRESETS.find((p) => p.id === tokenPreset)?.tokens ?? 896;
+    const maxNewTokens = TOKEN_PRESETS.find((p) => p.id === tokenPreset)?.tokens ?? 896;
     try {
       const res = await fetch("/api/generate", {
         method: "POST",
@@ -203,6 +216,20 @@ export default function HomePage() {
     }
   }
 
+  function onWrite() {
+    void runGenerate(
+      "Write",
+      `WRITE. New prose in Welles's voice.\n\n${ideaPrompt.trim()}`,
+    );
+  }
+
+  function onRewrite() {
+    void runGenerate(
+      "Rewrite",
+      `REWRITE. Restage this passage a different way. Keep the substance.\n\n${rewritePassage.trim()}`,
+    );
+  }
+
   if (!ready || !activePage) {
     return <div className={styles.boot}>Opening the desk…</div>;
   }
@@ -210,18 +237,21 @@ export default function HomePage() {
   return (
     <div className={styles.app}>
       <Sidebar
-        mode={mode}
-        onMode={setMode}
-        prompt={prompt}
-        onPrompt={setPrompt}
+        manuscriptName={activePage.documentName}
+        onManuscriptName={renameManuscript}
+        onManuscriptNameCommit={commitManuscriptName}
+        ideaPrompt={ideaPrompt}
+        onIdeaPrompt={setIdeaPrompt}
+        rewritePassage={rewritePassage}
+        onRewritePassage={setRewritePassage}
         tokenPreset={tokenPreset}
         onTokenPreset={setTokenPreset}
         loading={loading || writing}
         error={error}
-        onGenerate={onGenerate}
+        onWrite={onWrite}
+        onRewrite={onRewrite}
         onAddPage={addPage}
         onOpenSettings={() => setSettingsOpen(true)}
-        manuscriptName={activePage.documentName}
       />
 
       <section className={styles.workspace}>

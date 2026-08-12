@@ -59,12 +59,12 @@
 .preview {
   font-family: "Times New Roman", Times, serif;
   font-size: 0.8rem;
-  line-height: 1.4;
-  color: #444;
+  line-height: 1.35;
+  color: #555;
   overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 .add {

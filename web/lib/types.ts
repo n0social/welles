@@ -1,7 +1,5 @@
 export type ViewMode = "single" | "pages";
 
-export type Mode = "Write" | "Rewrite" | "Continue";
-
 export type Page = {
   id: string;
   html: string;
@@ -25,24 +23,6 @@ export const TOKEN_PRESETS = [
 ] as const;
 
 export type TokenPresetId = (typeof TOKEN_PRESETS)[number]["id"];
-
-export const MODE_BRIEF: Record<Mode, { label: string; hint: string; placeholder: string }> = {
-  Write: {
-    label: "Brief for Welles",
-    hint: "New pages from a prompt — scene, argument, or chapter beat.",
-    placeholder: "What should Welles write onto this blank stretch?",
-  },
-  Rewrite: {
-    label: "Passage to rewrite",
-    hint: "Keep the substance; ask Welles to restage the voice.",
-    placeholder: "Paste the draft Welles should rewrite in his voice. Keep the substance.",
-  },
-  Continue: {
-    label: "Where to continue",
-    hint: "Pick up from the end of this page and carry the thread forward.",
-    placeholder: "Point to the last beat. Welles carries the chapter forward from there.",
-  },
-};
 
 export function newId(prefix: string) {
   const n = Math.floor(Math.random() * 9000) + 1000;
@@ -75,14 +55,21 @@ export function pageLabel(page: Page): string {
   return `Page ${page.pageInChapter} of Chapter ${page.chapterIndex}`;
 }
 
-export function plainPreview(html: string, max = 90): string {
+/** Short card teaser: start of the first sentence + ellipsis. */
+export function cardSnippet(html: string, maxChars = 72): string {
   const text = html
     .replace(/<[^>]+>/g, " ")
     .replace(/&nbsp;/g, " ")
     .replace(/\s+/g, " ")
     .trim();
   if (!text) return "Empty page";
-  return text.length > max ? `${text.slice(0, max)}…` : text;
+
+  const sentenceMatch = text.match(/^(.+?[.!?])(\s|$)/);
+  let snippet = (sentenceMatch?.[1] || text).trim();
+  if (snippet.length > maxChars) {
+    snippet = snippet.slice(0, maxChars).replace(/\s+\S*$/, "").trim();
+  }
+  return snippet.endsWith("...") ? snippet : `${snippet}...`;
 }
 
 function escapeHtml(s: string) {

@@ -1,74 +1,97 @@
 "use client";
 
-import { MODE_BRIEF, TOKEN_PRESETS, type Mode, type TokenPresetId } from "@/lib/types";
+import { TOKEN_PRESETS, type TokenPresetId } from "@/lib/types";
 import styles from "./Sidebar.module.css";
 
 type Props = {
-  mode: Mode;
-  onMode: (m: Mode) => void;
-  prompt: string;
-  onPrompt: (v: string) => void;
+  manuscriptName: string;
+  onManuscriptName: (name: string) => void;
+  onManuscriptNameCommit: () => void;
+  ideaPrompt: string;
+  onIdeaPrompt: (v: string) => void;
+  rewritePassage: string;
+  onRewritePassage: (v: string) => void;
   tokenPreset: TokenPresetId;
   onTokenPreset: (id: TokenPresetId) => void;
   loading: boolean;
   error: string;
-  onGenerate: () => void;
+  onWrite: () => void;
+  onRewrite: () => void;
   onAddPage: () => void;
   onOpenSettings: () => void;
-  manuscriptName: string;
 };
 
 export default function Sidebar({
-  mode,
-  onMode,
-  prompt,
-  onPrompt,
+  manuscriptName,
+  onManuscriptName,
+  onManuscriptNameCommit,
+  ideaPrompt,
+  onIdeaPrompt,
+  rewritePassage,
+  onRewritePassage,
   tokenPreset,
   onTokenPreset,
   loading,
   error,
-  onGenerate,
+  onWrite,
+  onRewrite,
   onAddPage,
   onOpenSettings,
-  manuscriptName,
 }: Props) {
-  const brief = MODE_BRIEF[mode];
-
   return (
     <aside className={styles.side}>
       <div className={styles.topBlock}>
         <div className={styles.brand}>
           <p className={styles.mark}>Welles</p>
           <p className={styles.tag}>Oratorical. Cinematic. Measured.</p>
-          <p className={styles.ms}>{manuscriptName}</p>
+          <label className={styles.srOnly} htmlFor="manuscript-title">
+            Manuscript title
+          </label>
+          <input
+            id="manuscript-title"
+            className={styles.msInput}
+            value={manuscriptName}
+            onChange={(e) => onManuscriptName(e.target.value)}
+            onBlur={onManuscriptNameCommit}
+            placeholder="Untitled manuscript"
+          />
         </div>
 
-        <div className={styles.modes} role="radiogroup" aria-label="Mode">
-          {(["Write", "Rewrite", "Continue"] as Mode[]).map((m) => (
-            <button
-              key={m}
-              type="button"
-              className={mode === m ? styles.modeOn : styles.mode}
-              aria-pressed={mode === m}
-              onClick={() => onMode(m)}
-            >
-              {m}
-            </button>
-          ))}
-        </div>
-
-        <label className={styles.label} htmlFor="prompt">
-          {brief.label}
+        <label className={styles.label} htmlFor="idea">
+          Prompt
         </label>
-        <p className={styles.hint}>{brief.hint}</p>
+        <p className={styles.hint}>
+          New pages or paragraphs from an idea — what should follow the theme.
+        </p>
         <textarea
-          id="prompt"
+          id="idea"
           className={styles.area}
-          rows={5}
-          value={prompt}
-          onChange={(e) => onPrompt(e.target.value)}
-          placeholder={brief.placeholder}
+          rows={4}
+          value={ideaPrompt}
+          onChange={(e) => onIdeaPrompt(e.target.value)}
+          placeholder="I’m thinking of a paragraph that follows this section — write one that continues the theme…"
         />
+        <button className={styles.go} type="button" onClick={onWrite} disabled={loading}>
+          {loading ? "On the air…" : "Write onto page"}
+        </button>
+
+        <label className={styles.label} htmlFor="rewrite">
+          Rewrite
+        </label>
+        <p className={styles.hint}>
+          Paste a sentence or paragraph. Welles restages it a different way.
+        </p>
+        <textarea
+          id="rewrite"
+          className={styles.area}
+          rows={4}
+          value={rewritePassage}
+          onChange={(e) => onRewritePassage(e.target.value)}
+          placeholder="Paste the line or paragraph to rewrite…"
+        />
+        <button className={styles.goAlt} type="button" onClick={onRewrite} disabled={loading}>
+          {loading ? "On the air…" : "Rewrite onto page"}
+        </button>
 
         <p className={styles.label}>Length</p>
         <div className={styles.presets} role="radiogroup" aria-label="Length">
@@ -85,13 +108,8 @@ export default function Sidebar({
             </button>
           ))}
         </div>
-        <p className={styles.hint}>
-          {TOKEN_PRESETS.find((p) => p.id === tokenPreset)?.hint}
-        </p>
+        <p className={styles.hint}>{TOKEN_PRESETS.find((p) => p.id === tokenPreset)?.hint}</p>
 
-        <button className={styles.go} type="button" onClick={onGenerate} disabled={loading}>
-          {loading ? "On the air…" : "Generate onto page"}
-        </button>
         <button className={styles.ghost} type="button" onClick={onAddPage}>
           New page
         </button>
