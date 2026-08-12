@@ -1,6 +1,6 @@
 "use client";
 
-import type { Mode } from "@/lib/types";
+import { MODE_BRIEF, TOKEN_PRESETS, type Mode, type TokenPresetId } from "@/lib/types";
 import styles from "./Sidebar.module.css";
 
 type Props = {
@@ -8,15 +8,14 @@ type Props = {
   onMode: (m: Mode) => void;
   prompt: string;
   onPrompt: (v: string) => void;
-  maxTokens: number;
-  onMaxTokens: (n: number) => void;
+  tokenPreset: TokenPresetId;
+  onTokenPreset: (id: TokenPresetId) => void;
   loading: boolean;
   error: string;
   onGenerate: () => void;
   onAddPage: () => void;
   onOpenSettings: () => void;
   manuscriptName: string;
-  pageLocation: string;
 };
 
 export default function Sidebar({
@@ -24,16 +23,17 @@ export default function Sidebar({
   onMode,
   prompt,
   onPrompt,
-  maxTokens,
-  onMaxTokens,
+  tokenPreset,
+  onTokenPreset,
   loading,
   error,
   onGenerate,
   onAddPage,
   onOpenSettings,
   manuscriptName,
-  pageLocation,
 }: Props) {
+  const brief = MODE_BRIEF[mode];
+
   return (
     <aside className={styles.side}>
       <div className={styles.topBlock}>
@@ -41,7 +41,6 @@ export default function Sidebar({
           <p className={styles.mark}>Welles</p>
           <p className={styles.tag}>Oratorical. Cinematic. Measured.</p>
           <p className={styles.ms}>{manuscriptName}</p>
-          <p className={styles.loc}>{pageLocation}</p>
         </div>
 
         <div className={styles.modes} role="radiogroup" aria-label="Mode">
@@ -59,30 +58,36 @@ export default function Sidebar({
         </div>
 
         <label className={styles.label} htmlFor="prompt">
-          Brief for Welles
+          {brief.label}
         </label>
+        <p className={styles.hint}>{brief.hint}</p>
         <textarea
           id="prompt"
           className={styles.area}
-          rows={8}
+          rows={5}
           value={prompt}
           onChange={(e) => onPrompt(e.target.value)}
-          placeholder="What should land on this page?"
+          placeholder={brief.placeholder}
         />
 
-        <label className={styles.label} htmlFor="tokens">
-          Max tokens: {maxTokens}
-        </label>
-        <input
-          id="tokens"
-          className={styles.slider}
-          type="range"
-          min={256}
-          max={2048}
-          step={128}
-          value={maxTokens}
-          onChange={(e) => onMaxTokens(Number(e.target.value))}
-        />
+        <p className={styles.label}>Length</p>
+        <div className={styles.presets} role="radiogroup" aria-label="Length">
+          {TOKEN_PRESETS.map((p) => (
+            <button
+              key={p.id}
+              type="button"
+              className={tokenPreset === p.id ? styles.presetOn : styles.preset}
+              aria-pressed={tokenPreset === p.id}
+              title={p.hint}
+              onClick={() => onTokenPreset(p.id)}
+            >
+              {p.label}
+            </button>
+          ))}
+        </div>
+        <p className={styles.hint}>
+          {TOKEN_PRESETS.find((p) => p.id === tokenPreset)?.hint}
+        </p>
 
         <button className={styles.go} type="button" onClick={onGenerate} disabled={loading}>
           {loading ? "On the air…" : "Generate onto page"}

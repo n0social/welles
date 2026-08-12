@@ -1,38 +1,15 @@
 .wrap {
-  position: relative;
   display: grid;
   grid-template-rows: auto 1fr;
-  gap: 0.55rem;
+  gap: 0.65rem;
   min-height: 0;
   height: 100%;
-}
-
-.wrapExpanded {
-  position: fixed;
-  inset: 0;
-  z-index: 50;
-  padding: 1.25rem 1.25rem 3.5rem;
-  background: rgba(20, 17, 14, 0.55);
-  height: 100dvh;
-}
-
-.wrapExpanded .sheet {
-  max-width: min(52rem, 100%);
-  margin: 0 auto;
-  min-height: calc(100dvh - 6rem);
-  max-height: calc(100dvh - 6rem);
 }
 
 .toolbar {
   display: flex;
   align-items: center;
   gap: 0.1rem;
-}
-
-.wrapExpanded .toolbar {
-  max-width: min(52rem, 100%);
-  margin: 0 auto;
-  width: 100%;
 }
 
 .tool,
@@ -68,6 +45,31 @@
   padding: 0 0.15rem;
 }
 
+.pageStage {
+  position: relative;
+  min-height: 0;
+  height: 100%;
+}
+
+.pageExpanded {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  padding: 1.5rem 1.5rem 3.75rem;
+  background: rgba(20, 17, 14, 0.55);
+  height: 100dvh;
+  display: grid;
+}
+
+.pageExpanded .sheet {
+  max-width: min(52rem, 100%);
+  width: 100%;
+  margin: 0 auto;
+  height: 100%;
+  min-height: 0;
+  max-height: none;
+}
+
 .sheet {
   position: relative;
   background: #fff;
@@ -76,6 +78,7 @@
     0 1px 0 rgba(255, 255, 255, 0.35) inset,
     0 18px 40px rgba(20, 17, 14, 0.12);
   min-height: min(70vh, 52rem);
+  height: 100%;
   overflow: auto;
   padding: clamp(1.5rem, 4vw, 2.75rem) clamp(1.25rem, 4vw, 3rem);
 }
@@ -142,11 +145,11 @@
 
 .expand {
   position: absolute;
-  right: 0.75rem;
-  bottom: 0.75rem;
+  right: 0.85rem;
+  bottom: 0.85rem;
   z-index: 2;
   border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.95);
   color: var(--ink);
   padding: 0.45rem 0.75rem;
   cursor: pointer;
@@ -156,10 +159,10 @@
   box-shadow: 0 6px 16px rgba(20, 17, 14, 0.12);
 }
 
-.wrapExpanded .expand {
+.pageExpanded .expand {
   position: fixed;
-  right: 1.25rem;
-  bottom: 1.25rem;
+  right: 1.35rem;
+  bottom: 1.35rem;
 }
 
 @keyframes pulse {

@@ -14,16 +14,19 @@
 .cardOn,
 .add {
   display: grid;
-  gap: 0.45rem;
+  grid-template-rows: auto auto 1fr;
+  gap: 0.4rem;
   text-align: left;
   border: 1px solid var(--line);
-  background: #f4efe6;
+  background: #fff;
   color: var(--ink);
-  padding: 0.9rem;
-  min-height: 12rem;
+  padding: 0.85rem;
+  height: 11.5rem;
+  max-height: 11.5rem;
   cursor: pointer;
   box-shadow: 0 10px 24px rgba(20, 17, 14, 0.08);
   transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
 }
 
 .card:hover,
@@ -38,25 +41,30 @@
 }
 
 .num {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .title {
   font-family: var(--font-display), Georgia, serif;
-  font-size: 1.05rem;
+  font-size: 0.98rem;
+  line-height: 1.25;
 }
 
 .preview {
-  font-size: 0.82rem;
-  line-height: 1.45;
-  color: var(--muted);
-  display: -webkit-box;
-  -webkit-line-clamp: 6;
-  -webkit-box-orient: vertical;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: #444;
   overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
 }
 
 .add {
@@ -67,4 +75,5 @@
   background: transparent;
   border-style: dashed;
   box-shadow: none;
+  grid-template-rows: 1fr;
 }

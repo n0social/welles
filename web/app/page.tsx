@@ -19,11 +19,12 @@ import {
   saveView,
 } from "@/lib/storage";
 import {
+  TOKEN_PRESETS,
   newBlankPage,
-  pageLabel,
   pagesFromManuscript,
   type Mode,
   type Page,
+  type TokenPresetId,
   type ViewMode,
 } from "@/lib/types";
 import { startTransition, useEffect, useMemo, useState } from "react";
@@ -42,7 +43,7 @@ export default function HomePage() {
   const [apiUrl, setApiUrl] = useState("");
   const [mode, setMode] = useState<Mode>("Write");
   const [prompt, setPrompt] = useState("");
-  const [maxTokens, setMaxTokens] = useState(768);
+  const [tokenPreset, setTokenPreset] = useState<TokenPresetId>("novelist");
   const [loading, setLoading] = useState(false);
   const [writing, setWriting] = useState(false);
   const [error, setError] = useState("");
@@ -177,6 +178,8 @@ export default function HomePage() {
 
     saveApiUrl(endpoint);
     setLoading(true);
+    const maxNewTokens =
+      TOKEN_PRESETS.find((p) => p.id === tokenPreset)?.tokens ?? 896;
     try {
       const res = await fetch("/api/generate", {
         method: "POST",
@@ -185,7 +188,7 @@ export default function HomePage() {
           apiUrl: endpoint,
           mode,
           prompt,
-          maxNewTokens: maxTokens,
+          maxNewTokens,
         }),
       });
       const data = (await res.json()) as { text?: string; error?: string };
@@ -211,15 +214,14 @@ export default function HomePage() {
         onMode={setMode}
         prompt={prompt}
         onPrompt={setPrompt}
-        maxTokens={maxTokens}
-        onMaxTokens={setMaxTokens}
+        tokenPreset={tokenPreset}
+        onTokenPreset={setTokenPreset}
         loading={loading || writing}
         error={error}
         onGenerate={onGenerate}
         onAddPage={addPage}
         onOpenSettings={() => setSettingsOpen(true)}
         manuscriptName={activePage.documentName}
-        pageLocation={pageLabel(activePage)}
       />
 
       <section className={styles.workspace}>

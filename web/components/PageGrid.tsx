@@ -23,7 +23,7 @@ export default function PageGrid({ pages, activeId, onSelect, onAdd }: Props) {
           >
             <span className={styles.num}>{page.documentName}</span>
             <span className={styles.title}>{pageLabel(page)}</span>
-            <span className={styles.preview}>{plainPreview(page.html)}</span>
+            <span className={styles.preview}>{plainPreview(page.html, 90)}</span>
           </button>
         ))}
         <button type="button" className={styles.add} onClick={onAdd}>

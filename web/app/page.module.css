@@ -1,8 +1,9 @@
 .app {
   display: grid;
-  grid-template-columns: minmax(16rem, 20rem) 1fr;
+  grid-template-columns: minmax(15rem, 19rem) 1fr;
   min-height: 100dvh;
   animation: rise 0.7s ease both;
+  overflow-x: hidden;
 }
 
 .workspace {
