@@ -1,0 +1,25 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+outputs/
+hf_cache/
+data/train.jsonl
+data/eval.jsonl
+*.gguf
+*Token*.txt
+*token*.txt
+Welles-HuggingFace-Token.txt
+web/node_modules/
+web/.next/
+web/.env.local
+web/.vercel/
+
+# Private manuscripts — keep off GitHub
+Copy of The Working Bee*.txt
+The Unpaid Hour.txt
+
+data-set-googlecolab.zip
+drafts/
+*.zip
+

@@ -1,0 +1,40 @@
+:root {
+  --ink: #14110e;
+  --paper: #d7d2c8;
+  --paper-deep: #c4beb2;
+  --panel: rgba(20, 17, 14, 0.06);
+  --line: rgba(20, 17, 14, 0.18);
+  --accent: #8a1c1c;
+  --muted: rgba(20, 17, 14, 0.62);
+  --glow: rgba(255, 236, 200, 0.35);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  color: var(--ink);
+  font-family: var(--font-body), system-ui, sans-serif;
+  background:
+    radial-gradient(ellipse 90% 70% at 50% -10%, var(--glow), transparent 55%),
+    radial-gradient(ellipse 60% 50% at 100% 100%, rgba(138, 28, 28, 0.12), transparent 50%),
+    linear-gradient(165deg, #ebe6dc 0%, var(--paper) 45%, var(--paper-deep) 100%);
+  background-attachment: fixed;
+}
+
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+::selection {
+  background: rgba(138, 28, 28, 0.25);
+}
