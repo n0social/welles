@@ -1,19 +1,31 @@
 "use client";
 
 import DocumentEditor, { appendPlainAsHtml } from "@/components/DocumentEditor";
+import HowItWorksPanel from "@/components/HowItWorks";
 import PageGrid from "@/components/PageGrid";
+import Settings from "@/components/Settings";
 import Sidebar from "@/components/Sidebar";
 import {
+  documentsFromPages,
+  loadActiveDocId,
   loadActiveId,
   loadApiUrl,
   loadPages,
   loadView,
+  saveActiveDocId,
   saveActiveId,
   saveApiUrl,
   savePages,
   saveView,
 } from "@/lib/storage";
-import { newPage, type Mode, type Page, type ViewMode } from "@/lib/types";
+import {
+  newBlankPage,
+  pageLabel,
+  pagesFromManuscript,
+  type Mode,
+  type Page,
+  type ViewMode,
+} from "@/lib/types";
 import { startTransition, useEffect, useMemo, useState } from "react";
 import styles from "./page.module.css";
 
@@ -23,8 +35,9 @@ function sleep(ms: number) {
 
 export default function HomePage() {
   const [ready, setReady] = useState(false);
-  const [pages, setPages] = useState<Page[]>([newPage({ title: "Page 1" })]);
+  const [pages, setPages] = useState<Page[]>([newBlankPage()]);
   const [activeId, setActiveId] = useState("");
+  const [activeDocId, setActiveDocId] = useState("");
   const [view, setView] = useState<ViewMode>("single");
   const [apiUrl, setApiUrl] = useState("");
   const [mode, setMode] = useState<Mode>("Write");
@@ -33,11 +46,14 @@ export default function HomePage() {
   const [loading, setLoading] = useState(false);
   const [writing, setWriting] = useState(false);
   const [error, setError] = useState("");
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [howOpen, setHowOpen] = useState(false);
 
   useEffect(() => {
     const loaded = loadPages();
     setPages(loaded);
     setActiveId(loadActiveId(loaded));
+    setActiveDocId(loadActiveDocId(loaded));
     setView(loadView());
     setApiUrl(loadApiUrl());
     setReady(true);
@@ -54,14 +70,26 @@ export default function HomePage() {
   }, [activeId, ready]);
 
   useEffect(() => {
+    if (!ready || !activeDocId) return;
+    saveActiveDocId(activeDocId);
+  }, [activeDocId, ready]);
+
+  useEffect(() => {
     if (!ready) return;
     saveView(view);
   }, [view, ready]);
 
-  const activePage = useMemo(
-    () => pages.find((p) => p.id === activeId) || pages[0],
-    [pages, activeId],
+  const documents = useMemo(() => documentsFromPages(pages), [pages]);
+
+  const docPages = useMemo(
+    () => pages.filter((p) => p.documentId === activeDocId),
+    [pages, activeDocId],
   );
+
+  const activePage = useMemo(() => {
+    const inDoc = docPages.find((p) => p.id === activeId);
+    return inDoc || docPages[0] || pages[0];
+  }, [docPages, activeId, pages]);
 
   function updateActive(patch: Partial<Page>) {
     if (!activePage) return;
@@ -69,30 +97,64 @@ export default function HomePage() {
   }
 
   function addPage() {
-    const page = newPage({ title: `Page ${pages.length + 1}` });
+    if (!activePage) return;
+    const siblings = pages.filter(
+      (p) =>
+        p.documentId === activePage.documentId && p.chapterIndex === activePage.chapterIndex,
+    );
+    const page = newBlankPage({
+      documentId: activePage.documentId,
+      documentName: activePage.documentName,
+    });
+    page.chapterIndex = activePage.chapterIndex;
+    page.chapterTitle = activePage.chapterTitle;
+    page.pageInChapter = siblings.length + 1;
     setPages((prev) => [...prev, page]);
     setActiveId(page.id);
     setView("single");
   }
 
   function selectPage(id: string) {
+    const page = pages.find((p) => p.id === id);
+    if (page) setActiveDocId(page.documentId);
     setActiveId(id);
     setView("single");
+  }
+
+  function selectDoc(id: string) {
+    setActiveDocId(id);
+    const first = pages.find((p) => p.documentId === id);
+    if (first) setActiveId(first.id);
+    setSettingsOpen(false);
+    setView("pages");
+  }
+
+  async function onUploadFiles(files: FileList) {
+    const incoming: Page[] = [];
+    for (const file of Array.from(files)) {
+      const text = await file.text();
+      incoming.push(...pagesFromManuscript(file.name, text));
+    }
+    if (!incoming.length) return;
+    setPages((prev) => [...prev, ...incoming]);
+    setActiveDocId(incoming[0].documentId);
+    setActiveId(incoming[0].id);
+    setSettingsOpen(false);
+    setView("pages");
   }
 
   async function typeOntoPage(fullText: string) {
     if (!activePage) return;
     setWriting(true);
     const startHtml = activePage.html;
+    const pageId = activePage.id;
     let built = "";
     const tokens = fullText.split(/(\s+)/);
     for (const token of tokens) {
       built += token;
       const html = appendPlainAsHtml(startHtml, built);
       startTransition(() => {
-        setPages((prev) =>
-          prev.map((p) => (p.id === activePage.id ? { ...p, html } : p)),
-        );
+        setPages((prev) => prev.map((p) => (p.id === pageId ? { ...p, html } : p)));
       });
       await sleep(token.trim() ? 22 : 8);
     }
@@ -103,7 +165,8 @@ export default function HomePage() {
     setError("");
     const endpoint = apiUrl.trim();
     if (!endpoint) {
-      setError("Paste your Colab API URL first.");
+      setError("Open Settings and paste your Colab API URL.");
+      setSettingsOpen(true);
       return;
     }
     if (!prompt.trim()) {
@@ -143,11 +206,6 @@ export default function HomePage() {
   return (
     <div className={styles.app}>
       <Sidebar
-        apiUrl={apiUrl}
-        onApiUrl={(v) => {
-          setApiUrl(v);
-          saveApiUrl(v);
-        }}
         mode={mode}
         onMode={setMode}
         prompt={prompt}
@@ -157,9 +215,9 @@ export default function HomePage() {
         loading={loading || writing}
         error={error}
         onGenerate={onGenerate}
-        pageTitle={activePage.title}
-        onPageTitle={(title) => updateActive({ title })}
         onAddPage={addPage}
+        onOpenSettings={() => setSettingsOpen(true)}
+        manuscriptName={activePage.documentName}
       />
 
       <section className={styles.workspace}>
@@ -186,8 +244,8 @@ export default function HomePage() {
           </div>
           <p className={styles.crumb}>
             {view === "single"
-              ? activePage.title
-              : `${pages.length} page${pages.length === 1 ? "" : "s"}`}
+              ? pageLabel(activePage)
+              : `${docPages.length} page${docPages.length === 1 ? "" : "s"} · ${activePage.documentName}`}
           </p>
         </header>
 
@@ -200,7 +258,7 @@ export default function HomePage() {
             />
           ) : (
             <PageGrid
-              pages={pages}
+              pages={docPages}
               activeId={activePage.id}
               onSelect={selectPage}
               onAdd={addPage}
@@ -208,6 +266,26 @@ export default function HomePage() {
           )}
         </div>
       </section>
+
+      <Settings
+        open={settingsOpen}
+        onClose={() => setSettingsOpen(false)}
+        apiUrl={apiUrl}
+        onApiUrl={(v) => {
+          setApiUrl(v);
+          saveApiUrl(v);
+        }}
+        documents={documents}
+        activeDocId={activeDocId}
+        onSelectDoc={selectDoc}
+        onUploadFiles={onUploadFiles}
+        onOpenHowItWorks={() => {
+          setSettingsOpen(false);
+          setHowOpen(true);
+        }}
+      />
+
+      {howOpen ? <HowItWorksPanel onClose={() => setHowOpen(false)} /> : null}
     </div>
   );
 }

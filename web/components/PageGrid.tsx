@@ -1,6 +1,6 @@
 "use client";
 
-import { plainPreview, type Page } from "@/lib/types";
+import { pageLabel, plainPreview, type Page } from "@/lib/types";
 import styles from "./PageGrid.module.css";
 
 type Props = {
@@ -14,15 +14,15 @@ export default function PageGrid({ pages, activeId, onSelect, onAdd }: Props) {
   return (
     <div className={styles.gridWrap}>
       <div className={styles.grid}>
-        {pages.map((page, i) => (
+        {pages.map((page) => (
           <button
             key={page.id}
             type="button"
             className={page.id === activeId ? styles.cardOn : styles.card}
             onClick={() => onSelect(page.id)}
           >
-            <span className={styles.num}>Page {i + 1}</span>
-            <span className={styles.title}>{page.title}</span>
+            <span className={styles.num}>{page.documentName}</span>
+            <span className={styles.title}>{pageLabel(page)}</span>
             <span className={styles.preview}>{plainPreview(page.html)}</span>
           </button>
         ))}

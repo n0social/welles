@@ -4,8 +4,6 @@ import type { Mode } from "@/lib/types";
 import styles from "./Sidebar.module.css";
 
 type Props = {
-  apiUrl: string;
-  onApiUrl: (v: string) => void;
   mode: Mode;
   onMode: (m: Mode) => void;
   prompt: string;
@@ -15,14 +13,12 @@ type Props = {
   loading: boolean;
   error: string;
   onGenerate: () => void;
-  pageTitle: string;
-  onPageTitle: (v: string) => void;
   onAddPage: () => void;
+  onOpenSettings: () => void;
+  manuscriptName: string;
 };
 
 export default function Sidebar({
-  apiUrl,
-  onApiUrl,
   mode,
   onMode,
   prompt,
@@ -32,38 +28,21 @@ export default function Sidebar({
   loading,
   error,
   onGenerate,
-  pageTitle,
-  onPageTitle,
   onAddPage,
+  onOpenSettings,
+  manuscriptName,
 }: Props) {
   return (
     <aside className={styles.side}>
       <div className={styles.brand}>
         <p className={styles.mark}>Welles</p>
-        <p className={styles.tag}>Oratorical. Cinematic. Deliberate.</p>
+        <p className={styles.tag}>Oratorical. Cinematic. Measured.</p>
+        <p className={styles.ms}>{manuscriptName}</p>
       </div>
 
-      <label className={styles.label} htmlFor="apiUrl">
-        Colab API URL
-      </label>
-      <input
-        id="apiUrl"
-        className={styles.input}
-        type="url"
-        value={apiUrl}
-        onChange={(e) => onApiUrl(e.target.value)}
-        placeholder="https://….ngrok-free.app"
-      />
-
-      <label className={styles.label} htmlFor="pageTitle">
-        Page title
-      </label>
-      <input
-        id="pageTitle"
-        className={styles.input}
-        value={pageTitle}
-        onChange={(e) => onPageTitle(e.target.value)}
-      />
+      <button type="button" className={styles.ghost} onClick={onOpenSettings}>
+        Settings
+      </button>
 
       <div className={styles.modes} role="radiogroup" aria-label="Mode">
         {(["Write", "Rewrite", "Continue"] as Mode[]).map((m) => (
