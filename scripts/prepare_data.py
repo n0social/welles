@@ -17,6 +17,7 @@ if str(_SCRIPTS) not in sys.path:
     sys.path.insert(0, str(_SCRIPTS))
 
 from ingest_cinema import DEFAULT_OUT as CINEMA_CACHE, build_pairs, load_pairs as load_cinema_pairs
+from ingest_scripts import DEFAULT_OUT as SCRIPT_CACHE, build_pairs as build_script_pairs
 
 ROOT = Path(__file__).resolve().parents[1]
 SYSTEM_PATH = ROOT / "prompts" / "welles_system.md"
@@ -207,6 +208,42 @@ def main() -> None:
         default=40,
         help="When --fetch-cinema: MovieSum summary cap for ingest_cinema.py",
     )
+    parser.add_argument(
+        "--max-scripts",
+        type=int,
+        default=25,
+        help="Max script-staging rows from data/ingest/script_pairs.jsonl",
+    )
+    parser.add_argument(
+        "--scripts-cache",
+        type=Path,
+        default=SCRIPT_CACHE,
+        help="JSONL from scripts/ingest_scripts.py",
+    )
+    parser.add_argument(
+        "--fetch-scripts",
+        action="store_true",
+        default=False,
+        help="Run script ingest if cache missing or empty.",
+    )
+    parser.add_argument(
+        "--script-dataset",
+        choices=("moviesum", "movies", "manual"),
+        default="moviesum",
+        help="When --fetch-scripts: HF/manual loader for ingest_scripts.py",
+    )
+    parser.add_argument(
+        "--script-filter",
+        choices=("welles", "a24", "all"),
+        default="welles",
+        help="When --fetch-scripts: title/dir filter",
+    )
+    parser.add_argument(
+        "--max-script-ingest",
+        type=int,
+        default=30,
+        help="When --fetch-scripts: pair cap for ingest_scripts.py",
+    )
     parser.add_argument("--out", type=Path, default=ROOT / "data" / "train.jsonl")
     args = parser.parse_args()
 
@@ -292,6 +329,55 @@ def main() -> None:
             print(f"Used {cinema_added} rows from {sample_path} (no cache)")
     elif cinema_added:
         print(f"Added {cinema_added} cinema rows (cap {args.max_cinema})")
+
+    # 3b) Script staging ingest (MovieSum excerpts / manual drops — capped)
+    if args.fetch_scripts and (
+        not args.scripts_cache.exists() or args.scripts_cache.stat().st_size == 0
+    ):
+        import argparse as _ap
+
+        script_args = _ap.Namespace(
+            dataset=args.script_dataset,
+            filter=args.script_filter,
+            max_pairs=args.max_script_ingest,
+            scripts_cap=400,
+            max_per_script=2,
+            min_words=25,
+            max_words=150,
+        )
+        script_pairs = build_script_pairs(script_args)
+        args.scripts_cache.parent.mkdir(parents=True, exist_ok=True)
+        with args.scripts_cache.open("w", encoding="utf-8") as handle:
+            for item in script_pairs:
+                handle.write(
+                    json.dumps(
+                        {"prompt": item["prompt"], "completion": item["completion"]},
+                        ensure_ascii=False,
+                    )
+                    + "\n"
+                )
+        print(f"Fetched {len(script_pairs)} script pairs into {args.scripts_cache}")
+
+    script_pairs = load_cinema_pairs(args.scripts_cache)
+    script_added = 0
+    for prompt, completion in script_pairs[: max(0, args.max_scripts)]:
+        if not prompt or not completion:
+            continue
+        if args.english_only and (has_cjk(prompt) or has_cjk(completion)):
+            continue
+        if looks_hype(prompt) or looks_hype(completion):
+            continue
+        kept.append(row(system, prompt, completion))
+        script_added += 1
+    script_sample = ROOT / "data" / "ingest" / "script_sample.jsonl"
+    if script_added == 0 and script_sample.exists():
+        for prompt, completion in load_cinema_pairs(script_sample)[: max(0, args.max_scripts)]:
+            kept.append(row(system, prompt, completion))
+            script_added += 1
+        if script_added:
+            print(f"Used {script_added} rows from {script_sample} (no script cache)")
+    elif script_added:
+        print(f"Added {script_added} script-staging rows (cap {args.max_scripts})")
 
     # 4) Optional companions (argument muscle — off by default for voice-first v2)
     if args.include_companions:
