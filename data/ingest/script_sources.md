@@ -99,7 +99,8 @@ Example script URLs (public sitemap pattern, **not bulk-fetched by this repo**):
 |---------|-------------|
 | Docs link to studio listing | Automated sitemap/script HTML/PDF download |
 | `data/ingest/a24_script_slug_index.json` — **metadata guesses** from AlexPMorton titles (`script_slug_url_verified: false`) | Committing full PDFs or scraped script bodies |
-| User drops PDF in `data/scripts/a24/incoming/` → `extract_screenplay_pdf.py` | `ingest_scripts.py` pulling from Script Slug URLs |
+| User drops PDF in `data/scripts/a24/incoming/` → `extract_screenplay_pdf.py` | Bulk sitemap/studio crawls; `ingest_scripts.py` pulling from Script Slug |
+| User-operated `download_screenplay_pdf.py` (one URL / queue row) | Committing PDFs or automated dataset builds |
 
 **Safer reads:** studio award PDFs (e.g. [Babygirl on `a24awards.com`](https://a24awards.com/assets/Babygirl-screenplay.pdf)) — still not a training license by default.
 
@@ -112,14 +113,59 @@ Example script URLs (public sitemap pattern, **not bulk-fetched by this repo**):
 | **License / training** | Same as any fan/curator list: **personal study links**, not permission to redistribute text or train on verbatim scripts. Paid post does not transfer copyright. |
 | **Related** | Cole Haddon’s [“Hundreds of Screenplays”](https://colehaddon.substack.com/p/resource-hundreds-of-screenplays) hub links other themed collections (comedy, horror, women writers, etc.). |
 
+### User-operated “one-by-one” PDF bot (local cache)
+
+The repo ships **`scripts/download_screenplay_pdf.py`** — a **polite, user-operated** helper that fetches **one approved URL at a time** (or one queue row per run). It is **not** a full-site crawler.
+
+| Rule | Detail |
+|------|--------|
+| **Who runs it** | You, on your machine, after reading Script Slug / Substack terms |
+| **What it fetches** | Only `--url` you pass or rows in `data/ingest/a24_download_queue.json` |
+| **Where files go** | `data/scripts/a24/incoming/*.pdf` (**gitignored**) |
+| **Logs** | `data/ingest/download_log.jsonl` (**gitignored**) |
+| **Index scrape** | **`build_a24_slug_index.py` stubs live studio listing parse** (SPA); default rebuilds title→URL guesses from `a24_titles.json` only |
+
+**Legal checklist (before any download):**
+
+1. Personal / education study only — **no** commercial redistribution of PDFs or excerpt text.
+2. **Honoring takedowns** — delete local copies if a host or rights holder objects.
+3. **Cole Haddon** — paid Substack; paste **direct PDF URLs** you can access into the queue (`pdf_url`), not paywalled HTML.
+4. **Hub / commercial weights** — treat downloaded screenplays as **extra risk**: copyrighted dialogue; MovieSum NC may still be safer for training than verbatim PDFs.
+5. **Never commit PDFs** to this git repo.
+
+```bash
+# Optional: refresh title→Script Slug URL guesses (metadata only, no PDFs)
+python3 scripts/scrape_a24_metadata.py
+python3 scripts/build_a24_slug_index.py --sync-queue   # fills queue from titles
+
+# One Script Slug title (resolves PDF link from the script page HTML)
+python3 scripts/download_screenplay_pdf.py \
+  --i-accept-personal-use-only \
+  --url "https://www.scriptslug.com/script/moonlight-2016"
+
+# Queue: one item per invocation
+python3 scripts/download_screenplay_pdf.py --i-accept-personal-use-only --from-queue
+
+# Queue: up to 5 items, 30s between (still user-operated; max-per-run cap)
+python3 scripts/download_screenplay_pdf.py --i-accept-personal-use-only \
+  --from-queue --max-per-run 5 --delay 30
+
+# Cole Haddon / award host — direct PDF URL you obtained with subscriber access
+python3 scripts/download_screenplay_pdf.py --i-accept-personal-use-only \
+  --url "https://example.com/path/to/screenplay.pdf" --out-name "materialists-2025.pdf"
+
+# After download → staging excerpts (dialogue stripped)
+python3 scripts/extract_screenplay_pdf.py
+python3 scripts/ingest_scripts.py --dataset manual --filter a24
+```
+
 ### Recommended manual workflow (Sky)
 
 ```bash
 # 1) Metadata title list (GitHub AlexPMorton fallback; optional Kaggle if creds)
 python3 scripts/scrape_a24_metadata.py
 
-# 2) Manual PDF → staging excerpts
-#    (place PDFs in data/scripts/a24/incoming/)
+# 2) PDFs → incoming/ (manual drop **or** user-operated download bot above)
 python3 scripts/extract_screenplay_pdf.py
 
 # 3) Ingest manual drops + optional MovieSum A24 filter
@@ -127,7 +173,7 @@ python3 scripts/ingest_scripts.py --dataset manual --filter a24
 ```
 
 1. **Pick titles** from `a24_titles.json` / `a24_titles.csv` or cross-check `a24_script_slug_index.json` (guessed Script Slug paths — verify in browser).
-2. **Obtain PDF** yourself (Script Slug, Cole Haddon, `a24awards.com`) — never via repo HTTP scrapers.
+2. **Obtain PDF** via manual browser save **or** `download_screenplay_pdf.py` (never bulk sitemap/studio crawls in-repo).
 3. **extract_screenplay_pdf.py** writes capped staging chunks to `data/scripts/a24/` (dialogue stripped).
 4. **`ingest_scripts.py`** merges manual `.txt` into gitignored `script_pairs.jsonl`.
 5. Never commit full features; `incoming/*.pdf` is gitignored.

@@ -8,6 +8,7 @@ data/train.jsonl
 data/ingest/cinema_pairs.jsonl
 data/ingest/script_pairs.jsonl
 data/ingest/.cache/
+data/ingest/download_log.jsonl
 data/scripts/a24/incoming/*.pdf
 data/eval.jsonl
 *.gguf

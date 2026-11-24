@@ -10,4 +10,5 @@ python3 scripts/ingest_scripts.py --dataset manual --filter a24
 ```
 
 - `*.pdf` here is **gitignored** — do not commit copyrighted full scripts.
-- Repo **does not** auto-download from scriptslug.com (see ToS §9 in `data/ingest/script_sources.md`).
+- Optional **user-operated** bot: `scripts/download_screenplay_pdf.py` (one URL at a time; see `data/ingest/script_sources.md`).
+- No unattended full-site crawl (Script Slug ToS §9).

@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "legal_note": "User-operated queue for scripts/download_screenplay_pdf.py — personal/education only; PDFs stay local (gitignored). Add Cole Haddon direct PDF URLs here when you have Substack access.",
+  "items": [
+    {
+      "id": "moonlight-2016",
+      "title": "Moonlight",
+      "release_year": "2016",
+      "page_url": "https://www.scriptslug.com/script/moonlight-2016",
+      "pdf_url": null,
+      "out_name": "moonlight-2016.pdf",
+      "source": "script_slug",
+      "status": "pending"
+    },
+    {
+      "id": "lady-bird-2017",
+      "title": "Lady Bird",
+      "release_year": "2017",
+      "page_url": "https://www.scriptslug.com/script/lady-bird-2017",
+      "pdf_url": null,
+      "out_name": "lady-bird-2017.pdf",
+      "source": "script_slug",
+      "status": "pending"
+    },
+    {
+      "id": "hereditary-2018",
+      "title": "Hereditary",
+      "release_year": "2018",
+      "page_url": "https://www.scriptslug.com/script/hereditary-2018",
+      "pdf_url": null,
+      "out_name": "hereditary-2018.pdf",
+      "source": "script_slug",
+      "status": "pending"
+    }
+  ]
+}
