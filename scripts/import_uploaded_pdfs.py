@@ -25,7 +25,11 @@ STUDIO_DIRS = {
 EXTRACT = Path(__file__).resolve().parent / "extract_screenplay_pdf.py"
 
 NAME_PATTERN = re.compile(r"^.+_\d{4}\.pdf$", re.IGNORECASE)
+KEBAB_YEAR_PATTERN = re.compile(r"^.+-\d{4}\.pdf$", re.IGNORECASE)
 PDF_MAGIC = b"%PDF"
+
+# Legacy upload path (GitHub UI drop at repo root)
+LEGACY_A24_PDF_DIR = ROOT / "scripts"
 
 
 def parse_args() -> argparse.Namespace:
@@ -51,8 +55,8 @@ def parse_args() -> argparse.Namespace:
 
 def verify_pdf(path: Path) -> list[str]:
     issues: list[str] = []
-    if not NAME_PATTERN.match(path.name):
-        issues.append(f"naming: expected Title_Year.pdf, got {path.name}")
+    if not (NAME_PATTERN.match(path.name) or KEBAB_YEAR_PATTERN.match(path.name)):
+        issues.append(f"naming: expected Title_Year.pdf or title-YYYY.pdf, got {path.name}")
     try:
         head = path.read_bytes()[:5]
     except OSError as exc:
@@ -69,6 +73,21 @@ def main() -> None:
     args.incoming = args.incoming or incoming_default
     args.incoming.mkdir(parents=True, exist_ok=True)
     pdfs = sorted(args.incoming.glob("*.pdf"))
+    if not pdfs and args.studio == "a24" and LEGACY_A24_PDF_DIR.is_dir():
+        legacy = sorted(LEGACY_A24_PDF_DIR.glob("*.pdf"))
+        if legacy:
+            print(
+                f"Found {len(legacy)} PDF(s) in {LEGACY_A24_PDF_DIR} — "
+                f"moving into {args.incoming} …"
+            )
+            for src in legacy:
+                dest = args.incoming / src.name
+                if dest.exists():
+                    print(f"  skip (exists): {dest.name}")
+                    continue
+                src.rename(dest)
+                print(f"  moved {src.name}")
+            pdfs = sorted(args.incoming.glob("*.pdf"))
     if not pdfs:
         print(f"No PDFs in {args.incoming}")
         print("Upload files named Title_Year.pdf (e.g. Moonlight_2016.pdf), then re-run.")

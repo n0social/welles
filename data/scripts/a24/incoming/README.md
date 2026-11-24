@@ -9,6 +9,9 @@ Use **`Title_Year.pdf`** — underscores, four-digit year, `.pdf` extension:
 | Good | Avoid |
 |------|--------|
 | `Moonlight_2016.pdf` | `moonlight.pdf`, `Moonlight (2016).pdf` |
+| `moonlight-2016.pdf` (kebab + year) | random names without a year |
+
+If PDFs were uploaded to the repo-root `scripts/` folder by mistake, run `python3 scripts/import_uploaded_pdfs.py` once — it moves them here automatically.
 
 Run `python3 scripts/import_uploaded_pdfs.py` to validate names and PDF headers before extract.
 
