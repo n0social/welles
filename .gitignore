@@ -5,6 +5,7 @@ __pycache__/
 outputs/
 hf_cache/
 data/train.jsonl
+data/ingest/cinema_pairs.jsonl
 data/eval.jsonl
 *.gguf
 *Token*.txt

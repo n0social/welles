@@ -1,15 +1,22 @@
-"""Build Welles SFT JSONL: gold voice heavy, style samples, lightly capped LongWriter.
+"""Build Welles SFT JSONL: gold voice heavy, style samples, cinema ingest, capped LongWriter.
 
-LongWriter teaches length. Gold + style teach Welles. Run on any machine with internet.
+LongWriter teaches length. Gold + style teach Welles; cinema adds film/staging substance. Run on any machine with internet.
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 
 from datasets import load_dataset
+
+_SCRIPTS = Path(__file__).resolve().parent
+if str(_SCRIPTS) not in sys.path:
+    sys.path.insert(0, str(_SCRIPTS))
+
+from ingest_cinema import DEFAULT_OUT as CINEMA_CACHE, build_pairs, load_pairs as load_cinema_pairs
 
 ROOT = Path(__file__).resolve().parents[1]
 SYSTEM_PATH = ROOT / "prompts" / "welles_system.md"
@@ -170,6 +177,36 @@ def main() -> None:
     parser.add_argument("--english-only", action="store_true", default=True)
     parser.add_argument("--include-companions", action="store_true", default=False)
     parser.add_argument("--include-legacy-gold", action="store_true", default=False)
+    parser.add_argument(
+        "--max-cinema",
+        type=int,
+        default=60,
+        help="Max cinema-ingest rows included (after --cinema-cache load).",
+    )
+    parser.add_argument(
+        "--cinema-cache",
+        type=Path,
+        default=CINEMA_CACHE,
+        help="JSONL of prompt/completion pairs from scripts/ingest_cinema.py",
+    )
+    parser.add_argument(
+        "--fetch-cinema",
+        action="store_true",
+        default=False,
+        help="Run cinema ingest if cache missing or empty (uses ingest defaults).",
+    )
+    parser.add_argument(
+        "--max-wiki-ingest",
+        type=int,
+        default=400,
+        help="When --fetch-cinema: wiki plot cap for ingest_cinema.py",
+    )
+    parser.add_argument(
+        "--max-moviesum-ingest",
+        type=int,
+        default=40,
+        help="When --fetch-cinema: MovieSum summary cap for ingest_cinema.py",
+    )
     parser.add_argument("--out", type=Path, default=ROOT / "data" / "train.jsonl")
     args = parser.parse_args()
 
@@ -203,7 +240,60 @@ def main() -> None:
             style_count += 1
     print(f"Added {style_count} style-sample chunks")
 
-    # 3) Optional companions (argument muscle — off by default for voice-first v2)
+    # 3) Cinema ingest (HF plots / summaries — capped)
+    if args.fetch_cinema and (
+        not args.cinema_cache.exists() or args.cinema_cache.stat().st_size == 0
+    ):
+        import argparse as _ap
+
+        ingest_args = _ap.Namespace(
+            max_wiki=args.max_wiki_ingest,
+            max_moviesum=args.max_moviesum_ingest,
+            welles_boost=8,
+            min_words=80,
+            max_words=550,
+            include_script_excerpts=False,
+            max_script_excerpts=0,
+            scripts_cap=80,
+            shard_index=0,
+            shard_count=1,
+            seed=42,
+        )
+        pairs = build_pairs(ingest_args)
+        args.cinema_cache.parent.mkdir(parents=True, exist_ok=True)
+        with args.cinema_cache.open("w", encoding="utf-8") as handle:
+            for item in pairs:
+                handle.write(
+                    json.dumps(
+                        {"prompt": item["prompt"], "completion": item["completion"]},
+                        ensure_ascii=False,
+                    )
+                    + "\n"
+                )
+        print(f"Fetched {len(pairs)} cinema pairs into {args.cinema_cache}")
+
+    cinema_pairs = load_cinema_pairs(args.cinema_cache)
+    cinema_added = 0
+    for prompt, completion in cinema_pairs[: max(0, args.max_cinema)]:
+        if not prompt or not completion:
+            continue
+        if args.english_only and (has_cjk(prompt) or has_cjk(completion)):
+            continue
+        if looks_hype(prompt) or looks_hype(completion):
+            continue
+        kept.append(row(system, prompt, completion))
+        cinema_added += 1
+    sample_path = ROOT / "data" / "ingest" / "cinema_sample.jsonl"
+    if cinema_added == 0 and sample_path.exists():
+        for prompt, completion in load_cinema_pairs(sample_path)[: max(0, args.max_cinema)]:
+            kept.append(row(system, prompt, completion))
+            cinema_added += 1
+        if cinema_added:
+            print(f"Used {cinema_added} rows from {sample_path} (no cache)")
+    elif cinema_added:
+        print(f"Added {cinema_added} cinema rows (cap {args.max_cinema})")
+
+    # 4) Optional companions (argument muscle — off by default for voice-first v2)
     if args.include_companions:
         companion_prefix = (
             "WRITE. New prose in Welles's voice. "
@@ -216,7 +306,7 @@ def main() -> None:
                 companion_count += 1
         print(f"Added {companion_count} companion chunks")
 
-    # 4) LongWriter — length only, lightly capped
+    # 5) LongWriter — length only, lightly capped
     raw = load_dataset("zai-org/LongWriter-6k", split="train")
     longwriter_added = 0
     for example in raw:
