@@ -51,10 +51,47 @@ Also: **Too Much Johnson** (1938, unfinished), **Journey into Fear** (1943, co-d
 | Finding | Detail |
 |---------|--------|
 | **Official A24 screenplay HF dataset** | **None found** (Nov 2025). No studio-published script corpus on the Hub. |
-| **A24 metadata only** | Kaggle [A24 Studio movies dataset](https://www.kaggle.com/datasets/sebastiansuliborski/a24-studio-movies-dataset) — titles, budgets, credits; **no screenplay text**. |
+| **A24 metadata only** | Kaggle [A24 Studio movies dataset](https://www.kaggle.com/datasets/sebastiansuliborski/a24-studio-movies-dataset) — titles, budgets, credits; **no screenplay text**. See also **`AlexPMorton/A24-Movies-EDA`** on GitHub (not Kaggle) in [`kaggle_sources.md`](kaggle_sources.md). |
 | **Curated blog lists** | e.g. Cole Haddon Substack “60 A24 Screenplays” — **links to PDFs for personal study**; not a license for training redistribution. |
 | **MovieSum filter** | Several A24-era titles appear with full scripts (e.g. *Moonlight*, *Lady Bird*, *Hereditary*, *Midsommar*, *Eighth Grade*) — dataset license **CC BY-NC 4.0**; content still **copyright**. Ingest uses **stage-direction excerpts only**. |
 | **IsmaelMousa/movies** | 1,172 plain-text scripts, **Apache 2.0** on the *collection*; individual screenplays remain copyrighted. **Not enabled by default** (`--dataset movies` is opt-in and still skips dialogue). |
+
+---
+
+## Script Slug + Cole Haddon (PDF study sources — **manual only**)
+
+Survey: **2026-11-24**. These are the best public **indexes** for A24 screenplay PDFs. Neither grants ML redistribution rights; repo automation must **not** scrape or bulk-download them.
+
+### [Script Slug](https://www.scriptslug.com/) (`scriptslug.com`)
+
+| Aspect | Detail |
+|--------|--------|
+| **Format** | Searchable **original studio PDFs** (Courier layouts, revision colors, title pages). Browse A24 via [A24 Screenplays](https://www.scriptslug.com/scripts/studio/a24). |
+| **Cost** | Free to read/download on site (per [About → FAQ](https://www.scriptslug.com/about)). |
+| **Provenance** | “Found online or provided by users”; organized for education. |
+| **License / training** | Site states **fair use for education and research only**; **no commercial use** and **no grant of rights**. Honors takedown requests. A24 [Terms of Use](https://a24films.com/terms-of-use) limit official materials to **personal, non-commercial** viewing. |
+| **Repo policy** | **Do not** link Script Slug bulk download into `ingest_scripts.py`. **Do not** commit full PDFs/text. Optional: Sky manually opens a title, copies **staging-only** excerpts into `data/scripts/a24/<title_slug>.txt`. |
+| **Safer reads** | Studio-posted award-season PDFs (e.g. [Babygirl screenplay on `a24awards.com`](https://a24awards.com/assets/Babygirl-screenplay.pdf)) are **authorized studio copies** for personal study — still **not** a training redistribution license unless A24 says otherwise. |
+
+### Cole Haddon — [“60 A24 Screenplays to Download and Study”](https://colehaddon.substack.com/p/60-a24-screenplays-to-download-and)
+
+| Aspect | Detail |
+|--------|--------|
+| **What it is** | Paid Substack post (Jan 2026) curating **60 feature screenplays** A24 released or distributed since ~2012 — editor’s “arthouse gems” list, not a complete studio catalog. |
+| **Format** | Outbound **PDF download links** (often awards / studio / third-party hosts). Includes **2025** titles cited in the post (e.g. *The Smashing Machine*, *Eddington*, *Materialists*). |
+| **License / training** | Same as any fan/curator list: **personal study links**, not permission to redistribute text or train on verbatim scripts. Paid post does not transfer copyright. |
+| **Related** | Cole Haddon’s [“Hundreds of Screenplays”](https://colehaddon.substack.com/p/resource-hundreds-of-screenplays) hub links other themed collections (comedy, horror, women writers, etc.). |
+
+### Recommended manual workflow (Sky)
+
+1. **Pick titles** from `data/ingest/a24_titles.csv` (regenerate with `scripts/ingest_a24_metadata.py`) or MovieSum `--filter a24`.
+2. **Obtain PDF** yourself via Script Slug, Cole Haddon, `a24awards.com`, or a licensed book — **not** via repo scrapers.
+3. Convert locally (`pdftotext`, Acrobat export) to **`.txt`**; strip quoted dialogue if you only want staging register.
+4. Drop under `data/scripts/a24/` as `moonlight_2016.txt`, etc. (see folder README).
+5. Run `python3 scripts/ingest_scripts.py --dataset manual --filter a24` — ingest applies `strip_dialogue_plain` and word caps; output stays in gitignored `script_pairs.jsonl`.
+6. Keep **short excerpts** in git if you must commit examples; never full features.
+
+**Linking in docs:** OK to cite Script Slug and Cole Haddon URLs in this file for humans. **Ingesting:** manual drops only.
 
 ---
 

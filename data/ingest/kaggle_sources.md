@@ -61,6 +61,39 @@ Suggested workflow: maintain `a24_titles.csv` (from Kaggle metadata) → join wh
 
 ---
 
+## AlexPMorton/A24-Movies-EDA (GitHub — **not** a Kaggle dataset)
+
+| Field | Detail |
+|-------|--------|
+| **URL** | https://github.com/AlexPMorton/A24-Movies-EDA |
+| **On Kaggle?** | **No** — `site:kaggle.com AlexPMorton` returns no matching dataset. Users sometimes conflate this repo with Kaggle A24 CSVs. |
+| **Contents** | Jupyter EDA notebook (`A24_EDA.ipynb`), scraped **metadata** for A24 theatrical releases through **2022-09-26**, plus Oscar-winner join. **No screenplay text.** |
+| **License** | No explicit OSS license in repo root; treat files as **author’s tables** — fine for title/box-office research, not for republishing as a “script corpus.” |
+| **Size** | ~118 released-movie rows in `A24 Released Movies/A24_Released_Movies_2022_09_26.csv` (~11 KB CSV); joined Oscar file ~11 KB; notebook ~1.1 MB. |
+| **Primary CSV columns** | `title`, `release_date`, `genre`, `director`, `budget`, `domestic_revenue`, `international_revenue`, `worldwide_revenue`, `runtime`, `MPAA_rating` (Oscars file adds `oscar_win` YES/NO; uses `mpaa_rating` lowercase) |
+| **Upstream sources (per README)** | a24films.com catalog, Wikipedia genres/budgets, Box Office Mojo / The Numbers revenues, Wikipedia Academy Award winners list (scraped). |
+| **Fit for Welles SFT** | **High** for **title list / year / director joins** to MovieSum keys and manual `data/scripts/a24/` drops. **Zero** script staging text. |
+| **Wired in repo** | `scripts/ingest_a24_metadata.py --source github-alexp` → `data/ingest/a24_titles.csv` |
+
+### Kaggle overlap (newer / richer metadata than AlexPMorton snapshot)
+
+| Kaggle slug | Extra fields vs AlexPMorton | Use |
+|-------------|----------------------------|-----|
+| `sebastiansuliborski/a24-studio-movies-dataset` | `Written by`, `Screenplay by`, starring, cinematography, IMDb/RT scores | Preferred when you need **writer credits**; ~66 KB |
+| `dvdlws/a24-movie-database` | Letterboxd / popcornmeter | CC BY-SA 4.0; ratings-focused |
+| `alsyab/a24-films` | Catalog through **2026** from a24films.com | CC BY-NC-SA 4.0; good for **upcoming** title slugs |
+
+Download locally:
+
+```bash
+# Example — requires Kaggle CLI auth on your machine
+kaggle datasets download -d sebastiansuliborski/a24-studio-movies-dataset -f a24_data_cleaned.csv
+python3 scripts/ingest_a24_metadata.py --source local --input a24_data_cleaned.csv \
+  --input-label kaggle/sebastiansuliborski -o data/ingest/a24_titles.csv
+```
+
+---
+
 ## IMSDB / screenplay / dialogue (substitutes)
 
 | Kind | Kaggle examples | Welles pipeline note |
@@ -87,7 +120,7 @@ Suggested workflow: maintain `a24_titles.csv` (from Kaggle metadata) → join wh
 1. Keep **HF wiki plots** as default cinema path (`data/ingest/README.md`).
 2. Optional Kaggle CLI download of `jrobischon/wikipedia-movie-plots` for offline boxes without HF.
 3. Script-tier: add **title filter** module using IMDb Kaggle crew/basics + Welles/A24 title lists — still **no verbatim script commit**.
-4. Track A24 titles from `sebastiansuliborski/a24-studio-movies-dataset` in a small committed CSV (metadata only).
+4. Run `scripts/ingest_a24_metadata.py` (GitHub AlexPMorton default or Kaggle `--source local`) → committed `data/ingest/a24_titles.csv` (metadata only).
 
 ---
 

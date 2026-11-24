@@ -1,7 +1,8 @@
 """Ingest screenplay staging text for Welles SFT — HF caps + manual drop dirs.
 
 Default: MovieSum XML stage directions / scene descriptions only (no dialogue).
-See data/ingest/script_sources.md for filmography, A24 findings, and legal warnings.
+See data/ingest/script_sources.md for filmography, A24 findings, Script Slug / Cole Haddon
+manual PDF workflow, and legal warnings. Title metadata: scripts/ingest_a24_metadata.py.
 """
 
 from __future__ import annotations
