@@ -110,6 +110,17 @@ python scripts/prepare_data.py --max-examples 150 --gold-repeat 3 --max-cinema 6
 
 Train from `notebooks/welles_colab.ipynb`. Eval before Hub push: `data/eval_checklist.md`.
 
+### A24 screenplay PDFs (manual upload)
+
+No bulk Script Slug download. Save each PDF in the browser, upload as `data/scripts/a24/incoming/Title_Year.pdf` (public GitHub = copyrighted redistribution — prefer private repo or local-only; see that folder’s README), then:
+
+```bash
+python3 scripts/import_uploaded_pdfs.py
+python3 scripts/ingest_scripts.py --dataset manual --filter a24
+```
+
+Details: [`data/ingest/script_sources.md`](data/ingest/script_sources.md).
+
 ## Training (v1 — shipped)
 
 | Item | Value |

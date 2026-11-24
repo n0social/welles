@@ -9,7 +9,8 @@ data/ingest/cinema_pairs.jsonl
 data/ingest/script_pairs.jsonl
 data/ingest/.cache/
 data/ingest/download_log.jsonl
-data/scripts/a24/incoming/*.pdf
+# A24 incoming PDFs may be committed if you accept redistribution risk (see incoming/README.md).
+# Removed blanket ignore so opt-in `git add data/scripts/a24/incoming/*.pdf` works.
 data/eval.jsonl
 *.gguf
 *Token*.txt

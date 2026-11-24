@@ -7,7 +7,7 @@ This document records **research** for the Welles LoRA **script/staging** tier (
 > - Hugging Face datasets with stated licenses, and then **stage directions / scene descriptions only** (no quoted dialogue) from MovieSum-style XML where possible
 > - **Your own** `.txt` / `.md` files in `data/scripts/welles/` or `data/scripts/a24/` that you have the right to use for training (self-authored, licensed, or clearly public domain)
 >
-> **Do not** commit full Hollywood scripts to git. `data/ingest/script_pairs.jsonl` is gitignored (regenerate locally).
+> **Hollywood scripts are copyrighted.** `data/ingest/script_pairs.jsonl` is gitignored (regenerate locally). Full PDFs in `data/scripts/a24/incoming/*.pdf` **may** be committed if you opt in — **public GitHub = redistribution**; prefer a **private repo** or keep PDFs local. See [`data/scripts/a24/incoming/README.md`](../scripts/a24/incoming/README.md).
 
 ---
 
@@ -98,9 +98,9 @@ Example script URLs (public sitemap pattern, **not bulk-fetched by this repo**):
 | Allowed | Not allowed |
 |---------|-------------|
 | Docs link to studio listing | Automated sitemap/script HTML/PDF download |
-| `data/ingest/a24_script_slug_index.json` — **metadata guesses** from AlexPMorton titles (`script_slug_url_verified: false`) | Committing full PDFs or scraped script bodies |
-| User drops PDF in `data/scripts/a24/incoming/` → `extract_screenplay_pdf.py` | Bulk sitemap/studio crawls; `ingest_scripts.py` pulling from Script Slug |
-| User-operated `download_screenplay_pdf.py` (one URL / queue row) | Committing PDFs or automated dataset builds |
+| `data/ingest/a24_script_slug_index.json` — **metadata guesses** from AlexPMorton titles (`script_slug_url_verified: false`) | Scraped script bodies in git; unattended bulk PDF harvest |
+| Manual download → upload PDF to `data/scripts/a24/incoming/Title_Year.pdf` → `import_uploaded_pdfs.py` / `extract_screenplay_pdf.py` | Bulk sitemap/studio crawls; `ingest_scripts.py` pulling from Script Slug |
+| User-operated `download_screenplay_pdf.py` (one URL / queue row) | Automated bulk download or unattended crawlers |
 
 **Safer reads:** studio award PDFs (e.g. [Babygirl on `a24awards.com`](https://a24awards.com/assets/Babygirl-screenplay.pdf)) — still not a training license by default.
 
@@ -121,7 +121,7 @@ The repo ships **`scripts/download_screenplay_pdf.py`** — a **polite, user-ope
 |------|--------|
 | **Who runs it** | You, on your machine, after reading Script Slug / Substack terms |
 | **What it fetches** | Only `--url` you pass or rows in `data/ingest/a24_download_queue.json` |
-| **Where files go** | `data/scripts/a24/incoming/*.pdf` (**gitignored**) |
+| **Where files go** | `data/scripts/a24/incoming/Title_Year.pdf` (commit optional — see incoming README) |
 | **Logs** | `data/ingest/download_log.jsonl` (**gitignored**) |
 | **Index scrape** | **`build_a24_slug_index.py` stubs live studio listing parse** (SPA); default rebuilds title→URL guesses from `a24_titles.json` only |
 
@@ -131,7 +131,7 @@ The repo ships **`scripts/download_screenplay_pdf.py`** — a **polite, user-ope
 2. **Honoring takedowns** — delete local copies if a host or rights holder objects.
 3. **Cole Haddon** — paid Substack; paste **direct PDF URLs** you can access into the queue (`pdf_url`), not paywalled HTML.
 4. **Hub / commercial weights** — treat downloaded screenplays as **extra risk**: copyrighted dialogue; MovieSum NC may still be safer for training than verbatim PDFs.
-5. **Never commit PDFs** to this git repo.
+5. **GitHub PDFs:** committing full PDFs to a **public** repo is redistribution — use private repos, LFS, or local-only copies unless you accept that risk.
 
 ```bash
 # Optional: refresh title→Script Slug URL guesses (metadata only, no PDFs)
@@ -159,24 +159,31 @@ python3 scripts/extract_screenplay_pdf.py
 python3 scripts/ingest_scripts.py --dataset manual --filter a24
 ```
 
-### Recommended manual workflow (Sky)
+### Recommended manual workflow (download → upload → pipeline)
+
+**No automated Script Slug download.** Save each PDF in the browser (or optional `download_screenplay_pdf.py` for one URL at a time), then upload to the repo:
+
+| Step | Action |
+|------|--------|
+| 1 | Pick titles from `a24_titles.json` / `a24_script_slug_index.json`; open Script Slug or Cole Haddon links in a browser. |
+| 2 | Save PDFs locally, rename to **`Title_Year.pdf`**, upload to **`data/scripts/a24/incoming/`** on GitHub (or copy locally). |
+| 3 | Pull / sync repo, then run the commands below. |
 
 ```bash
-# 1) Metadata title list (GitHub AlexPMorton fallback; optional Kaggle if creds)
+# 1) Metadata title list (optional)
 python3 scripts/scrape_a24_metadata.py
 
-# 2) PDFs → incoming/ (manual drop **or** user-operated download bot above)
-python3 scripts/extract_screenplay_pdf.py
+# 2) Verify PDFs + extract staging excerpts → data/scripts/a24/*_excerpt.txt
+python3 scripts/import_uploaded_pdfs.py
+# equivalent: python3 scripts/extract_screenplay_pdf.py
 
 # 3) Ingest manual drops + optional MovieSum A24 filter
 python3 scripts/ingest_scripts.py --dataset manual --filter a24
 ```
 
-1. **Pick titles** from `a24_titles.json` / `a24_titles.csv` or cross-check `a24_script_slug_index.json` (guessed Script Slug paths — verify in browser).
-2. **Obtain PDF** via manual browser save **or** `download_screenplay_pdf.py` (never bulk sitemap/studio crawls in-repo).
-3. **extract_screenplay_pdf.py** writes capped staging chunks to `data/scripts/a24/` (dialogue stripped).
-4. **`ingest_scripts.py`** merges manual `.txt` into gitignored `script_pairs.jsonl`.
-5. Never commit full features; `incoming/*.pdf` is gitignored.
+1. **extract** / **import_uploaded_pdfs** writes capped staging chunks to `data/scripts/a24/` (dialogue stripped).
+2. **`ingest_scripts.py`** merges manual `.txt` into gitignored `script_pairs.jsonl`.
+3. **PDFs on GitHub:** your choice — documented risk in incoming README; optional Git LFS via `.gitattributes`.
 
 **Linking in docs:** OK to cite Script Slug and Cole Haddon URLs. **Ingesting:** local files only.
 

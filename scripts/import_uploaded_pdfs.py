@@ -1,0 +1,89 @@
+"""Verify user-uploaded A24 PDFs in incoming/, then run extract_screenplay_pdf in batch.
+
+Does not download from the web — use manual browser save or download_screenplay_pdf.py first.
+"""
+
+from __future__ import annotations
+
+import argparse
+import re
+import subprocess
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+INCOMING = ROOT / "data" / "scripts" / "a24" / "incoming"
+EXTRACT = Path(__file__).resolve().parent / "extract_screenplay_pdf.py"
+
+NAME_PATTERN = re.compile(r"^.+_\d{4}\.pdf$", re.IGNORECASE)
+PDF_MAGIC = b"%PDF"
+
+
+def parse_args() -> argparse.Namespace:
+    p = argparse.ArgumentParser(
+        description="Check incoming/*.pdf naming, then batch-extract staging .txt files."
+    )
+    p.add_argument("--incoming", type=Path, default=INCOMING)
+    p.add_argument("--strict-naming", action="store_true", help="Exit 1 if any PDF breaks Title_Year.pdf.")
+    p.add_argument("--dry-run", action="store_true", help="Verify only; do not run extract.")
+    return p.parse_args()
+
+
+def verify_pdf(path: Path) -> list[str]:
+    issues: list[str] = []
+    if not NAME_PATTERN.match(path.name):
+        issues.append(f"naming: expected Title_Year.pdf, got {path.name}")
+    try:
+        head = path.read_bytes()[:5]
+    except OSError as exc:
+        issues.append(f"read: {exc}")
+        return issues
+    if head != PDF_MAGIC:
+        issues.append("not a PDF (missing %PDF header)")
+    return issues
+
+
+def main() -> None:
+    args = parse_args()
+    args.incoming.mkdir(parents=True, exist_ok=True)
+    pdfs = sorted(args.incoming.glob("*.pdf"))
+    if not pdfs:
+        print(f"No PDFs in {args.incoming}")
+        print("Upload files named Title_Year.pdf (e.g. Moonlight_2016.pdf), then re-run.")
+        raise SystemExit(1)
+
+    bad = False
+    for pdf in pdfs:
+        issues = verify_pdf(pdf)
+        if issues:
+            bad = True
+            print(f"{pdf.name}:")
+            for msg in issues:
+                print(f"  - {msg}")
+        else:
+            size_kb = pdf.stat().st_size // 1024
+            print(f"OK  {pdf.name} ({size_kb} KiB)")
+
+    if bad and args.strict_naming:
+        raise SystemExit(1)
+
+    if args.dry_run:
+        print("\nDry run — skipped extract.")
+        print("Next: python3 scripts/ingest_scripts.py --dataset manual --filter a24")
+        return
+
+    cmd = [sys.executable, str(EXTRACT), "--incoming", str(args.incoming)]
+    print("\nRunning extract_screenplay_pdf.py …")
+    proc = subprocess.run(cmd, cwd=ROOT)
+    if proc.returncode != 0:
+        raise SystemExit(proc.returncode)
+
+    print(
+        "\nExcerpts → data/scripts/a24/*_excerpt.txt\n"
+        "Next:\n"
+        "  python3 scripts/ingest_scripts.py --dataset manual --filter a24"
+    )
+
+
+if __name__ == "__main__":
+    main()

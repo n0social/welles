@@ -6,7 +6,7 @@ Legal / product stance
   No commercial redistribution. Honor takedowns. This bot does **not** grant
   ML-training rights (see scriptslug.com/ai.txt and ToS §9).
 * Cole Haddon / Substack links: you must have subscriber access; one-off downloads.
-* **Never commit PDF bodies** to git (`data/scripts/a24/incoming/*.pdf` is gitignored).
+* **PDFs on GitHub are optional** — public commit = redistribution risk; see `data/scripts/a24/incoming/README.md`.
 * Default: no full-site crawl — only URLs you pass on the CLI or approve in
   `data/ingest/a24_download_queue.json`, or detail URLs already listed in
   `data/ingest/a24_script_slug_index.json` when you build a queue from that file.

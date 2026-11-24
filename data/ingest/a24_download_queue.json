@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "legal_note": "User-operated queue for scripts/download_screenplay_pdf.py — personal/education only; PDFs stay local (gitignored). Add Cole Haddon direct PDF URLs here when you have Substack access.",
+  "legal_note": "User-operated queue for scripts/download_screenplay_pdf.py — personal/education only. Prefer manual browser save + upload to incoming/; see incoming/README.md for GitHub redistribution risk. Add Cole Haddon direct PDF URLs here when you have Substack access.",
   "items": [
     {
       "id": "moonlight-2016",
