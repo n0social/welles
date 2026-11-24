@@ -104,7 +104,8 @@ HF Gradio GPU Spaces need a paid plan. Modal is optional for a URL that stays up
 ```bash
 python scripts/build_welles_gold.py
 python scripts/ingest_cinema.py --max-wiki 400 --max-moviesum 40
-python scripts/prepare_data.py --max-examples 150 --gold-repeat 3 --max-cinema 60
+python scripts/ingest_scripts.py --dataset moviesum --filter welles --max-pairs 20
+python scripts/prepare_data.py --max-examples 150 --gold-repeat 3 --max-cinema 60 --max-scripts 25
 ```
 
 Train from `notebooks/welles_colab.ipynb`. Eval before Hub push: `data/eval_checklist.md`.

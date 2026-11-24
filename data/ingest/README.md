@@ -91,9 +91,26 @@ python3 scripts/prepare_data.py --fetch-cinema --max-cinema 60
 4. Keep **gold repeat ×3** and `--max-cinema` ≤ ~15–20% of total rows so voice stays Welles not Wikipedia.
 5. For commercial release, replace MovieSum (NC) with wiki-only or self-authored pairs.
 
+## Script / screenplay tier
+
+Full research: [`script_sources.md`](script_sources.md) (Orson Welles filmography, A24 HF findings, **copyright warnings**).
+
+| Path | Role |
+|------|------|
+| `scripts/ingest_scripts.py` | MovieSum staging excerpts + `data/scripts/welles/` & `data/scripts/a24/` manual drops |
+| `data/ingest/script_pairs.jsonl` | Ignored cache |
+| `data/ingest/script_sample.jsonl` | Tiny committed sample (original exercise text, not a studio script) |
+
+```bash
+python3 scripts/ingest_scripts.py --dataset moviesum --filter welles --max-pairs 20
+python3 scripts/prepare_data.py --max-cinema 60 --max-scripts 25 --fetch-scripts
+```
+
 ## Cached files
 
 | Path | In git? |
 |------|---------|
 | `data/ingest/cinema_pairs.jsonl` | Ignored (large); regenerate with ingest |
 | `data/ingest/cinema_sample.jsonl` | Small committed sample for CI/dry checks |
+| `data/ingest/script_pairs.jsonl` | Ignored; regenerate with `ingest_scripts.py` |
+| `data/ingest/script_sample.jsonl` | Small committed sample for CI/dry checks |

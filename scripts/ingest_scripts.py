@@ -45,38 +45,38 @@ WELLES_MOVIESUM_KEYS = (
     "filming othello",
 )
 
+# Prefer `Title_YYYY` MovieSum keys to avoid substring false positives (e.g. "men" in Phantom Menace).
 A24_MOVIESUM_KEYS = (
     "moonlight_2016",
-    "lady bird",
-    "hereditary",
-    "midsommar",
-    "eighth grade",
+    "lady bird_2017",
+    "hereditary_2018",
+    "midsommar_2019",
+    "eighth grade_2018",
     "the witch_2015",
-    "ex machina",
+    "ex machina_2015",
     "room_2015",
-    "the lobster",
-    "swiss army man",
-    "moonage daydream",  # doc — weak match
-    "everything everywhere",
-    "uncut gems",
-    "the green knight",
-    "minari",
-    "last night in soho",
-    "the farewell",
-    "first cow",
-    "the lighthouse",
-    "good time",
-    "saint maud",
-    "men",
-    "pearl",
+    "the lobster_2015",
+    "swiss army man_2016",
+    "everything everywhere all at once_2022",
+    "uncut gems_2019",
+    "the green knight_2021",
+    "minari_2020",
+    "last night in soho_2021",
+    "the farewell_2019",
+    "first cow_2019",
+    "the lighthouse_2019",
+    "good time_2017",
+    "saint maud_2019",
+    "men_2022",
+    "pearl_2022",
     "x_2022",
-    "bones and all",
-    "aftersun",
-    "the whale",
-    "beau is afraid",
-    "past lives",
-    "priscilla",
-    "dream scenario",
+    "bones and all_2022",
+    "aftersun_2022",
+    "the whale_2022",
+    "beau is afraid_2023",
+    "past lives_2023",
+    "priscilla_2023",
+    "dream scenario_2023",
 )
 
 WRITE = "WRITE. New prose in Welles's voice.\n\n"
@@ -103,15 +103,28 @@ from ingest_cinema import (  # noqa: E402
 DATASETS = ("moviesum", "movies", "manual")
 
 
+def _norm_title(name: str) -> str:
+    return re.sub(r"\s+", "_", name.strip().lower())
+
+
 def matches_filter(movie_name: str, filt: str) -> bool:
-    name = movie_name.lower()
+    name = _norm_title(movie_name)
     if filt == "all":
         return True
-    if filt == "welles":
-        return any(k in name for k in WELLES_MOVIESUM_KEYS)
-    if filt == "a24":
-        return any(k in name for k in A24_MOVIESUM_KEYS)
-    return True
+    keys = WELLES_MOVIESUM_KEYS if filt == "welles" else A24_MOVIESUM_KEYS
+    for key in keys:
+        k = _norm_title(key)
+        if name == k:
+            return True
+        if "_" in k:
+            title_part, _, year = k.rpartition("_")
+            if year.isdigit() and name.startswith(f"{title_part}_{year}"):
+                return True
+            if name.startswith(f"{title_part}_"):
+                return True
+        elif k in name:
+            return True
+    return False
 
 
 def pairs_from_moviesum(

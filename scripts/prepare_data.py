@@ -1,6 +1,6 @@
-"""Build Welles SFT JSONL: gold voice heavy, style samples, cinema ingest, capped LongWriter.
+"""Build Welles SFT JSONL: gold voice heavy, style samples, cinema + script ingest, capped LongWriter.
 
-LongWriter teaches length. Gold + style teach Welles; cinema adds film/staging substance. Run on any machine with internet.
+LongWriter teaches length. Gold + style teach Welles; cinema/scripts add film/staging substance. Run on any machine with internet.
 """
 
 from __future__ import annotations
