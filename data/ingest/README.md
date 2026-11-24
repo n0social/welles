@@ -98,8 +98,13 @@ Full research: [`script_sources.md`](script_sources.md) (Orson Welles filmograph
 | Path | Role |
 |------|------|
 | `scripts/ingest_scripts.py` | MovieSum staging excerpts + `data/scripts/welles/` & `data/scripts/a24/` manual drops |
+| `scripts/scrape_welles_metadata.py` | Welles filmography + `welles_script_slug_index.json` (metadata only) |
+| `data/ingest/welles_titles.json` | Orson-directed feature list for MovieSum key joins |
+| `data/ingest/welles_script_slug_index.json` | Study links + Script Slug URL guesses (`verified: false`) |
+| `data/scripts/welles/incoming/` | Manual PDF upload path (`import_uploaded_pdfs.py --studio welles`) |
 | `data/ingest/script_pairs.jsonl` | Ignored cache |
 | `data/ingest/script_sample.jsonl` | Tiny committed sample (original exercise text, not a studio script) |
+| `data/ingest/welles_script_pairs_sample.jsonl` | Committed Kane MovieSum staging excerpts (2 pairs) |
 
 ```bash
 python3 scripts/ingest_scripts.py --dataset moviesum --filter welles --max-pairs 20

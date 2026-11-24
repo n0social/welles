@@ -2,6 +2,15 @@
 
 Place **`.txt`** or **`.md`** files here for `scripts/ingest_scripts.py --dataset manual --filter welles`.
 
+**PDF workflow:** upload `Title_Year.pdf` to [`incoming/`](incoming/README.md), then:
+
+```bash
+python3 scripts/import_uploaded_pdfs.py --studio welles
+python3 scripts/ingest_scripts.py --dataset manual --filter welles
+```
+
+Title / study-link index (metadata only): `data/ingest/welles_script_slug_index.json`.
+
 ## What you may put here
 
 - Staging-only excerpts you are entitled to use (no full copyrighted screenplay in git)

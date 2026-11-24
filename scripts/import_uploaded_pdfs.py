@@ -1,4 +1,4 @@
-"""Verify user-uploaded A24 PDFs in incoming/, then run extract_screenplay_pdf in batch.
+"""Verify user-uploaded screenplay PDFs in incoming/, then batch-extract staging .txt.
 
 Does not download from the web — use manual browser save or download_screenplay_pdf.py first.
 """
@@ -12,7 +12,16 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-INCOMING = ROOT / "data" / "scripts" / "a24" / "incoming"
+STUDIO_DIRS = {
+    "a24": (
+        ROOT / "data" / "scripts" / "a24" / "incoming",
+        ROOT / "data" / "scripts" / "a24",
+    ),
+    "welles": (
+        ROOT / "data" / "scripts" / "welles" / "incoming",
+        ROOT / "data" / "scripts" / "welles",
+    ),
+}
 EXTRACT = Path(__file__).resolve().parent / "extract_screenplay_pdf.py"
 
 NAME_PATTERN = re.compile(r"^.+_\d{4}\.pdf$", re.IGNORECASE)
@@ -23,7 +32,18 @@ def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(
         description="Check incoming/*.pdf naming, then batch-extract staging .txt files."
     )
-    p.add_argument("--incoming", type=Path, default=INCOMING)
+    p.add_argument(
+        "--studio",
+        choices=sorted(STUDIO_DIRS),
+        default="a24",
+        help="Which incoming/ + excerpt output dir (default: a24).",
+    )
+    p.add_argument(
+        "--incoming",
+        type=Path,
+        default=None,
+        help="Override incoming folder (default: data/scripts/<studio>/incoming/).",
+    )
     p.add_argument("--strict-naming", action="store_true", help="Exit 1 if any PDF breaks Title_Year.pdf.")
     p.add_argument("--dry-run", action="store_true", help="Verify only; do not run extract.")
     return p.parse_args()
@@ -45,6 +65,8 @@ def verify_pdf(path: Path) -> list[str]:
 
 def main() -> None:
     args = parse_args()
+    incoming_default, out_dir = STUDIO_DIRS[args.studio]
+    args.incoming = args.incoming or incoming_default
     args.incoming.mkdir(parents=True, exist_ok=True)
     pdfs = sorted(args.incoming.glob("*.pdf"))
     if not pdfs:
@@ -69,19 +91,26 @@ def main() -> None:
 
     if args.dry_run:
         print("\nDry run — skipped extract.")
-        print("Next: python3 scripts/ingest_scripts.py --dataset manual --filter a24")
+        print(f"Next: python3 scripts/ingest_scripts.py --dataset manual --filter {args.studio}")
         return
 
-    cmd = [sys.executable, str(EXTRACT), "--incoming", str(args.incoming)]
+    cmd = [
+        sys.executable,
+        str(EXTRACT),
+        "--incoming",
+        str(args.incoming),
+        "--out-dir",
+        str(out_dir),
+    ]
     print("\nRunning extract_screenplay_pdf.py …")
     proc = subprocess.run(cmd, cwd=ROOT)
     if proc.returncode != 0:
         raise SystemExit(proc.returncode)
 
     print(
-        "\nExcerpts → data/scripts/a24/*_excerpt.txt\n"
+        f"\nExcerpts → {out_dir}/*_excerpt.txt\n"
         "Next:\n"
-        "  python3 scripts/ingest_scripts.py --dataset manual --filter a24"
+        f"  python3 scripts/ingest_scripts.py --dataset manual --filter {args.studio}"
     )
 
 

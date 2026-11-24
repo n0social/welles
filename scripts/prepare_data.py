@@ -370,12 +370,22 @@ def main() -> None:
         kept.append(row(system, prompt, completion))
         script_added += 1
     script_sample = ROOT / "data" / "ingest" / "script_sample.jsonl"
-    if script_added == 0 and script_sample.exists():
-        for prompt, completion in load_cinema_pairs(script_sample)[: max(0, args.max_scripts)]:
-            kept.append(row(system, prompt, completion))
-            script_added += 1
-        if script_added:
-            print(f"Used {script_added} rows from {script_sample} (no script cache)")
+    welles_script_sample = ROOT / "data" / "ingest" / "welles_script_pairs_sample.jsonl"
+    if script_added == 0:
+        fallbacks: list[Path] = []
+        if args.script_filter in ("welles", "all") and welles_script_sample.exists():
+            fallbacks.append(welles_script_sample)
+        if script_sample.exists():
+            fallbacks.append(script_sample)
+        for fb in fallbacks:
+            for prompt, completion in load_cinema_pairs(fb)[: max(0, args.max_scripts - script_added)]:
+                kept.append(row(system, prompt, completion))
+                script_added += 1
+                if script_added >= args.max_scripts:
+                    break
+            if script_added:
+                print(f"Used script-staging rows from {fb.name} (no script cache)")
+                break
     elif script_added:
         print(f"Added {script_added} script-staging rows (cap {args.max_scripts})")
 
