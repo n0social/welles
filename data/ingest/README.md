@@ -4,6 +4,10 @@ This tier adds **film-adjacent prose** to the SFT mix: plot movement, staging la
 
 Original Welles **quotations** are not harvested here; gold lives in `data/welles_gold.jsonl` and `data/style_samples/`. Ingest favors **paraphrase-style desk tasks** (`WRITE` / `REWRITE` prefixes) over verbatim celebrity quotes.
 
+## Kaggle survey
+
+See **`data/ingest/kaggle_sources.md`** for Orson Welles / A24 / screenplay corpora on Kaggle (no dedicated Welles or A24 script sets; metadata and general script neighbors documented).
+
 ## Candidate Hugging Face / public sources
 
 | Dataset | Hub ID | License | Language | Fit for Qwen SFT | Notes |
