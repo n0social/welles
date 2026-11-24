@@ -7,6 +7,8 @@ hf_cache/
 data/train.jsonl
 data/ingest/cinema_pairs.jsonl
 data/ingest/script_pairs.jsonl
+data/ingest/.cache/
+data/scripts/a24/incoming/*.pdf
 data/eval.jsonl
 *.gguf
 *Token*.txt

@@ -6,7 +6,7 @@ Original Welles **quotations** are not harvested here; gold lives in `data/welle
 
 ## Kaggle survey
 
-See **`data/ingest/kaggle_sources.md`** for Orson Welles / A24 / screenplay corpora on Kaggle (no dedicated Welles or A24 script sets; metadata and general script neighbors documented). A24 title index: `data/ingest/a24_titles.csv` via `scripts/ingest_a24_metadata.py`.
+See **`data/ingest/kaggle_sources.md`** for Orson Welles / A24 / screenplay corpora on Kaggle (no dedicated Welles or A24 script sets; metadata and general script neighbors documented). A24 title index: `scripts/scrape_a24_metadata.py` → `a24_titles.json` / CSV; manual PDFs → `scripts/extract_screenplay_pdf.py`.
 
 ## Candidate Hugging Face / public sources
 

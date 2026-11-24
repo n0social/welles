@@ -73,7 +73,7 @@ Suggested workflow: maintain `a24_titles.csv` (from Kaggle metadata) → join wh
 | **Primary CSV columns** | `title`, `release_date`, `genre`, `director`, `budget`, `domestic_revenue`, `international_revenue`, `worldwide_revenue`, `runtime`, `MPAA_rating` (Oscars file adds `oscar_win` YES/NO; uses `mpaa_rating` lowercase) |
 | **Upstream sources (per README)** | a24films.com catalog, Wikipedia genres/budgets, Box Office Mojo / The Numbers revenues, Wikipedia Academy Award winners list (scraped). |
 | **Fit for Welles SFT** | **High** for **title list / year / director joins** to MovieSum keys and manual `data/scripts/a24/` drops. **Zero** script staging text. |
-| **Wired in repo** | `scripts/ingest_a24_metadata.py --source github-alexp` → `data/ingest/a24_titles.csv` |
+| **Wired in repo** | `scripts/scrape_a24_metadata.py` (GitHub default; Kaggle CLI if creds) → `a24_titles.json` + CSV; `ingest_a24_metadata.py` CSV-only shorthand |
 
 ### Kaggle overlap (newer / richer metadata than AlexPMorton snapshot)
 

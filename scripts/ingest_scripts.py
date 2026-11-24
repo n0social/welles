@@ -80,6 +80,28 @@ A24_MOVIESUM_KEYS = (
     "dream scenario_2023",
 )
 
+A24_TITLES_JSON = ROOT / "data" / "ingest" / "a24_titles.json"
+
+
+def a24_filter_keys() -> tuple[str, ...]:
+    """Static MovieSum keys + optional rows from data/ingest/a24_titles.json."""
+    keys = list(A24_MOVIESUM_KEYS)
+    if not A24_TITLES_JSON.exists():
+        return tuple(keys)
+    try:
+        payload = json.loads(A24_TITLES_JSON.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        return tuple(keys)
+    for row in payload.get("titles", []):
+        slug = (row.get("title_slug") or "").strip()
+        year = (row.get("release_year") or "").strip()
+        if slug and year:
+            keys.append(f"{slug}_{year}")
+        elif slug:
+            keys.append(slug)
+    return tuple(dict.fromkeys(keys))
+
+
 WRITE = "WRITE. New prose in Welles's voice.\n\n"
 
 # Reuse cinema filters / MovieSum XML parsing
@@ -112,7 +134,7 @@ def matches_filter(movie_name: str, filt: str) -> bool:
     name = _norm_title(movie_name)
     if filt == "all":
         return True
-    keys = WELLES_MOVIESUM_KEYS if filt == "welles" else A24_MOVIESUM_KEYS
+    keys = WELLES_MOVIESUM_KEYS if filt == "welles" else a24_filter_keys()
     for key in keys:
         k = _norm_title(key)
         if name == k:
@@ -262,7 +284,7 @@ def pairs_from_movies_hf(
             lname = name.lower()
             if filt == "welles" and not any(k.split("_")[0] in lname for k in WELLES_MOVIESUM_KEYS):
                 continue
-            if filt == "a24" and not any(k.split("_")[0] in lname for k in A24_MOVIESUM_KEYS):
+            if filt == "a24" and not any(k.split("_")[0] in lname for k in a24_filter_keys()):
                 continue
         scanned += 1
         if scanned > scripts_cap:

@@ -1,0 +1,964 @@
+{
+  "survey_date": "2026-11-24",
+  "automated_scrape_performed": false,
+  "script_slug_policy": {
+    "studio_listing": "https://www.scriptslug.com/scripts/studio/a24",
+    "url_pattern_note": "https://www.scriptslug.com/script/{kebab-title}-{year}",
+    "robots_txt": "https://www.scriptslug.com/robots.txt",
+    "ai_policy": "https://www.scriptslug.com/ai.txt",
+    "terms": "https://www.scriptslug.com/legal",
+    "reason_no_scrape": "Script Slug ToS §9 forbids automated scraping and AI training dataset creation without written permission; ai.txt denies training rights on PDFs."
+  },
+  "cole_haddon": {
+    "post_url": "https://colehaddon.substack.com/p/60-a24-screenplays-to-download-and",
+    "format": "paid_substack_pdf_links",
+    "automated_scrape": false,
+    "reason": "Paid Substack; PDF hosts are third-party copyrighted works."
+  },
+  "entries": [
+    {
+      "title": "20th Century Women",
+      "release_year": "2016",
+      "title_slug": "20th_century_women",
+      "script_slug_url": "https://www.scriptslug.com/script/20th-century-women-2016",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "A Ghost Story",
+      "release_year": "2017",
+      "title_slug": "a_ghost_story",
+      "script_slug_url": "https://www.scriptslug.com/script/a-ghost-story-2017",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "A Glimpse Inside the Mind of Charles Swan III",
+      "release_year": "2013",
+      "title_slug": "a_glimpse_inside_the_mind_of_charles_swan_iii",
+      "script_slug_url": "https://www.scriptslug.com/script/a-glimpse-inside-the-mind-of-charles-swan-iii-2013",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "A Most Violent Year",
+      "release_year": "2014",
+      "title_slug": "a_most_violent_year",
+      "script_slug_url": "https://www.scriptslug.com/script/a-most-violent-year-2014",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "A Prayer Before Dawn",
+      "release_year": "2018",
+      "title_slug": "a_prayer_before_dawn",
+      "script_slug_url": "https://www.scriptslug.com/script/a-prayer-before-dawn-2018",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "After Yang",
+      "release_year": "2022",
+      "title_slug": "after_yang",
+      "script_slug_url": "https://www.scriptslug.com/script/after-yang-2022",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "American Honey",
+      "release_year": "2016",
+      "title_slug": "american_honey",
+      "script_slug_url": "https://www.scriptslug.com/script/american-honey-2016",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Amy",
+      "release_year": "2015",
+      "title_slug": "amy",
+      "script_slug_url": "https://www.scriptslug.com/script/amy-2015",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Backstabbing For Beginners",
+      "release_year": "2018",
+      "title_slug": "backstabbing_for_beginners",
+      "script_slug_url": "https://www.scriptslug.com/script/backstabbing-for-beginners-2018",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Barely Lethal",
+      "release_year": "2015",
+      "title_slug": "barely_lethal",
+      "script_slug_url": "https://www.scriptslug.com/script/barely-lethal-2015",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Bodies Bodies Bodies",
+      "release_year": "2022",
+      "title_slug": "bodies_bodies_bodies",
+      "script_slug_url": "https://www.scriptslug.com/script/bodies-bodies-bodies-2022",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Boys State",
+      "release_year": "2022",
+      "title_slug": "boys_state",
+      "script_slug_url": "https://www.scriptslug.com/script/boys-state-2022",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Climax",
+      "release_year": "2019",
+      "title_slug": "climax",
+      "script_slug_url": "https://www.scriptslug.com/script/climax-2019",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "C'mon C'mon",
+      "release_year": "2021",
+      "title_slug": "cmon_cmon",
+      "script_slug_url": "https://www.scriptslug.com/script/cmon-cmon-2021",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Cut Bank",
+      "release_year": "2015",
+      "title_slug": "cut_bank",
+      "script_slug_url": "https://www.scriptslug.com/script/cut-bank-2015",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Dark Places",
+      "release_year": "2015",
+      "title_slug": "dark_places",
+      "script_slug_url": "https://www.scriptslug.com/script/dark-places-2015",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "De Palma",
+      "release_year": "2016",
+      "title_slug": "de_palma",
+      "script_slug_url": "https://www.scriptslug.com/script/de-palma-2016",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Eighth Grade",
+      "release_year": "2018",
+      "title_slug": "eighth_grade",
+      "script_slug_url": "https://www.scriptslug.com/script/eighth-grade-2018",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Enemy",
+      "release_year": "2014",
+      "title_slug": "enemy",
+      "script_slug_url": "https://www.scriptslug.com/script/enemy-2014",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Equals",
+      "release_year": "2016",
+      "title_slug": "equals",
+      "script_slug_url": "https://www.scriptslug.com/script/equals-2016",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Everything Everywhere All At Once",
+      "release_year": "2022",
+      "title_slug": "everything_everywhere_all_at_once",
+      "script_slug_url": "https://www.scriptslug.com/script/everything-everywhere-all-at-once-2022",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Ex Machina",
+      "release_year": "2015",
+      "title_slug": "ex_machina",
+      "script_slug_url": "https://www.scriptslug.com/script/ex-machina-2015",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "False Positive",
+      "release_year": "2021",
+      "title_slug": "false_positive",
+      "script_slug_url": "https://www.scriptslug.com/script/false-positive-2021",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "First Cow",
+      "release_year": "2020",
+      "title_slug": "first_cow",
+      "script_slug_url": "https://www.scriptslug.com/script/first-cow-2020",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "First Reformed",
+      "release_year": "2018",
+      "title_slug": "first_reformed",
+      "script_slug_url": "https://www.scriptslug.com/script/first-reformed-2018",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Free Fire",
+      "release_year": "2017",
+      "title_slug": "free_fire",
+      "script_slug_url": "https://www.scriptslug.com/script/free-fire-2017",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Funny Pages",
+      "release_year": "2022",
+      "title_slug": "funny_pages",
+      "script_slug_url": "https://www.scriptslug.com/script/funny-pages-2022",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Ginger & Rosa",
+      "release_year": "2013",
+      "title_slug": "ginger_rosa",
+      "script_slug_url": "https://www.scriptslug.com/script/ginger-rosa-2013",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Gloria Bell",
+      "release_year": "2019",
+      "title_slug": "gloria_bell",
+      "script_slug_url": "https://www.scriptslug.com/script/gloria-bell-2019",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Good Time",
+      "release_year": "2017",
+      "title_slug": "good_time",
+      "script_slug_url": "https://www.scriptslug.com/script/good-time-2017",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Green Room",
+      "release_year": "2016",
+      "title_slug": "green_room",
+      "script_slug_url": "https://www.scriptslug.com/script/green-room-2016",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Hereditary",
+      "release_year": "2018",
+      "title_slug": "hereditary",
+      "script_slug_url": "https://www.scriptslug.com/script/hereditary-2018",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "High Life",
+      "release_year": "2019",
+      "title_slug": "high_life",
+      "script_slug_url": "https://www.scriptslug.com/script/high-life-2019",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Hot Summer Nights",
+      "release_year": "2018",
+      "title_slug": "hot_summer_nights",
+      "script_slug_url": "https://www.scriptslug.com/script/hot-summer-nights-2018",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "How To Talk To Girls At Parties",
+      "release_year": "2018",
+      "title_slug": "how_to_talk_to_girls_at_parties",
+      "script_slug_url": "https://www.scriptslug.com/script/how-to-talk-to-girls-at-parties-2018",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "In Fabric",
+      "release_year": "2019",
+      "title_slug": "in_fabric",
+      "script_slug_url": "https://www.scriptslug.com/script/in-fabric-2019",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Into The Forest",
+      "release_year": "2016",
+      "title_slug": "into_the_forest",
+      "script_slug_url": "https://www.scriptslug.com/script/into-the-forest-2016",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "It Comes At Night",
+      "release_year": "2017",
+      "title_slug": "it_comes_at_night",
+      "script_slug_url": "https://www.scriptslug.com/script/it-comes-at-night-2017",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Krisha",
+      "release_year": "2016",
+      "title_slug": "krisha",
+      "script_slug_url": "https://www.scriptslug.com/script/krisha-2016",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Lady Bird",
+      "release_year": "2017",
+      "title_slug": "lady_bird",
+      "script_slug_url": "https://www.scriptslug.com/script/lady-bird-2017",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Laggies",
+      "release_year": "2014",
+      "title_slug": "laggies",
+      "script_slug_url": "https://www.scriptslug.com/script/laggies-2014",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Lamb",
+      "release_year": "2021",
+      "title_slug": "lamb",
+      "script_slug_url": "https://www.scriptslug.com/script/lamb-2021",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Lean on Pete",
+      "release_year": "2018",
+      "title_slug": "lean_on_pete",
+      "script_slug_url": "https://www.scriptslug.com/script/lean-on-pete-2018",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Life After Beth",
+      "release_year": "2014",
+      "title_slug": "life_after_beth",
+      "script_slug_url": "https://www.scriptslug.com/script/life-after-beth-2014",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Locke",
+      "release_year": "2014",
+      "title_slug": "locke",
+      "script_slug_url": "https://www.scriptslug.com/script/locke-2014",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Low Tide",
+      "release_year": "2019",
+      "title_slug": "low_tide",
+      "script_slug_url": "https://www.scriptslug.com/script/low-tide-2019",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Marcel the Shell With Shoes On",
+      "release_year": "2022",
+      "title_slug": "marcel_the_shell_with_shoes_on",
+      "script_slug_url": "https://www.scriptslug.com/script/marcel-the-shell-with-shoes-on-2022",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Men",
+      "release_year": "2022",
+      "title_slug": "men",
+      "script_slug_url": "https://www.scriptslug.com/script/men-2022",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Menashe",
+      "release_year": "2017",
+      "title_slug": "menashe",
+      "script_slug_url": "https://www.scriptslug.com/script/menashe-2017",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Mid90s",
+      "release_year": "2018",
+      "title_slug": "mid90s",
+      "script_slug_url": "https://www.scriptslug.com/script/mid90s-2018",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Midsommar",
+      "release_year": "2019",
+      "title_slug": "midsommar",
+      "script_slug_url": "https://www.scriptslug.com/script/midsommar-2019",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Minari",
+      "release_year": "2021",
+      "title_slug": "minari",
+      "script_slug_url": "https://www.scriptslug.com/script/minari-2021",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Mississippi Grind",
+      "release_year": "2015",
+      "title_slug": "mississippi_grind",
+      "script_slug_url": "https://www.scriptslug.com/script/mississippi-grind-2015",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Mojave",
+      "release_year": "2016",
+      "title_slug": "mojave",
+      "script_slug_url": "https://www.scriptslug.com/script/mojave-2016",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Moonlight",
+      "release_year": "2016",
+      "title_slug": "moonlight",
+      "script_slug_url": "https://www.scriptslug.com/script/moonlight-2016",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Morris From America",
+      "release_year": "2016",
+      "title_slug": "morris_from_america",
+      "script_slug_url": "https://www.scriptslug.com/script/morris-from-america-2016",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Native Son",
+      "release_year": "2019",
+      "title_slug": "native_son",
+      "script_slug_url": "https://www.scriptslug.com/script/native-son-2019",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Never Goin' Back",
+      "release_year": "2018",
+      "title_slug": "never_goin_back",
+      "script_slug_url": "https://www.scriptslug.com/script/never-goin-back-2018",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Obvious Child",
+      "release_year": "2014",
+      "title_slug": "obvious_child",
+      "script_slug_url": "https://www.scriptslug.com/script/obvious-child-2014",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "On The Rocks",
+      "release_year": "2020",
+      "title_slug": "on_the_rocks",
+      "script_slug_url": "https://www.scriptslug.com/script/on-the-rocks-2020",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Outlaws",
+      "release_year": "2019",
+      "title_slug": "outlaws",
+      "script_slug_url": "https://www.scriptslug.com/script/outlaws-2019",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Red Rocket",
+      "release_year": "2021",
+      "title_slug": "red_rocket",
+      "script_slug_url": "https://www.scriptslug.com/script/red-rocket-2021",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Remember",
+      "release_year": "2016",
+      "title_slug": "remember",
+      "script_slug_url": "https://www.scriptslug.com/script/remember-2016",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Revenge of the Green Dragons",
+      "release_year": "2014",
+      "title_slug": "revenge_of_the_green_dragons",
+      "script_slug_url": "https://www.scriptslug.com/script/revenge-of-the-green-dragons-2014",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Room",
+      "release_year": "2015",
+      "title_slug": "room",
+      "script_slug_url": "https://www.scriptslug.com/script/room-2015",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Saint Maud",
+      "release_year": "2021",
+      "title_slug": "saint_maud",
+      "script_slug_url": "https://www.scriptslug.com/script/saint-maud-2021",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Share",
+      "release_year": "2019",
+      "title_slug": "share",
+      "script_slug_url": "https://www.scriptslug.com/script/share-2019",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Skin",
+      "release_year": "2019",
+      "title_slug": "skin",
+      "script_slug_url": "https://www.scriptslug.com/script/skin-2019",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Slice",
+      "release_year": "2018",
+      "title_slug": "slice",
+      "script_slug_url": "https://www.scriptslug.com/script/slice-2018",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Slow West",
+      "release_year": "2015",
+      "title_slug": "slow_west",
+      "script_slug_url": "https://www.scriptslug.com/script/slow-west-2015",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Son of a Gun",
+      "release_year": "2015",
+      "title_slug": "son_of_a_gun",
+      "script_slug_url": "https://www.scriptslug.com/script/son-of-a-gun-2015",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Spring Breakers",
+      "release_year": "2013",
+      "title_slug": "spring_breakers",
+      "script_slug_url": "https://www.scriptslug.com/script/spring-breakers-2013",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Supersonic",
+      "release_year": "2016",
+      "title_slug": "supersonic",
+      "script_slug_url": "https://www.scriptslug.com/script/supersonic-2016",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Swiss Army Man",
+      "release_year": "2016",
+      "title_slug": "swiss_army_man",
+      "script_slug_url": "https://www.scriptslug.com/script/swiss-army-man-2016",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "The Adderall Diaries",
+      "release_year": "2016",
+      "title_slug": "the_adderall_diaries",
+      "script_slug_url": "https://www.scriptslug.com/script/the-adderall-diaries-2016",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "The Ballad of Lefty Brown",
+      "release_year": "2017",
+      "title_slug": "the_ballad_of_lefty_brown",
+      "script_slug_url": "https://www.scriptslug.com/script/the-ballad-of-lefty-brown-2017",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "The Blackcoat's Daughter",
+      "release_year": "2017",
+      "title_slug": "the_blackcoats_daughter",
+      "script_slug_url": "https://www.scriptslug.com/script/the-blackcoats-daughter-2017",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "The Bling Ring",
+      "release_year": "2013",
+      "title_slug": "the_bling_ring",
+      "script_slug_url": "https://www.scriptslug.com/script/the-bling-ring-2013",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "The Captive",
+      "release_year": "2014",
+      "title_slug": "the_captive",
+      "script_slug_url": "https://www.scriptslug.com/script/the-captive-2014",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "The Children Act",
+      "release_year": "2018",
+      "title_slug": "the_children_act",
+      "script_slug_url": "https://www.scriptslug.com/script/the-children-act-2018",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "The Death of Dick Long",
+      "release_year": "2019",
+      "title_slug": "the_death_of_dick_long",
+      "script_slug_url": "https://www.scriptslug.com/script/the-death-of-dick-long-2019",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "The Disaster Artist",
+      "release_year": "2017",
+      "title_slug": "the_disaster_artist",
+      "script_slug_url": "https://www.scriptslug.com/script/the-disaster-artist-2017",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "The End of the Tour",
+      "release_year": "2015",
+      "title_slug": "the_end_of_the_tour",
+      "script_slug_url": "https://www.scriptslug.com/script/the-end-of-the-tour-2015",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "The Exception",
+      "release_year": "2017",
+      "title_slug": "the_exception",
+      "script_slug_url": "https://www.scriptslug.com/script/the-exception-2017",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "The Farewell",
+      "release_year": "2019",
+      "title_slug": "the_farewell",
+      "script_slug_url": "https://www.scriptslug.com/script/the-farewell-2019",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "The Florida Project",
+      "release_year": "2017",
+      "title_slug": "the_florida_project",
+      "script_slug_url": "https://www.scriptslug.com/script/the-florida-project-2017",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "The Green Knight",
+      "release_year": "2021",
+      "title_slug": "the_green_knight",
+      "script_slug_url": "https://www.scriptslug.com/script/the-green-knight-2021",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "The Hole in the Ground",
+      "release_year": "2019",
+      "title_slug": "the_hole_in_the_ground",
+      "script_slug_url": "https://www.scriptslug.com/script/the-hole-in-the-ground-2019",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "The Humans",
+      "release_year": "2021",
+      "title_slug": "the_humans",
+      "script_slug_url": "https://www.scriptslug.com/script/the-humans-2021",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "The Kill Team",
+      "release_year": "2019",
+      "title_slug": "the_kill_team",
+      "script_slug_url": "https://www.scriptslug.com/script/the-kill-team-2019",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "The Killing of a Sacred Deer",
+      "release_year": "2017",
+      "title_slug": "the_killing_of_a_sacred_deer",
+      "script_slug_url": "https://www.scriptslug.com/script/the-killing-of-a-sacred-deer-2017",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "The Last Black Man in San Francisco",
+      "release_year": "2019",
+      "title_slug": "the_last_black_man_in_san_francisco",
+      "script_slug_url": "https://www.scriptslug.com/script/the-last-black-man-in-san-francisco-2019",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "The Last Movie Star",
+      "release_year": "2018",
+      "title_slug": "the_last_movie_star",
+      "script_slug_url": "https://www.scriptslug.com/script/the-last-movie-star-2018",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "The Lighthouse",
+      "release_year": "2019",
+      "title_slug": "the_lighthouse",
+      "script_slug_url": "https://www.scriptslug.com/script/the-lighthouse-2019",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "The Lobster",
+      "release_year": "2016",
+      "title_slug": "the_lobster",
+      "script_slug_url": "https://www.scriptslug.com/script/the-lobster-2016",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "The Lovers",
+      "release_year": "2017",
+      "title_slug": "the_lovers",
+      "script_slug_url": "https://www.scriptslug.com/script/the-lovers-2017",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "The Monster",
+      "release_year": "2016",
+      "title_slug": "the_monster",
+      "script_slug_url": "https://www.scriptslug.com/script/the-monster-2016",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "The Rover",
+      "release_year": "2014",
+      "title_slug": "the_rover",
+      "script_slug_url": "https://www.scriptslug.com/script/the-rover-2014",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "The Sea of Trees",
+      "release_year": "2016",
+      "title_slug": "the_sea_of_trees",
+      "script_slug_url": "https://www.scriptslug.com/script/the-sea-of-trees-2016",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "The Sky is Everywhere",
+      "release_year": "2022",
+      "title_slug": "the_sky_is_everywhere",
+      "script_slug_url": "https://www.scriptslug.com/script/the-sky-is-everywhere-2022",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "The Souvenir",
+      "release_year": "2019",
+      "title_slug": "the_souvenir",
+      "script_slug_url": "https://www.scriptslug.com/script/the-souvenir-2019",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "The Souvenir Part II",
+      "release_year": "2021",
+      "title_slug": "the_souvenir_part_ii",
+      "script_slug_url": "https://www.scriptslug.com/script/the-souvenir-part-ii-2021",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "The Spectacular Now",
+      "release_year": "2013",
+      "title_slug": "the_spectacular_now",
+      "script_slug_url": "https://www.scriptslug.com/script/the-spectacular-now-2013",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "The Tragedy of Macbeth",
+      "release_year": "2021",
+      "title_slug": "the_tragedy_of_macbeth",
+      "script_slug_url": "https://www.scriptslug.com/script/the-tragedy-of-macbeth-2021",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "The Vanishing of Sidney Hall",
+      "release_year": "2018",
+      "title_slug": "the_vanishing_of_sidney_hall",
+      "script_slug_url": "https://www.scriptslug.com/script/the-vanishing-of-sidney-hall-2018",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "The Witch",
+      "release_year": "2016",
+      "title_slug": "the_witch",
+      "script_slug_url": "https://www.scriptslug.com/script/the-witch-2016",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Trespass Against Us",
+      "release_year": "2017",
+      "title_slug": "trespass_against_us",
+      "script_slug_url": "https://www.scriptslug.com/script/trespass-against-us-2017",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Tusk",
+      "release_year": "2014",
+      "title_slug": "tusk",
+      "script_slug_url": "https://www.scriptslug.com/script/tusk-2014",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Uncut Gems",
+      "release_year": "2019",
+      "title_slug": "uncut_gems",
+      "script_slug_url": "https://www.scriptslug.com/script/uncut-gems-2019",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Under the Silver Lake",
+      "release_year": "2019",
+      "title_slug": "under_the_silver_lake",
+      "script_slug_url": "https://www.scriptslug.com/script/under-the-silver-lake-2019",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Under the Skin",
+      "release_year": "2014",
+      "title_slug": "under_the_skin",
+      "script_slug_url": "https://www.scriptslug.com/script/under-the-skin-2014",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Val",
+      "release_year": "2021",
+      "title_slug": "val",
+      "script_slug_url": "https://www.scriptslug.com/script/val-2021",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Waves",
+      "release_year": "2019",
+      "title_slug": "waves",
+      "script_slug_url": "https://www.scriptslug.com/script/waves-2019",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "While We're Young",
+      "release_year": "2015",
+      "title_slug": "while_were_young",
+      "script_slug_url": "https://www.scriptslug.com/script/while-were-young-2015",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Woman Walks Ahead",
+      "release_year": "2018",
+      "title_slug": "woman_walks_ahead",
+      "script_slug_url": "https://www.scriptslug.com/script/woman-walks-ahead-2018",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Woodshock",
+      "release_year": "2017",
+      "title_slug": "woodshock",
+      "script_slug_url": "https://www.scriptslug.com/script/woodshock-2017",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "X",
+      "release_year": "2022",
+      "title_slug": "x",
+      "script_slug_url": "https://www.scriptslug.com/script/x-2022",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    },
+    {
+      "title": "Zola",
+      "release_year": "2021",
+      "title_slug": "zola",
+      "script_slug_url": "https://www.scriptslug.com/script/zola-2021",
+      "script_slug_url_verified": false,
+      "note": "Guessed path for manual browser check only — not fetched by this repo."
+    }
+  ]
+}

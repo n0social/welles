@@ -60,18 +60,48 @@ Also: **Too Much Johnson** (1938, unfinished), **Journey into Fear** (1943, co-d
 
 ## Script Slug + Cole Haddon (PDF study sources — **manual only**)
 
-Survey: **2026-11-24**. These are the best public **indexes** for A24 screenplay PDFs. Neither grants ML redistribution rights; repo automation must **not** scrape or bulk-download them.
+Survey: **2026-11-24** (page fetch + `robots.txt` / `ai.txt` / [Legal ToS](https://www.scriptslug.com/legal)). Neither source grants ML redistribution rights; **this repo does not run site scrapers**.
 
 ### [Script Slug](https://www.scriptslug.com/) (`scriptslug.com`)
 
+#### Site structure
+
+| Path | Purpose |
+|------|---------|
+| `/scripts/studio/a24` | Studio listing (faceted UI; script cards load client-side). |
+| `/script/{kebab-title}-{year}` | Per-script page (HTML + embedded PDF viewer; `?page=N` deep links). |
+| `/sitemap.xml` | Index of sub-sitemaps: `sitemap-scripts.xml`, `sitemap-studios.xml`, etc. |
+| `/craft/`, `/api/`, `/*?q=` | Disallowed for generic crawlers in `robots.txt`. |
+
+Example script URLs (public sitemap pattern, **not bulk-fetched by this repo**):  
+`https://www.scriptslug.com/script/materialists-2025`, `…/moonlight-2016`.
+
+#### robots.txt & AI policy
+
+| Document | Key points |
+|----------|------------|
+| [robots.txt](https://www.scriptslug.com/robots.txt) | Blocks **AI training crawlers** (GPTBot, ClaudeBot, CCBot, …) on `/`. Search-oriented bots allowed with path limits. States scripts are **copyrighted**; Script Slug cannot grant training rights → [ai.txt](https://www.scriptslug.com/ai.txt). |
+| [ai.txt](https://www.scriptslug.com/ai.txt) (2026-11-23) | **Training: NOT GRANTED** (PDFs + site copy). Search/citation: allowed with attribution. |
+| [Legal ToS](https://www.scriptslug.com/legal) §9 | Prohibits scrapers, crawlers, **systematic download**, and **dataset creation for AI** without written permission. |
+
+#### Use license (humans)
+
 | Aspect | Detail |
 |--------|--------|
-| **Format** | Searchable **original studio PDFs** (Courier layouts, revision colors, title pages). Browse A24 via [A24 Screenplays](https://www.scriptslug.com/scripts/studio/a24). |
-| **Cost** | Free to read/download on site (per [About → FAQ](https://www.scriptslug.com/about)). |
-| **Provenance** | “Found online or provided by users”; organized for education. |
-| **License / training** | Site states **fair use for education and research only**; **no commercial use** and **no grant of rights**. Honors takedown requests. A24 [Terms of Use](https://a24films.com/terms-of-use) limit official materials to **personal, non-commercial** viewing. |
-| **Repo policy** | **Do not** link Script Slug bulk download into `ingest_scripts.py`. **Do not** commit full PDFs/text. Optional: Sky manually opens a title, copies **staging-only** excerpts into `data/scripts/a24/<title_slug>.txt`. |
-| **Safer reads** | Studio-posted award-season PDFs (e.g. [Babygirl screenplay on `a24awards.com`](https://a24awards.com/assets/Babygirl-screenplay.pdf)) are **authorized studio copies** for personal study — still **not** a training redistribution license unless A24 says otherwise. |
+| **Format** | Searchable **original studio PDFs** (Courier layouts, revision colors, title pages). |
+| **Cost** | Free on-site reading/download per [About FAQ](https://www.scriptslug.com/about). |
+| **Provenance** | “Found online or provided by users”; fair-use educational framing. |
+| **Commercial / training** | FAQ: **no commercial use**; ai.txt denies model training; §2 use license is **personal non-commercial transitory viewing** only. |
+
+#### Repo policy
+
+| Allowed | Not allowed |
+|---------|-------------|
+| Docs link to studio listing | Automated sitemap/script HTML/PDF download |
+| `data/ingest/a24_script_slug_index.json` — **metadata guesses** from AlexPMorton titles (`script_slug_url_verified: false`) | Committing full PDFs or scraped script bodies |
+| User drops PDF in `data/scripts/a24/incoming/` → `extract_screenplay_pdf.py` | `ingest_scripts.py` pulling from Script Slug URLs |
+
+**Safer reads:** studio award PDFs (e.g. [Babygirl on `a24awards.com`](https://a24awards.com/assets/Babygirl-screenplay.pdf)) — still not a training license by default.
 
 ### Cole Haddon — [“60 A24 Screenplays to Download and Study”](https://colehaddon.substack.com/p/60-a24-screenplays-to-download-and)
 
@@ -84,14 +114,25 @@ Survey: **2026-11-24**. These are the best public **indexes** for A24 screenplay
 
 ### Recommended manual workflow (Sky)
 
-1. **Pick titles** from `data/ingest/a24_titles.csv` (regenerate with `scripts/ingest_a24_metadata.py`) or MovieSum `--filter a24`.
-2. **Obtain PDF** yourself via Script Slug, Cole Haddon, `a24awards.com`, or a licensed book — **not** via repo scrapers.
-3. Convert locally (`pdftotext`, Acrobat export) to **`.txt`**; strip quoted dialogue if you only want staging register.
-4. Drop under `data/scripts/a24/` as `moonlight_2016.txt`, etc. (see folder README).
-5. Run `python3 scripts/ingest_scripts.py --dataset manual --filter a24` — ingest applies `strip_dialogue_plain` and word caps; output stays in gitignored `script_pairs.jsonl`.
-6. Keep **short excerpts** in git if you must commit examples; never full features.
+```bash
+# 1) Metadata title list (GitHub AlexPMorton fallback; optional Kaggle if creds)
+python3 scripts/scrape_a24_metadata.py
 
-**Linking in docs:** OK to cite Script Slug and Cole Haddon URLs in this file for humans. **Ingesting:** manual drops only.
+# 2) Manual PDF → staging excerpts
+#    (place PDFs in data/scripts/a24/incoming/)
+python3 scripts/extract_screenplay_pdf.py
+
+# 3) Ingest manual drops + optional MovieSum A24 filter
+python3 scripts/ingest_scripts.py --dataset manual --filter a24
+```
+
+1. **Pick titles** from `a24_titles.json` / `a24_titles.csv` or cross-check `a24_script_slug_index.json` (guessed Script Slug paths — verify in browser).
+2. **Obtain PDF** yourself (Script Slug, Cole Haddon, `a24awards.com`) — never via repo HTTP scrapers.
+3. **extract_screenplay_pdf.py** writes capped staging chunks to `data/scripts/a24/` (dialogue stripped).
+4. **`ingest_scripts.py`** merges manual `.txt` into gitignored `script_pairs.jsonl`.
+5. Never commit full features; `incoming/*.pdf` is gitignored.
+
+**Linking in docs:** OK to cite Script Slug and Cole Haddon URLs. **Ingesting:** local files only.
 
 ---
 

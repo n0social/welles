@@ -1,0 +1,1187 @@
+{
+  "fetched_at": "2026-11-24T01:59:30.027841+00:00",
+  "provenance": "AlexPMorton/A24-Movies-EDA",
+  "count": 118,
+  "titles": [
+    {
+      "title": "20th Century Women",
+      "title_slug": "20th_century_women",
+      "release_year": "2016",
+      "director": "Mike Mills",
+      "genre": "Comedy, Drama",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/20th-century-women-2016",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "A Ghost Story",
+      "title_slug": "a_ghost_story",
+      "release_year": "2017",
+      "director": "David Lowery",
+      "genre": "Drama, Fantasy",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/a-ghost-story-2017",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "A Glimpse Inside the Mind of Charles Swan III",
+      "title_slug": "a_glimpse_inside_the_mind_of_charles_swan_iii",
+      "release_year": "2013",
+      "director": "Roman Coppola",
+      "genre": "Comedy",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/a-glimpse-inside-the-mind-of-charles-swan-iii-2013",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "A Most Violent Year",
+      "title_slug": "a_most_violent_year",
+      "release_year": "2014",
+      "director": "J.C. Chandor",
+      "genre": "Crime, Drama",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/a-most-violent-year-2014",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "A Prayer Before Dawn",
+      "title_slug": "a_prayer_before_dawn",
+      "release_year": "2018",
+      "director": "Jean-Stéphane Sauvaire",
+      "genre": "Action, Drama, Crime",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/a-prayer-before-dawn-2018",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "After Yang",
+      "title_slug": "after_yang",
+      "release_year": "2022",
+      "director": "Kogonada",
+      "genre": "Sci-Fi, Drama",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/after-yang-2022",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "American Honey",
+      "title_slug": "american_honey",
+      "release_year": "2016",
+      "director": "Andrea Arnold",
+      "genre": "Drama, Adventure",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/american-honey-2016",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Amy",
+      "title_slug": "amy",
+      "release_year": "2015",
+      "director": "Asif Kapadia",
+      "genre": "Documentary, Biographical, Music",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/amy-2015",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Backstabbing For Beginners",
+      "title_slug": "backstabbing_for_beginners",
+      "release_year": "2018",
+      "director": "Per Fly",
+      "genre": "Thriller, Political",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/backstabbing-for-beginners-2018",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Barely Lethal",
+      "title_slug": "barely_lethal",
+      "release_year": "2015",
+      "director": "Kyle Newman",
+      "genre": "Action, Comedy",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/barely-lethal-2015",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Bodies Bodies Bodies",
+      "title_slug": "bodies_bodies_bodies",
+      "release_year": "2022",
+      "director": "Halina Reijn",
+      "genre": "Horror, Comedy",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/bodies-bodies-bodies-2022",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Boys State",
+      "title_slug": "boys_state",
+      "release_year": "2022",
+      "director": "Amanda McBaine, Jesse Moss",
+      "genre": "Documentary",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/boys-state-2022",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Climax",
+      "title_slug": "climax",
+      "release_year": "2019",
+      "director": "Gaspar Noé",
+      "genre": "Horror, Drama, Music",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/climax-2019",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "C'mon C'mon",
+      "title_slug": "cmon_cmon",
+      "release_year": "2021",
+      "director": "Mike Mills",
+      "genre": "Drama, B/W",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/cmon-cmon-2021",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Cut Bank",
+      "title_slug": "cut_bank",
+      "release_year": "2015",
+      "director": "Matt Shakman",
+      "genre": "Thriller",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/cut-bank-2015",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Dark Places",
+      "title_slug": "dark_places",
+      "release_year": "2015",
+      "director": "Gilles Paquet-Brenner",
+      "genre": "Mystery, Thriller",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/dark-places-2015",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "De Palma",
+      "title_slug": "de_palma",
+      "release_year": "2016",
+      "director": "Noah Baumbach, Jake Paltrow",
+      "genre": "Documentary",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/de-palma-2016",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Eighth Grade",
+      "title_slug": "eighth_grade",
+      "release_year": "2018",
+      "director": "Bo Burnham",
+      "genre": "Comedy, Drama, Coming-of-age",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/eighth-grade-2018",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Enemy",
+      "title_slug": "enemy",
+      "release_year": "2014",
+      "director": "Denis Villeneuve",
+      "genre": "Thriller, Mystery",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/enemy-2014",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Equals",
+      "title_slug": "equals",
+      "release_year": "2016",
+      "director": "Drake Doremus",
+      "genre": "Sci-Fi, Romance, Drama",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/equals-2016",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Everything Everywhere All At Once",
+      "title_slug": "everything_everywhere_all_at_once",
+      "release_year": "2022",
+      "director": "Dan Kwan, Daniel Scheinert",
+      "genre": "Comedy, Action, Drama, Sci-Fi",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/everything-everywhere-all-at-once-2022",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Ex Machina",
+      "title_slug": "ex_machina",
+      "release_year": "2015",
+      "director": "Alex Garland",
+      "genre": "Sci-Fi",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/ex-machina-2015",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "False Positive",
+      "title_slug": "false_positive",
+      "release_year": "2021",
+      "director": "John Lee",
+      "genre": "Horror, Thriller",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/false-positive-2021",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "First Cow",
+      "title_slug": "first_cow",
+      "release_year": "2020",
+      "director": "Kelly Reichardt",
+      "genre": "Drama",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/first-cow-2020",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "First Reformed",
+      "title_slug": "first_reformed",
+      "release_year": "2018",
+      "director": "Paul Schrader",
+      "genre": "Drama",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/first-reformed-2018",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Free Fire",
+      "title_slug": "free_fire",
+      "release_year": "2017",
+      "director": "Ben Wheatley",
+      "genre": "Action, Comedy",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/free-fire-2017",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Funny Pages",
+      "title_slug": "funny_pages",
+      "release_year": "2022",
+      "director": "Owen Kline",
+      "genre": "Comedy",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/funny-pages-2022",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Ginger & Rosa",
+      "title_slug": "ginger_rosa",
+      "release_year": "2013",
+      "director": "Sally Porter",
+      "genre": "Drama",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/ginger-rosa-2013",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Gloria Bell",
+      "title_slug": "gloria_bell",
+      "release_year": "2019",
+      "director": "Sebastián Lelio",
+      "genre": "Romance, Comedy, Drama",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/gloria-bell-2019",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Good Time",
+      "title_slug": "good_time",
+      "release_year": "2017",
+      "director": "Josh Safdie, Benny Safdie",
+      "genre": "Crime, Thriller",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/good-time-2017",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Green Room",
+      "title_slug": "green_room",
+      "release_year": "2016",
+      "director": "Jeremy Saulnier",
+      "genre": "Horror, Thriller, Music",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/green-room-2016",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Hereditary",
+      "title_slug": "hereditary",
+      "release_year": "2018",
+      "director": "Ari Aster",
+      "genre": "Horror, Psychological",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/hereditary-2018",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "High Life",
+      "title_slug": "high_life",
+      "release_year": "2019",
+      "director": "Claire Denis",
+      "genre": "Sci-Fi, Horror",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/high-life-2019",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Hot Summer Nights",
+      "title_slug": "hot_summer_nights",
+      "release_year": "2018",
+      "director": "Elijah Bynum",
+      "genre": "Crime, Drama, Coming-of-age",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/hot-summer-nights-2018",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "How To Talk To Girls At Parties",
+      "title_slug": "how_to_talk_to_girls_at_parties",
+      "release_year": "2018",
+      "director": "John Cameron Mitchell",
+      "genre": "Sci-Fi, Romance, Comedy",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/how-to-talk-to-girls-at-parties-2018",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "In Fabric",
+      "title_slug": "in_fabric",
+      "release_year": "2019",
+      "director": "Peter Strickland",
+      "genre": "Horror, Comedy",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/in-fabric-2019",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Into The Forest",
+      "title_slug": "into_the_forest",
+      "release_year": "2016",
+      "director": "Patricia Rozema",
+      "genre": "Drama, Apocalyptic",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/into-the-forest-2016",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "It Comes At Night",
+      "title_slug": "it_comes_at_night",
+      "release_year": "2017",
+      "director": "Trey Edward Shults",
+      "genre": "Horror, Psychological",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/it-comes-at-night-2017",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Krisha",
+      "title_slug": "krisha",
+      "release_year": "2016",
+      "director": "Trey Edward Shults",
+      "genre": "Drama",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/krisha-2016",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Lady Bird",
+      "title_slug": "lady_bird",
+      "release_year": "2017",
+      "director": "Greta Gerwig",
+      "genre": "Drama, Comedy",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/lady-bird-2017",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Laggies",
+      "title_slug": "laggies",
+      "release_year": "2014",
+      "director": "Lynn Shelton",
+      "genre": "Comedy, Romance",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/laggies-2014",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Lamb",
+      "title_slug": "lamb",
+      "release_year": "2021",
+      "director": "Valdimar Jóhannsson",
+      "genre": "Horror, Fantasy, Folk",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/lamb-2021",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Lean on Pete",
+      "title_slug": "lean_on_pete",
+      "release_year": "2018",
+      "director": "Andrew Haigh",
+      "genre": "Drama, Adventure",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/lean-on-pete-2018",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Life After Beth",
+      "title_slug": "life_after_beth",
+      "release_year": "2014",
+      "director": "Jeff Baena",
+      "genre": "Comedy, Romance, Zombie",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/life-after-beth-2014",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Locke",
+      "title_slug": "locke",
+      "release_year": "2014",
+      "director": "Steven Knight",
+      "genre": "Drama, Psychological",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/locke-2014",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Low Tide",
+      "title_slug": "low_tide",
+      "release_year": "2019",
+      "director": "Kevin McMullin",
+      "genre": "Drama, Thriller",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/low-tide-2019",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Marcel the Shell With Shoes On",
+      "title_slug": "marcel_the_shell_with_shoes_on",
+      "release_year": "2022",
+      "director": "Dean Fleischer Camp",
+      "genre": "Comedy, Drama, Mockumentary",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/marcel-the-shell-with-shoes-on-2022",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Men",
+      "title_slug": "men",
+      "release_year": "2022",
+      "director": "Alex Garland",
+      "genre": "Horror, Psychological, Folk",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/men-2022",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Menashe",
+      "title_slug": "menashe",
+      "release_year": "2017",
+      "director": "Joshua Z. Weinstein",
+      "genre": "Drama",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/menashe-2017",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Mid90s",
+      "title_slug": "mid90s",
+      "release_year": "2018",
+      "director": "Jonah Hill",
+      "genre": "Comedy, Drama, Coming-of-age",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/mid90s-2018",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Midsommar",
+      "title_slug": "midsommar",
+      "release_year": "2019",
+      "director": "Ari Aster",
+      "genre": "Horror, Folk",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/midsommar-2019",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Minari",
+      "title_slug": "minari",
+      "release_year": "2021",
+      "director": "Lee Isaac Chung",
+      "genre": "Drama",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/minari-2021",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Mississippi Grind",
+      "title_slug": "mississippi_grind",
+      "release_year": "2015",
+      "director": "Anna Boden, Ryan Fleck",
+      "genre": "Comedy, Drama",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/mississippi-grind-2015",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Mojave",
+      "title_slug": "mojave",
+      "release_year": "2016",
+      "director": "William Monahan",
+      "genre": "Thriller, Crime",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/mojave-2016",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Moonlight",
+      "title_slug": "moonlight",
+      "release_year": "2016",
+      "director": "Barry Jenkins",
+      "genre": "Drama, Coming-of-age",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/moonlight-2016",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Morris From America",
+      "title_slug": "morris_from_america",
+      "release_year": "2016",
+      "director": "Chad Hartigan",
+      "genre": "Comedy, Drama, Coming-of-age",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/morris-from-america-2016",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Native Son",
+      "title_slug": "native_son",
+      "release_year": "2019",
+      "director": "Rashid Johnson",
+      "genre": "Drama",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/native-son-2019",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Never Goin' Back",
+      "title_slug": "never_goin_back",
+      "release_year": "2018",
+      "director": "Augustine Frizzell",
+      "genre": "Drama, Comedy",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/never-goin-back-2018",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Obvious Child",
+      "title_slug": "obvious_child",
+      "release_year": "2014",
+      "director": "Gillian Robespierre",
+      "genre": "Comedy, Romance",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/obvious-child-2014",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "On The Rocks",
+      "title_slug": "on_the_rocks",
+      "release_year": "2020",
+      "director": "Sofia Coppola",
+      "genre": "Comedy, Drama",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/on-the-rocks-2020",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Outlaws",
+      "title_slug": "outlaws",
+      "release_year": "2019",
+      "director": "Stephen McCallum",
+      "genre": "Crime, Drama",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/outlaws-2019",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Red Rocket",
+      "title_slug": "red_rocket",
+      "release_year": "2021",
+      "director": "Sean Baker",
+      "genre": "Comedy, Drama",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/red-rocket-2021",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Remember",
+      "title_slug": "remember",
+      "release_year": "2016",
+      "director": "Atom Egoyan",
+      "genre": "Drama, Thriller",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/remember-2016",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Revenge of the Green Dragons",
+      "title_slug": "revenge_of_the_green_dragons",
+      "release_year": "2014",
+      "director": "Andrew Lau, Andrew Loo",
+      "genre": "Crime, Drama",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/revenge-of-the-green-dragons-2014",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Room",
+      "title_slug": "room",
+      "release_year": "2015",
+      "director": "Lenny Abrahamson",
+      "genre": "Drama, Thriller",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/room-2015",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Saint Maud",
+      "title_slug": "saint_maud",
+      "release_year": "2021",
+      "director": "Rose Glass",
+      "genre": "Horror, Psychological",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/saint-maud-2021",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Share",
+      "title_slug": "share",
+      "release_year": "2019",
+      "director": "Pippa Bianco",
+      "genre": "Drama, Coming-of-age",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/share-2019",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Skin",
+      "title_slug": "skin",
+      "release_year": "2019",
+      "director": "Guy Nattiv",
+      "genre": "Drama, Biographical",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/skin-2019",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Slice",
+      "title_slug": "slice",
+      "release_year": "2018",
+      "director": "Austin Vesely",
+      "genre": "Horror, Comedy",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/slice-2018",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Slow West",
+      "title_slug": "slow_west",
+      "release_year": "2015",
+      "director": "John Maclean",
+      "genre": "Western, Adventure, Romance",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/slow-west-2015",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Son of a Gun",
+      "title_slug": "son_of_a_gun",
+      "release_year": "2015",
+      "director": "Julius Avery",
+      "genre": "Crime, Thriller",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/son-of-a-gun-2015",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Spring Breakers",
+      "title_slug": "spring_breakers",
+      "release_year": "2013",
+      "director": "Harmony Korine",
+      "genre": "Comedy, Crime",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/spring-breakers-2013",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Supersonic",
+      "title_slug": "supersonic",
+      "release_year": "2016",
+      "director": "Mat Whitecross",
+      "genre": "Documentary, Music",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/supersonic-2016",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Swiss Army Man",
+      "title_slug": "swiss_army_man",
+      "release_year": "2016",
+      "director": "Dan Kwan, Daniel Scheinert",
+      "genre": "Comedy, Adventure",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/swiss-army-man-2016",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "The Adderall Diaries",
+      "title_slug": "the_adderall_diaries",
+      "release_year": "2016",
+      "director": "Pamela Romanowsky",
+      "genre": "Drama, Thriller, Crime",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/the-adderall-diaries-2016",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "The Ballad of Lefty Brown",
+      "title_slug": "the_ballad_of_lefty_brown",
+      "release_year": "2017",
+      "director": "Jared Moshe",
+      "genre": "Western, Action",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/the-ballad-of-lefty-brown-2017",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "The Blackcoat's Daughter",
+      "title_slug": "the_blackcoats_daughter",
+      "release_year": "2017",
+      "director": "Oz Perkins",
+      "genre": "Horror, Psychological, Supernatural",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/the-blackcoats-daughter-2017",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "The Bling Ring",
+      "title_slug": "the_bling_ring",
+      "release_year": "2013",
+      "director": "Sofia Coppola",
+      "genre": "Crime, Satire",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/the-bling-ring-2013",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "The Captive",
+      "title_slug": "the_captive",
+      "release_year": "2014",
+      "director": "Atom Egoyan",
+      "genre": "Thriller, Mystery",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/the-captive-2014",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "The Children Act",
+      "title_slug": "the_children_act",
+      "release_year": "2018",
+      "director": "Richard Eyre",
+      "genre": "Drama",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/the-children-act-2018",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "The Death of Dick Long",
+      "title_slug": "the_death_of_dick_long",
+      "release_year": "2019",
+      "director": "Daniel Scheinert",
+      "genre": "Drama, Comedy, Crime",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/the-death-of-dick-long-2019",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "The Disaster Artist",
+      "title_slug": "the_disaster_artist",
+      "release_year": "2017",
+      "director": "James Franco",
+      "genre": "Comedy, Drama, Biographical",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/the-disaster-artist-2017",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "The End of the Tour",
+      "title_slug": "the_end_of_the_tour",
+      "release_year": "2015",
+      "director": "James Ponsoldt",
+      "genre": "Drama",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/the-end-of-the-tour-2015",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "The Exception",
+      "title_slug": "the_exception",
+      "release_year": "2017",
+      "director": "David Leveaux",
+      "genre": "Romance, War",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/the-exception-2017",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "The Farewell",
+      "title_slug": "the_farewell",
+      "release_year": "2019",
+      "director": "Lulu Wang",
+      "genre": "Drama, Comedy",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/the-farewell-2019",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "The Florida Project",
+      "title_slug": "the_florida_project",
+      "release_year": "2017",
+      "director": "Sean Baker",
+      "genre": "Drama, Coming-of-age",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/the-florida-project-2017",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "The Green Knight",
+      "title_slug": "the_green_knight",
+      "release_year": "2021",
+      "director": "David Lowery",
+      "genre": "Adventure, Fantasy, Medieval",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/the-green-knight-2021",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "The Hole in the Ground",
+      "title_slug": "the_hole_in_the_ground",
+      "release_year": "2019",
+      "director": "Lee Cronin",
+      "genre": "Horror, Thriller, Supernatural",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/the-hole-in-the-ground-2019",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "The Humans",
+      "title_slug": "the_humans",
+      "release_year": "2021",
+      "director": "Stephen Karam",
+      "genre": "Drama",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/the-humans-2021",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "The Kill Team",
+      "title_slug": "the_kill_team",
+      "release_year": "2019",
+      "director": "Dan Krauss",
+      "genre": "Drama, War",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/the-kill-team-2019",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "The Killing of a Sacred Deer",
+      "title_slug": "the_killing_of_a_sacred_deer",
+      "release_year": "2017",
+      "director": "Yorgos Lanthimos",
+      "genre": "Horror, Thriller, Psychological",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/the-killing-of-a-sacred-deer-2017",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "The Last Black Man in San Francisco",
+      "title_slug": "the_last_black_man_in_san_francisco",
+      "release_year": "2019",
+      "director": "Joe Talbot",
+      "genre": "Drama",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/the-last-black-man-in-san-francisco-2019",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "The Last Movie Star",
+      "title_slug": "the_last_movie_star",
+      "release_year": "2018",
+      "director": "Adam Rifkin",
+      "genre": "Drama, Comedy",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/the-last-movie-star-2018",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "The Lighthouse",
+      "title_slug": "the_lighthouse",
+      "release_year": "2019",
+      "director": "Robert Eggers",
+      "genre": "Horror, Thriller, B/W",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/the-lighthouse-2019",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "The Lobster",
+      "title_slug": "the_lobster",
+      "release_year": "2016",
+      "director": "Yorgos Lanthimos",
+      "genre": "Comedy, Dystopian",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/the-lobster-2016",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "The Lovers",
+      "title_slug": "the_lovers",
+      "release_year": "2017",
+      "director": "Azazel Jacobs",
+      "genre": "Romance, Comedy",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/the-lovers-2017",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "The Monster",
+      "title_slug": "the_monster",
+      "release_year": "2016",
+      "director": "Bryan Bertino",
+      "genre": "Horror, Drama",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/the-monster-2016",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "The Rover",
+      "title_slug": "the_rover",
+      "release_year": "2014",
+      "director": "David Michôd",
+      "genre": "Western, Drama, Dystopian",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/the-rover-2014",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "The Sea of Trees",
+      "title_slug": "the_sea_of_trees",
+      "release_year": "2016",
+      "director": "Gus Van Sant",
+      "genre": "Drama, Mystery",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/the-sea-of-trees-2016",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "The Sky is Everywhere",
+      "title_slug": "the_sky_is_everywhere",
+      "release_year": "2022",
+      "director": "Josephine Decker",
+      "genre": "Drama, Romance, Coming-of-age",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/the-sky-is-everywhere-2022",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "The Souvenir",
+      "title_slug": "the_souvenir",
+      "release_year": "2019",
+      "director": "Joanna Hogg",
+      "genre": "Drama, Romance",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/the-souvenir-2019",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "The Souvenir Part II",
+      "title_slug": "the_souvenir_part_ii",
+      "release_year": "2021",
+      "director": "Joanna Hogg",
+      "genre": "Drama, Romance",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/the-souvenir-part-ii-2021",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "The Spectacular Now",
+      "title_slug": "the_spectacular_now",
+      "release_year": "2013",
+      "director": "James Ponsoldt",
+      "genre": "Drama, Romance, Coming-of-age",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/the-spectacular-now-2013",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "The Tragedy of Macbeth",
+      "title_slug": "the_tragedy_of_macbeth",
+      "release_year": "2021",
+      "director": "Joel Coen",
+      "genre": "Thriller, Drama, Historical, B/W",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/the-tragedy-of-macbeth-2021",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "The Vanishing of Sidney Hall",
+      "title_slug": "the_vanishing_of_sidney_hall",
+      "release_year": "2018",
+      "director": "Shawn Christensen",
+      "genre": "Mystery, Drama",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/the-vanishing-of-sidney-hall-2018",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "The Witch",
+      "title_slug": "the_witch",
+      "release_year": "2016",
+      "director": "Robert Eggers",
+      "genre": "Horror, Folk",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/the-witch-2016",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Trespass Against Us",
+      "title_slug": "trespass_against_us",
+      "release_year": "2017",
+      "director": "Adam Smith",
+      "genre": "Crime, Drama",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/trespass-against-us-2017",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Tusk",
+      "title_slug": "tusk",
+      "release_year": "2014",
+      "director": "Kevin Smith",
+      "genre": "Horror, Comedy",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/tusk-2014",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Uncut Gems",
+      "title_slug": "uncut_gems",
+      "release_year": "2019",
+      "director": "Josh Safdie, Benny Safdie",
+      "genre": "Crime, Thriller",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/uncut-gems-2019",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Under the Silver Lake",
+      "title_slug": "under_the_silver_lake",
+      "release_year": "2019",
+      "director": "David Robert Mitchell",
+      "genre": "Mystery, Comedy",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/under-the-silver-lake-2019",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Under the Skin",
+      "title_slug": "under_the_skin",
+      "release_year": "2014",
+      "director": "Jonathan Glazer",
+      "genre": "Sci-Fi, Drama",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/under-the-skin-2014",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Val",
+      "title_slug": "val",
+      "release_year": "2021",
+      "director": "Leo Scott, Ting Poo",
+      "genre": "Documentary, Biographical",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/val-2021",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Waves",
+      "title_slug": "waves",
+      "release_year": "2019",
+      "director": "Trey Edward Shults",
+      "genre": "Drama, Romance",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/waves-2019",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "While We're Young",
+      "title_slug": "while_were_young",
+      "release_year": "2015",
+      "director": "Noah Baumbach",
+      "genre": "Comedy, Drama",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/while-were-young-2015",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Woman Walks Ahead",
+      "title_slug": "woman_walks_ahead",
+      "release_year": "2018",
+      "director": "Susanna White",
+      "genre": "Drama, Biographical, Western",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/woman-walks-ahead-2018",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Woodshock",
+      "title_slug": "woodshock",
+      "release_year": "2017",
+      "director": "Kate Mulleavy, Laura Mulleavy",
+      "genre": "Thriller, Drama, Psychological",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/woodshock-2017",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "X",
+      "title_slug": "x",
+      "release_year": "2022",
+      "director": "Ti West",
+      "genre": "Horror, Slasher",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/x-2022",
+      "cole_haddon_60_a24": null
+    },
+    {
+      "title": "Zola",
+      "title_slug": "zola",
+      "release_year": "2021",
+      "director": "Janicza Bravo",
+      "genre": "Comedy, Drama, Crime",
+      "source": "AlexPMorton/A24-Movies-EDA",
+      "script_slug_path_guess": "/script/zola-2021",
+      "cole_haddon_60_a24": null
+    }
+  ]
+}
