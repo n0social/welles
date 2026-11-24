@@ -1,0 +1,105 @@
+{
+  "survey_date": "2026-11-24",
+  "provenance": "Orson Welles directed-features filmography (Wikipedia / IMDb director credit; metadata only)",
+  "automated_scrape_performed": false,
+  "titles": [
+    {
+      "title": "Citizen Kane",
+      "release_year": "1941",
+      "title_slug": "citizen_kane",
+      "director_credit": "Orson Welles",
+      "note": "RKO; primary MovieSum HF match for Welles script tier."
+    },
+    {
+      "title": "The Magnificent Ambersons",
+      "release_year": "1942",
+      "title_slug": "the_magnificent_ambersons",
+      "director_credit": "Orson Welles"
+    },
+    {
+      "title": "Journey into Fear",
+      "release_year": "1943",
+      "title_slug": "journey_into_fear",
+      "director_credit": "Orson Welles (co-directed)"
+    },
+    {
+      "title": "The Stranger",
+      "release_year": "1946",
+      "title_slug": "the_stranger",
+      "director_credit": "Orson Welles"
+    },
+    {
+      "title": "The Lady from Shanghai",
+      "release_year": "1947",
+      "title_slug": "the_lady_from_shanghai",
+      "director_credit": "Orson Welles"
+    },
+    {
+      "title": "Macbeth",
+      "release_year": "1948",
+      "title_slug": "macbeth",
+      "director_credit": "Orson Welles"
+    },
+    {
+      "title": "Othello",
+      "release_year": "1952",
+      "title_slug": "othello",
+      "director_credit": "Orson Welles"
+    },
+    {
+      "title": "Mr. Arkadin",
+      "release_year": "1955",
+      "title_slug": "mr_arkadin",
+      "director_credit": "Orson Welles",
+      "alt_titles": ["Confidential Report"]
+    },
+    {
+      "title": "Touch of Evil",
+      "release_year": "1958",
+      "title_slug": "touch_of_evil",
+      "director_credit": "Orson Welles"
+    },
+    {
+      "title": "The Trial",
+      "release_year": "1962",
+      "title_slug": "the_trial",
+      "director_credit": "Orson Welles"
+    },
+    {
+      "title": "Chimes at Midnight",
+      "release_year": "1965",
+      "title_slug": "chimes_at_midnight",
+      "director_credit": "Orson Welles"
+    },
+    {
+      "title": "The Immortal Story",
+      "release_year": "1968",
+      "title_slug": "the_immortal_story",
+      "director_credit": "Orson Welles"
+    },
+    {
+      "title": "F for Fake",
+      "release_year": "1973",
+      "title_slug": "f_for_fake",
+      "director_credit": "Orson Welles"
+    },
+    {
+      "title": "Filming Othello",
+      "release_year": "1978",
+      "title_slug": "filming_othello",
+      "director_credit": "Orson Welles"
+    },
+    {
+      "title": "The Other Side of the Wind",
+      "release_year": "2018",
+      "title_slug": "the_other_side_of_the_wind",
+      "director_credit": "Orson Welles / posthumous completion"
+    },
+    {
+      "title": "Too Much Johnson",
+      "release_year": "1938",
+      "title_slug": "too_much_johnson",
+      "director_credit": "Orson Welles (unfinished)"
+    }
+  ]
+}

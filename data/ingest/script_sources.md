@@ -44,6 +44,32 @@ Also: **Too Much Johnson** (1938, unfinished), **Journey into Fear** (1943, co-d
 
 **Manual workflow:** If you lawfully obtain a Welles script (purchase, permission, or PD radio text), place a **redacted excerpt** (staging only, or paraphrase) in `data/scripts/welles/` — see that folder’s README.
 
+### What exists in this repo today (script tier)
+
+| Asset | Welles (Orson-directed) | A24 (pipeline) |
+|--------|-------------------------|----------------|
+| Title metadata JSON | `welles_titles.json`, `welles_script_slug_index.json` (16 features; **URL guesses only**, `script_slug_url_verified: false`) | `a24_titles.json`, `a24_script_slug_index.json` (~100+ rows) |
+| Manual drop dirs | `data/scripts/welles/` (README only until you add `.txt` / PDFs) | `data/scripts/a24/` + `incoming/` workflow |
+| MovieSum HF matches (streamed full train, Nov 2026) | **1** title: `Citizen Kane_1941` | **Several** (Moonlight, Lady Bird, Hereditary, …) |
+| Committed staging samples | `welles_script_pairs_sample.jsonl` (**2** Kane stage-direction pairs, NC excerpts) | `script_sample.jsonl` (1 synthetic exercise row) |
+| Gitignored local cache | `script_pairs.jsonl` (regenerate via ingest) | same file |
+| Scrape / index builders | `scripts/scrape_welles_metadata.py` | `scripts/scrape_a24_metadata.py`, `build_a24_slug_index.py` |
+| PDF import | `import_uploaded_pdfs.py --studio welles` → `data/scripts/welles/incoming/` | `--studio a24` (default) |
+
+**Why Welles looked empty before:** MovieSum has almost no Welles director credits; the old `--filter welles` substring list also false-matched random “Mr.*” titles until fixed. Without `welles_script_slug_index.json`, manual PDF workflow, or a committed sample, `prepare_data.py` fell through to zero script rows unless you ran HF ingest yourself.
+
+```bash
+# Refresh Welles filmography + study-link index (no HTTP screenplay fetch)
+python3 scripts/scrape_welles_metadata.py
+
+# HF staging excerpts (expect ~1–2 pairs today — Kane only)
+python3 scripts/ingest_scripts.py --dataset moviesum --filter welles --max-pairs 50
+
+# Manual PDFs (after upload to data/scripts/welles/incoming/)
+python3 scripts/import_uploaded_pdfs.py --studio welles
+python3 scripts/ingest_scripts.py --dataset manual --filter welles
+```
+
 ---
 
 ## A24 — findings (honest)

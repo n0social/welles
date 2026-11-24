@@ -22,29 +22,27 @@ A24_DIR = ROOT / "data" / "scripts" / "a24"
 MOVIESUM_DS = "rohitsaxena/MovieSum"
 MOVIES_DS = "IsmaelMousa/movies"
 
-# MovieSum `movie_name` patterns (title before _YEAR). Not exhaustive — boosts recall.
+# MovieSum `movie_name` is `Title_YYYY`. Prefer exact keys — loose substrings matched too many "Mr.*" titles.
 WELLES_MOVIESUM_KEYS = (
-    "citizen kane",
-    "magnificent ambersons",
-    "the stranger_1946",
-    "stranger_1946",
-    "lady from shanghai",
+    "citizen_kane_1941",
+    "the_magnificent_ambersons_1942",
+    "journey_into_fear_1943",
+    "the_stranger_1946",
+    "the_lady_from_shanghai_1947",
     "macbeth_1948",
-    "macbeth_195",
-    "othello_19",
-    "touch of evil",
-    "the trial_1962",
-    "trial_1962",
-    "chimes at midnight",
-    "f for fake",
-    "journey into fear",
-    "immortal story",
-    "mr. arkadin",
-    "confidential report",
-    "other side of the wind",
-    "too much johnson",
-    "filming othello",
+    "othello_1952",
+    "mr_arkadin_1955",
+    "touch_of_evil_1958",
+    "the_trial_1962",
+    "chimes_at_midnight_1965",
+    "the_immortal_story_1968",
+    "f_for_fake_1973",
+    "filming_othello_1978",
+    "the_other_side_of_the_wind_2018",
+    "too_much_johnson_1938",
 )
+
+WELLES_TITLES_JSON = ROOT / "data" / "ingest" / "welles_titles.json"
 
 # Prefer `Title_YYYY` MovieSum keys to avoid substring false positives (e.g. "men" in Phantom Menace).
 A24_MOVIESUM_KEYS = (
@@ -83,23 +81,35 @@ A24_MOVIESUM_KEYS = (
 A24_TITLES_JSON = ROOT / "data" / "ingest" / "a24_titles.json"
 
 
-def a24_filter_keys() -> tuple[str, ...]:
-    """Static MovieSum keys + optional rows from data/ingest/a24_titles.json."""
-    keys = list(A24_MOVIESUM_KEYS)
-    if not A24_TITLES_JSON.exists():
+def _title_json_keys(path: Path, static_keys: tuple[str, ...]) -> tuple[str, ...]:
+    keys = list(static_keys)
+    if not path.exists():
         return tuple(keys)
     try:
-        payload = json.loads(A24_TITLES_JSON.read_text(encoding="utf-8"))
+        payload = json.loads(path.read_text(encoding="utf-8"))
     except (json.JSONDecodeError, OSError):
         return tuple(keys)
     for row in payload.get("titles", []):
         slug = (row.get("title_slug") or "").strip()
-        year = (row.get("release_year") or "").strip()
+        year = str(row.get("release_year") or "").strip()
+        title = (row.get("title") or "").strip()
+        if title and year:
+            keys.append(f"{title}_{year}")
         if slug and year:
             keys.append(f"{slug}_{year}")
         elif slug:
             keys.append(slug)
     return tuple(dict.fromkeys(keys))
+
+
+def welles_filter_keys() -> tuple[str, ...]:
+    """Static MovieSum keys + optional rows from data/ingest/welles_titles.json."""
+    return _title_json_keys(WELLES_TITLES_JSON, WELLES_MOVIESUM_KEYS)
+
+
+def a24_filter_keys() -> tuple[str, ...]:
+    """Static MovieSum keys + optional rows from data/ingest/a24_titles.json."""
+    return _title_json_keys(A24_TITLES_JSON, A24_MOVIESUM_KEYS)
 
 
 WRITE = "WRITE. New prose in Welles's voice.\n\n"
@@ -134,17 +144,24 @@ def matches_filter(movie_name: str, filt: str) -> bool:
     name = _norm_title(movie_name)
     if filt == "all":
         return True
-    keys = WELLES_MOVIESUM_KEYS if filt == "welles" else a24_filter_keys()
+    keys = welles_filter_keys() if filt == "welles" else a24_filter_keys()
     for key in keys:
         k = _norm_title(key)
         if name == k:
             return True
         if "_" in k:
             title_part, _, year = k.rpartition("_")
-            if year.isdigit() and name.startswith(f"{title_part}_{year}"):
-                return True
-            if name.startswith(f"{title_part}_"):
-                return True
+            if len(year) == 4 and year.isdigit():
+                if name.startswith(f"{title_part}_{year}"):
+                    return True
+                # MovieSum uses spaces in titles, not underscores
+                spaced = f"{title_part.replace('_', ' ')}_{year}"
+                if name == _norm_title(spaced):
+                    return True
+            elif not year.isdigit() and k in name:
+                # Legacy key without a year suffix
+                if k in name:
+                    return True
         elif k in name:
             return True
     return False
@@ -282,7 +299,7 @@ def pairs_from_movies_hf(
         if filt != "all" and not matches_filter(name.lower().replace(" ", "_") + "_0000", filt):
             # movies dataset has no year — loose title match
             lname = name.lower()
-            if filt == "welles" and not any(k.split("_")[0] in lname for k in WELLES_MOVIESUM_KEYS):
+            if filt == "welles" and not any(k.split("_")[0] in lname for k in welles_filter_keys()):
                 continue
             if filt == "a24" and not any(k.split("_")[0] in lname for k in a24_filter_keys()):
                 continue

@@ -1,0 +1,241 @@
+{
+  "survey_date": "2026-11-24",
+  "automated_scrape_performed": false,
+  "legal_note": "URLs are manual-study hints only. No script bodies are fetched or committed by automation.",
+  "imsdb_writer_index": "https://imsdb.com/writer.php?w=Orson+Welles",
+  "script_slug_policy": {
+    "url_pattern_note": "https://www.scriptslug.com/script/{kebab-title}-{year}",
+    "reason_no_scrape": "Same as A24: Script Slug ToS forbids automated scraping; Welles titles may be absent from studio listings."
+  },
+  "entries": [
+    {
+      "title": "Citizen Kane",
+      "release_year": "1941",
+      "title_slug": "citizen_kane",
+      "script_slug_url": "https://www.scriptslug.com/script/citizen-kane-1941",
+      "script_slug_url_verified": false,
+      "study_links": [
+        {
+          "label": "UIUC Digital Collections (surrogate)",
+          "url": "https://digital.library.illinois.edu/items/fb1e7c00-6ae8-0137-6d00-02d0d7bfd6e4-9",
+          "note": "Marked In Copyright — research surrogate only."
+        },
+        {
+          "label": "IMSDb writer index",
+          "url": "https://imsdb.com/writer.php?w=Orson+Welles"
+        }
+      ],
+      "moviesum_hf_key_guess": "Citizen Kane_1941"
+    },
+    {
+      "title": "The Magnificent Ambersons",
+      "release_year": "1942",
+      "title_slug": "the_magnificent_ambersons",
+      "script_slug_url": "https://www.scriptslug.com/script/the-magnificent-ambersons-1942",
+      "script_slug_url_verified": false,
+      "study_links": [
+        {
+          "label": "IMSDb writer index",
+          "url": "https://imsdb.com/writer.php?w=Orson+Welles"
+        }
+      ],
+      "moviesum_hf_key_guess": "The Magnificent Ambersons_1942"
+    },
+    {
+      "title": "The Stranger",
+      "release_year": "1946",
+      "title_slug": "the_stranger",
+      "script_slug_url": "https://www.scriptslug.com/script/the-stranger-1946",
+      "script_slug_url_verified": false,
+      "study_links": [
+        {
+          "label": "IMSDb writer index",
+          "url": "https://imsdb.com/writer.php?w=Orson+Welles"
+        }
+      ],
+      "moviesum_hf_key_guess": "The Stranger_1946"
+    },
+    {
+      "title": "The Lady from Shanghai",
+      "release_year": "1947",
+      "title_slug": "the_lady_from_shanghai",
+      "script_slug_url": "https://www.scriptslug.com/script/the-lady-from-shanghai-1947",
+      "script_slug_url_verified": false,
+      "study_links": [
+        {
+          "label": "IMSDb writer index",
+          "url": "https://imsdb.com/writer.php?w=Orson+Welles"
+        }
+      ],
+      "moviesum_hf_key_guess": "The Lady from Shanghai_1947"
+    },
+    {
+      "title": "Macbeth",
+      "release_year": "1948",
+      "title_slug": "macbeth",
+      "script_slug_url": "https://www.scriptslug.com/script/macbeth-1948",
+      "script_slug_url_verified": false,
+      "study_links": [
+        {
+          "label": "IMSDb writer index",
+          "url": "https://imsdb.com/writer.php?w=Orson+Welles"
+        }
+      ],
+      "moviesum_hf_key_guess": "Macbeth_1948"
+    },
+    {
+      "title": "Othello",
+      "release_year": "1952",
+      "title_slug": "othello",
+      "script_slug_url": "https://www.scriptslug.com/script/othello-1952",
+      "script_slug_url_verified": false,
+      "study_links": [
+        {
+          "label": "IMSDb writer index",
+          "url": "https://imsdb.com/writer.php?w=Orson+Welles"
+        }
+      ],
+      "moviesum_hf_key_guess": "Othello_1952"
+    },
+    {
+      "title": "Touch of Evil",
+      "release_year": "1958",
+      "title_slug": "touch_of_evil",
+      "script_slug_url": "https://www.scriptslug.com/script/touch-of-evil-1958",
+      "script_slug_url_verified": false,
+      "study_links": [
+        {
+          "label": "IMSDb writer index",
+          "url": "https://imsdb.com/writer.php?w=Orson+Welles"
+        }
+      ],
+      "moviesum_hf_key_guess": "Touch of Evil_1958"
+    },
+    {
+      "title": "The Trial",
+      "release_year": "1962",
+      "title_slug": "the_trial",
+      "script_slug_url": "https://www.scriptslug.com/script/the-trial-1962",
+      "script_slug_url_verified": false,
+      "study_links": [
+        {
+          "label": "IMSDb writer index",
+          "url": "https://imsdb.com/writer.php?w=Orson+Welles"
+        }
+      ],
+      "moviesum_hf_key_guess": "The Trial_1962"
+    },
+    {
+      "title": "Chimes at Midnight",
+      "release_year": "1965",
+      "title_slug": "chimes_at_midnight",
+      "script_slug_url": "https://www.scriptslug.com/script/chimes-at-midnight-1965",
+      "script_slug_url_verified": false,
+      "study_links": [
+        {
+          "label": "IMSDb writer index",
+          "url": "https://imsdb.com/writer.php?w=Orson+Welles"
+        }
+      ],
+      "moviesum_hf_key_guess": "Chimes at Midnight_1965"
+    },
+    {
+      "title": "F for Fake",
+      "release_year": "1973",
+      "title_slug": "f_for_fake",
+      "script_slug_url": "https://www.scriptslug.com/script/f-for-fake-1973",
+      "script_slug_url_verified": false,
+      "study_links": [
+        {
+          "label": "IMSDb writer index",
+          "url": "https://imsdb.com/writer.php?w=Orson+Welles"
+        }
+      ],
+      "moviesum_hf_key_guess": "F for Fake_1973"
+    },
+    {
+      "title": "The Other Side of the Wind",
+      "release_year": "2018",
+      "title_slug": "the_other_side_of_the_wind",
+      "script_slug_url": "https://www.scriptslug.com/script/the-other-side-of-the-wind-2018",
+      "script_slug_url_verified": false,
+      "study_links": [
+        {
+          "label": "Wellesnet unfilmed / script pointers",
+          "url": "https://wellesnet.com/unfilmed-orson-welles-scripts-available-online/"
+        }
+      ],
+      "moviesum_hf_key_guess": "The Other Side of the Wind_2018"
+    },
+    {
+      "title": "Mr. Arkadin",
+      "release_year": "1955",
+      "title_slug": "mr_arkadin",
+      "script_slug_url": "https://www.scriptslug.com/script/mr-arkadin-1955",
+      "script_slug_url_verified": false,
+      "study_links": [
+        {
+          "label": "IMSDb writer index",
+          "url": "https://imsdb.com/writer.php?w=Orson+Welles"
+        }
+      ],
+      "moviesum_hf_key_guess": "Mr. Arkadin_1955"
+    },
+    {
+      "title": "Journey into Fear",
+      "release_year": "1943",
+      "title_slug": "journey_into_fear",
+      "script_slug_url": "https://www.scriptslug.com/script/journey-into-fear-1943",
+      "script_slug_url_verified": false,
+      "study_links": [
+        {
+          "label": "IMSDb writer index",
+          "url": "https://imsdb.com/writer.php?w=Orson+Welles"
+        }
+      ],
+      "moviesum_hf_key_guess": "Journey into Fear_1943"
+    },
+    {
+      "title": "The Immortal Story",
+      "release_year": "1968",
+      "title_slug": "the_immortal_story",
+      "script_slug_url": "https://www.scriptslug.com/script/the-immortal-story-1968",
+      "script_slug_url_verified": false,
+      "study_links": [
+        {
+          "label": "IMSDb writer index",
+          "url": "https://imsdb.com/writer.php?w=Orson+Welles"
+        }
+      ],
+      "moviesum_hf_key_guess": "The Immortal Story_1968"
+    },
+    {
+      "title": "Filming Othello",
+      "release_year": "1978",
+      "title_slug": "filming_othello",
+      "script_slug_url": "https://www.scriptslug.com/script/filming-othello-1978",
+      "script_slug_url_verified": false,
+      "study_links": [
+        {
+          "label": "IMSDb writer index",
+          "url": "https://imsdb.com/writer.php?w=Orson+Welles"
+        }
+      ],
+      "moviesum_hf_key_guess": "Filming Othello_1978"
+    },
+    {
+      "title": "Too Much Johnson",
+      "release_year": "1938",
+      "title_slug": "too_much_johnson",
+      "script_slug_url": "https://www.scriptslug.com/script/too-much-johnson-1938",
+      "script_slug_url_verified": false,
+      "study_links": [
+        {
+          "label": "Wellesnet unfilmed / script pointers",
+          "url": "https://wellesnet.com/unfilmed-orson-welles-scripts-available-online/"
+        }
+      ],
+      "moviesum_hf_key_guess": "Too Much Johnson_1938"
+    }
+  ]
+}
