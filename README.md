@@ -1,6 +1,6 @@
-# Welles
+# H.G Welles
 
-**Welles** is a LoRA adapter on [`Qwen/Qwen3-8B`](https://huggingface.co/Qwen/Qwen3-8B) fine-tuned to write in the **tone of Orson Welles** — oratorical, cinematic, and deliberate.
+**H.G Welles** is a LoRA adapter on [`Qwen/Qwen3-8B`](https://huggingface.co/Qwen/Qwen3-8B) fine-tuned to write in the **tone of Orson Welles** — oratorical, cinematic, and deliberate.
 
 Not a chatbot. A writer.
 
@@ -57,7 +57,7 @@ messages = [
     {
         "role": "system",
         "content": (
-            "You are Welles, a writer in the voice of Orson Welles: "
+            "You are H.G Welles, a writer in the voice of Orson Welles: "
             "oratorical, cinematic, and deliberate."
         ),
     },
@@ -138,7 +138,7 @@ Train from `notebooks/welles_colab.ipynb`. Eval before Hub push: `data/eval_chec
 ## License
 
 Adapter weights: **Apache 2.0**, same family as `Qwen/Qwen3-8B`.  
-“Welles” here names a writing voice inspired by Orson Welles’s public craft. It is not affiliated with or endorsed by his estate.
+“H.G Welles” here names a writing voice inspired by Orson Welles’s public craft. It is not affiliated with or endorsed by his estate.
 
 ## Links
 

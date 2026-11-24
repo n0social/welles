@@ -41,7 +41,7 @@ export default function DocumentEditor({
       StarterKit,
       Highlight.configure({ multicolor: false }),
       Placeholder.configure({
-        placeholder: "The page is blank. Ask Welles — or begin.",
+        placeholder: "The page is blank. Ask H.G Welles — or begin.",
       }),
     ],
     content: html,
@@ -205,7 +205,7 @@ export default function DocumentEditor({
       <div className={`${styles.pageStage} ${expanded ? styles.pageExpanded : ""}`}>
         <div className={`${styles.sheet} ${writing ? styles.writing : ""}`}>
           <EditorContent editor={editor} />
-          {writing ? <p className={styles.live}>Welles is on the page…</p> : null}
+          {writing ? <p className={styles.live}>H.G Welles is on the page…</p> : null}
         </div>
 
         {onToggleExpand ? (

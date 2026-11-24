@@ -8,16 +8,18 @@ tags:
   - text-generation
   - writing
   - orson-welles
+  - hg-welles
   - sft
 license: apache-2.0
+model_name: H.G Welles
 language:
   - en
 pipeline_tag: text-generation
 ---
 
-# Welles
+# H.G Welles
 
-**Welles** is a LoRA adapter on [`Qwen/Qwen3-8B`](https://huggingface.co/Qwen/Qwen3-8B) fine-tuned to write in the **tone of Orson Welles** — oratorical, cinematic, and deliberate.
+**H.G Welles** is a LoRA adapter on [`Qwen/Qwen3-8B`](https://huggingface.co/Qwen/Qwen3-8B) fine-tuned to write in the **tone of Orson Welles** — oratorical, cinematic, and deliberate.
 
 Not a chatbot. A writer.
 
@@ -68,7 +70,7 @@ messages = [
     {
         "role": "system",
         "content": (
-            "You are Welles, a writer in the voice of Orson Welles: "
+            "You are H.G Welles, a writer in the voice of Orson Welles: "
             "oratorical, cinematic, and deliberate."
         ),
     },
@@ -137,13 +139,13 @@ Data: long-form English writing mixture (including a capped subset of [`zai-org/
 ## License
 
 Adapter weights: **Apache 2.0**, same family as `Qwen/Qwen3-8B`.  
-“Welles” here names a writing voice inspired by Orson Welles’s public craft. It is not affiliated with or endorsed by his estate.
+“H.G Welles” here names a writing voice inspired by Orson Welles’s public craft. It is not affiliated with or endorsed by his estate.
 
 ## Citation
 
 ```bibtex
 @misc{welles-lora-2026,
-  title  = {Welles: Orson Welles–tone writing LoRA on Qwen3-8B},
+  title  = {H.G Welles: Orson Welles–tone writing LoRA on Qwen3-8B},
   author = {n0social},
   year   = {2026},
   url    = {https://huggingface.co/n0social/welles}

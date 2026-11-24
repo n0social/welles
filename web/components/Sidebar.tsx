@@ -40,7 +40,7 @@ export default function Sidebar({
     <aside className={styles.side}>
       <div className={styles.topBlock}>
         <div className={styles.brand}>
-          <p className={styles.mark}>Welles</p>
+          <p className={styles.mark}>H.G Welles</p>
           <p className={styles.tag}>Oratorical. Cinematic. Measured.</p>
           <label className={styles.srOnly} htmlFor="manuscript-title">
             Manuscript title
@@ -77,7 +77,7 @@ export default function Sidebar({
           Rewrite
         </label>
         <p className={styles.hint}>
-          Paste a sentence or paragraph. Welles restages it a different way.
+          Paste a sentence or paragraph. H.G Welles restages it a different way.
         </p>
         <textarea
           id="rewrite"

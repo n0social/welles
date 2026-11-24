@@ -13,7 +13,7 @@ const body = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Welles",
+  title: "H.G Welles",
   description: "Document desk for writing in the tone of Orson Welles.",
 };
 

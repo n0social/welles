@@ -13,7 +13,7 @@ export default function HowItWorksPanel({ onClose }: { onClose: () => void }) {
           </button>
         </div>
         <p>
-          Welles is a writing desk in the browser. The UI lives on Vercel. The model
+          H.G Welles is a writing desk in the browser. The UI lives on Vercel. The model
           runs on a GPU you start yourself (free Colab). You paste that GPU link into
           Settings.
         </p>
@@ -77,7 +77,7 @@ export default function HowItWorksPanel({ onClose }: { onClose: () => void }) {
           <code>#</code> / <code>##</code> headings or lines like <code>Chapter 1</code>.
           Long chapters split into pages. The desk shows{" "}
           <strong>Page # of Chapter #</strong> (plus a heading when the page has one).
-          Generate from the sidebar; Welles types onto the open page.
+          Generate from the sidebar; H.G Welles types onto the open page.
         </p>
 
         <h3>Why not all on Vercel?</h3>

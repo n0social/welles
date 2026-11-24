@@ -8,7 +8,7 @@
 
 | Item | Choice |
 |---|---|
-| Product name | **Welles** (the Architect: rework / write / complete the trilogy) |
+| Product name | **H.G Welles** (the Architect: rework / write / complete the trilogy) |
 | Hugging Face username | `n0social` |
 | Model repo (planned) | `n0social/welles` |
 | Space (planned) | `n0social/welles` |
