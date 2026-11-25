@@ -60,6 +60,39 @@ Use the same system prompt (`prompts/welles_system.md`) for all rows.
 
 ---
 
+## Full screenplay mode (dialogue + scenes)
+
+**Default until now:** `staging` — strip most dialogue, 3 short action chunks per PDF (Welles *prose* / A24 *STAGE* rewrite).
+
+**If you want the model to learn real screenplay format** (sluglines, cues, dialogue, action), use **full** mode:
+
+1. Extract:
+   ```bash
+   python3 scripts/import_uploaded_pdfs.py --studio welles --full-screenplay
+   python3 scripts/import_uploaded_pdfs.py --studio a24 --full-screenplay
+   ```
+   Writes `data/scripts/<studio>/{stem}_full.txt` — entire PDF text, dialogue kept.
+
+2. Ingest (all scenes, no per-file chunk cap):
+   ```bash
+   python3 scripts/ingest_scripts.py --dataset manual --filter welles \
+     --screenplay-mode full --max-pairs 0 --max-words 380 \
+     --boost-titles "citizen kane" --boost-repeat 3
+   ```
+
+3. Train mix:
+   ```bash
+   python3 scripts/prepare_data.py --gold-repeat 3 --max-scripts 0 \
+     --script-screenplay-mode full --fetch-scripts --script-dataset manual \
+     --script-filter all --max-script-ingest 0 --citizen-kane-repeat 3
+   ```
+
+**Note:** One 120-page PDF becomes **many** SFT rows (one per scene chunk), not one row. `train.py` uses `max_length=2048` so chunks fit. **Copyright:** full scripts in `train.jsonl` / Hub weights is higher risk than staging excerpts — use private repo and accept licensing limits.
+
+**Voice vs format:** Full mode teaches **format and content of the script text**; `welles_gold` still carries **Welles desk voice** for the product UI. Blend both in the mix.
+
+---
+
 ## A24 scripts: keep, but filter how you *use* them
 
 **Tone mismatch (honest):** A24 house style skews toward naturalistic speech, irony, and literary PDF formatting. Welles skews toward **declamation, baroque composition, and visible craft**. Training on A24 **dialogue** or **unfiltered action** risks pulling the LoRA toward MFA-screenplay cadence.

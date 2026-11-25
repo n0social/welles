@@ -50,6 +50,11 @@ def parse_args() -> argparse.Namespace:
     )
     p.add_argument("--strict-naming", action="store_true", help="Exit 1 if any PDF breaks Title_Year.pdf.")
     p.add_argument("--dry-run", action="store_true", help="Verify only; do not run extract.")
+    p.add_argument(
+        "--full-screenplay",
+        action="store_true",
+        help="Extract entire PDF to Title_full.txt (dialogue kept) for --screenplay-mode full ingest.",
+    )
     return p.parse_args()
 
 
@@ -124,7 +129,11 @@ def main() -> None:
         str(args.incoming),
         "--out-dir",
         str(out_dir),
+        "--mode",
+        "full" if args.full_screenplay else "staging",
     ]
+    if args.full_screenplay:
+        cmd.extend(["--full-max-words", "380"])
     print("\nRunning extract_screenplay_pdf.py …")
     proc = subprocess.run(cmd, cwd=ROOT)
     if proc.returncode != 0:
@@ -134,6 +143,7 @@ def main() -> None:
         f"\nExcerpts → {out_dir}/*_excerpt.txt\n"
         "Next:\n"
         f"  python3 scripts/ingest_scripts.py --dataset manual --filter {args.studio}"
+        + (" --screenplay-mode full --max-pairs 0" if args.full_screenplay else "")
     )
 
 

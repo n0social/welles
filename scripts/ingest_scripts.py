@@ -270,6 +270,66 @@ def pairs_from_moviesum(
     return pairs
 
 
+SCENE_HEADING = re.compile(r"^(INT\.|EXT\.|INT/EXT|I/E\.)", re.I)
+
+
+def chunk_screenplay_full(
+    text: str,
+    min_words: int,
+    max_words: int,
+    *,
+    keep_dialogue: bool = True,
+    max_chunks: int = 0,
+) -> list[str]:
+    """Split a screenplay into scene-bounded chunks (dialogue kept when keep_dialogue)."""
+    body = text if keep_dialogue else strip_dialogue_plain(text)
+    if word_count(body) < min_words:
+        return []
+
+    scenes: list[str] = []
+    current: list[str] = []
+    for line in body.splitlines():
+        stripped = line.strip()
+        if SCENE_HEADING.match(stripped):
+            if current:
+                blob = "\n".join(current).strip()
+                if word_count(blob) >= min_words:
+                    scenes.append(blob)
+            current = [line]
+        else:
+            current.append(line)
+    if current:
+        blob = "\n".join(current).strip()
+        if word_count(blob) >= min_words:
+            scenes.append(blob)
+
+    if not scenes:
+        scenes = [body.strip()] if word_count(body) >= min_words else []
+
+    out: list[str] = []
+    for scene in scenes:
+        if word_count(scene) <= max_words:
+            out.append(scene)
+        else:
+            paras = [p.strip() for p in re.split(r"\n\s*\n", scene) if p.strip()]
+            buf: list[str] = []
+            for para in paras:
+                buf.append(para)
+                blob = "\n\n".join(buf)
+                if word_count(blob) >= min_words:
+                    out.append(clamp_words(blob, max_words))
+                    buf = []
+            if buf:
+                blob = "\n\n".join(buf)
+                if word_count(blob) >= min_words:
+                    out.append(clamp_words(blob, max_words))
+        if max_chunks and len(out) >= max_chunks:
+            return out[:max_chunks]
+    if max_chunks:
+        return out[:max_chunks]
+    return out
+
+
 def strip_dialogue_plain(text: str) -> str:
     """Heuristic: keep scene headings and action; drop ALL-CAPS character cues and dialogue."""
     lines = text.splitlines()
@@ -315,11 +375,20 @@ def chunk_manual_text(text: str, min_words: int, max_words: int) -> list[str]:
     return chunks
 
 
+SCREENPLAY_BLOCK = (
+    "SCREENPLAY. Full scene block — keep industry format: slugline, action, character cues, dialogue.\n\n"
+)
+
+
 def pairs_from_manual(
     filt: str,
     max_pairs: int,
     min_words: int,
     max_words: int,
+    *,
+    screenplay_mode: str = "staging",
+    keep_dialogue: bool = True,
+    max_chunks_per_file: int = 0,
 ) -> list[dict]:
     dirs: list[tuple[Path, str]] = []
     if filt in ("welles", "all"):
@@ -328,18 +397,52 @@ def pairs_from_manual(
         dirs.append((A24_DIR, "a24"))
 
     pairs: list[dict] = []
+    full_mode = screenplay_mode == "full"
+
     for directory, label in dirs:
         if not directory.exists():
             continue
-        for path in sorted(directory.glob("*")):
+        paths = sorted(directory.glob("*"))
+        if full_mode:
+            full_txt = [p for p in paths if p.suffix.lower() == ".txt" and p.stem.endswith("_full")]
+            other = [
+                p
+                for p in paths
+                if p.suffix.lower() in (".txt", ".md")
+                and p.name != "README.md"
+                and not p.stem.endswith("_excerpt")
+                and p not in full_txt
+            ]
+            paths = full_txt + other
+        for path in paths:
             if path.suffix.lower() not in (".txt", ".md") or path.name == "README.md":
                 continue
+            if path.stem.endswith("_excerpt") and full_mode:
+                continue
             raw = path.read_text(encoding="utf-8", errors="ignore")
-            title = path.stem.replace("_", " ")
-            for chunk in chunk_manual_text(raw, min_words, max_words):
+            if raw.startswith("# Staging excerpts"):
+                raw = raw.split("\n\n", 1)[-1] if "\n\n" in raw else raw
+            title = path.stem.replace("_full", "").replace("_excerpt", "").replace("_", " ")
+
+            if full_mode:
+                chunks = chunk_screenplay_full(
+                    raw,
+                    min_words,
+                    max_words,
+                    keep_dialogue=keep_dialogue,
+                    max_chunks=max_chunks_per_file,
+                )
+            else:
+                chunks = chunk_manual_text(raw, min_words, max_words)
+                if max_chunks_per_file:
+                    chunks = chunks[:max_chunks_per_file]
+
+            for scene_i, chunk in enumerate(chunks, start=1):
                 if has_cjk(chunk) or looks_hype(chunk):
                     continue
-                if label == "a24":
+                if full_mode:
+                    prompt = f"{SCREENPLAY_BLOCK}Title: {title!r}. Scene {scene_i}."
+                elif label == "a24":
                     prompt = f"{STAGE_A24}Source excerpt: {title!r}."
                 else:
                     prompt = (
@@ -354,7 +457,7 @@ def pairs_from_manual(
                         source_title=title,
                     )
                 )
-                if len(pairs) >= max_pairs:
+                if max_pairs and len(pairs) >= max_pairs:
                     return pairs
     return pairs
 
@@ -427,11 +530,21 @@ def build_pairs(args: argparse.Namespace) -> list[dict]:
         )
     elif args.dataset == "manual":
         pairs.extend(
-            pairs_from_manual(args.filter, args.max_pairs, args.min_words, args.max_words)
+            pairs_from_manual(
+                args.filter,
+                args.max_pairs,
+                args.min_words,
+                args.max_words,
+                screenplay_mode=getattr(args, "screenplay_mode", "staging"),
+                keep_dialogue=getattr(args, "keep_dialogue", True),
+                max_chunks_per_file=getattr(args, "max_chunks_per_file", 0),
+            )
         )
     boost_titles = tuple(getattr(args, "boost_titles", None) or ())
     boost_repeat = int(getattr(args, "boost_repeat", 1) or 1)
     pairs = apply_boost_pairs(pairs, boost_titles, boost_repeat)
+    if args.max_pairs <= 0:
+        return pairs
     limit = args.max_pairs * boost_repeat if boost_titles and boost_repeat > 1 else args.max_pairs
     return pairs[:limit]
 
@@ -455,6 +568,24 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-per-script", type=int, default=2, help="Excerpts per screenplay.")
     parser.add_argument("--min-words", type=int, default=25)
     parser.add_argument("--max-words", type=int, default=150)
+    parser.add_argument(
+        "--screenplay-mode",
+        choices=("staging", "full"),
+        default="staging",
+        help="staging: action-only excerpts; full: scene chunks with dialogue (manual .txt/_full).",
+    )
+    parser.add_argument(
+        "--keep-dialogue",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help="Full mode: keep dialogue in chunks (default true).",
+    )
+    parser.add_argument(
+        "--max-chunks-per-file",
+        type=int,
+        default=0,
+        help="0 = all scenes/chunks from each file (full screenplay coverage).",
+    )
     parser.add_argument("--out", "-o", type=Path, default=DEFAULT_OUT)
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument(

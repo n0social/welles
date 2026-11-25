@@ -248,7 +248,25 @@ def main() -> None:
         "--max-script-ingest",
         type=int,
         default=30,
-        help="When --fetch-scripts: pair cap for ingest_scripts.py",
+        help="When --fetch-scripts: pair cap for ingest_scripts.py (0 = all scene chunks).",
+    )
+    parser.add_argument(
+        "--script-screenplay-mode",
+        choices=("staging", "full"),
+        default="staging",
+        help="When --fetch-scripts: full = dialogue + scene chunks from *_full.txt",
+    )
+    parser.add_argument(
+        "--script-min-words",
+        type=int,
+        default=None,
+        help="Override script chunk min words (full mode default 60).",
+    )
+    parser.add_argument(
+        "--script-max-words",
+        type=int,
+        default=None,
+        help="Override script chunk max words (full mode default 380).",
     )
     parser.add_argument("--out", type=Path, default=ROOT / "data" / "train.jsonl")
     args = parser.parse_args()
@@ -342,14 +360,20 @@ def main() -> None:
     ):
         import argparse as _ap
 
+        full_script = args.script_screenplay_mode == "full"
         script_args = _ap.Namespace(
             dataset=args.script_dataset,
             filter=args.script_filter,
             max_pairs=args.max_script_ingest,
             scripts_cap=400,
             max_per_script=2,
-            min_words=25,
-            max_words=150,
+            min_words=args.script_min_words if args.script_min_words is not None else (60 if full_script else 25),
+            max_words=args.script_max_words if args.script_max_words is not None else (380 if full_script else 150),
+            screenplay_mode=args.script_screenplay_mode,
+            keep_dialogue=True,
+            max_chunks_per_file=0,
+            boost_titles=(),
+            boost_repeat=1,
         )
         script_pairs = build_script_pairs(script_args)
         args.scripts_cache.parent.mkdir(parents=True, exist_ok=True)

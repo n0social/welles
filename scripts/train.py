@@ -32,7 +32,7 @@ def main() -> None:
             per_device_train_batch_size=1,
             gradient_accumulation_steps=8,
             gradient_checkpointing=True,
-            max_length=1024,
+            max_length=2048,  # full screenplay scene chunks (~380 words); use 1024 for staging-only mixes
             logging_steps=10,
             save_steps=100,
             bf16=True,
