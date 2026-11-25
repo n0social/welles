@@ -2,6 +2,18 @@
 
 Survey date: 2026-11-24. Method: `site:kaggle.com` search, public dataset pages, Hugging Face cross-links noted where authors cite them.
 
+## Local copy (this VM / Colab)
+
+After `git pull`, run:
+
+```bash
+python3 scripts/fetch_external_datasets.py --hf inkwell,atum09
+python3 scripts/fetch_external_datasets.py --dataverse-movie-corpus   # or --kaggle-movie-corpus
+python3 scripts/convert_external_datasets.py --inkwell-eval --atum09-max 500
+```
+
+Files land in `data/external/` (gitignored). See `data/external/README.md`.
+
 ## Executive summary
 
 | Topic | On Kaggle? |
