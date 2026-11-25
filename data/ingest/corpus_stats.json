@@ -1,0 +1,26 @@
+{
+  "generated_utc": "2026-11-25",
+  "script_pairs_rows": 16108,
+  "train_jsonl_rows": 16502,
+  "script_pairs_mib": 15.41,
+  "train_jsonl_mib": 31.43,
+  "tasks": {
+    "verbatim": 4122,
+    "structure": 4122,
+    "continue": 3062,
+    "bridge": 2937,
+    "compose": 1865
+  },
+  "completion_words_p50": 73,
+  "completion_words_p90": 150,
+  "completion_words_max_script": 191,
+  "kane_script_rows": 1230,
+  "welles_script_rows": 1247,
+  "a24_script_rows": 14861,
+  "welles_gold_rows_in_train": 276,
+  "notes": [
+    "Kane opens with Xanadu / Rosebud camera grammar — verbatim rows look correct.",
+    "Ambersons and Trial PDFs failed text extract on cloud build; replace PDFs on Colab if needed.",
+    "97% of train.jsonl is screenplay tasks; bump --gold-repeat or cap --max-scripts for desk voice (see COLAB_PREP.md)."
+  ]
+}
