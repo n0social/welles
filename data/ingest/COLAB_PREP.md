@@ -1,5 +1,34 @@
 # Colab prep — validate data before GPU
 
+## 0. Combined training mix (ours + external)
+
+**Ours:** Welles/A24 PDFs → `script_pairs.jsonl`, gold, style, cinema.  
+**External:** Inkwell (eval), Atum09 coverage/punch-up (train), Movie Scripts Corpus (optional offline pool in `data/external/`).
+
+One-shot:
+
+```bash
+bash scripts/build_colab_training.sh
+```
+
+Or step by step:
+
+```bash
+pip install -q pypdf huggingface_hub datasets peft trl transformers bitsandbytes accelerate
+python3 scripts/fetch_external_datasets.py --hf inkwell,atum09
+python3 scripts/fetch_external_datasets.py --dataverse-movie-corpus   # or --kaggle-movie-corpus
+python3 scripts/build_script_corpus.py --build-train
+python3 scripts/prepare_data.py \
+  --fetch-scripts --scripts-cache data/ingest/script_pairs.jsonl \
+  --max-scripts 0 --gold-repeat 4 --max-cinema 40 --max-examples 80 \
+  --max-external-atum09 1500
+python3 scripts/review_training_data.py
+```
+
+`--max-external-atum09` pulls from `data/external/atum09-screenplay-dataset/` (or `external_samples/` fallback). Atum09 `thinking` text is wrapped in Qwen think tags when present — useful if you later train with `enable_thinking=True`.
+
+**Inkwell** stays **eval** only (`data/ingest/external_samples/inkwell_revision_eval.jsonl`), not merged into `train.jsonl`.
+
 ## 1. Build on Colab (after `git pull` + `git lfs pull`)
 
 ```bash

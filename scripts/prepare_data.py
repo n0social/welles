@@ -17,6 +17,7 @@ if str(_SCRIPTS) not in sys.path:
     sys.path.insert(0, str(_SCRIPTS))
 
 from ingest_cinema import DEFAULT_OUT as CINEMA_CACHE, build_pairs, load_pairs as load_cinema_pairs
+from ingest_external import load_atum09_pairs
 from ingest_scripts import DEFAULT_OUT as SCRIPT_CACHE, build_pairs as build_script_pairs
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -274,6 +275,24 @@ def main() -> None:
         default=None,
         help="Override script chunk max words (full mode default 380).",
     )
+    parser.add_argument(
+        "--max-external-atum09",
+        type=int,
+        default=0,
+        help="Cap Atum09 external pairs (script_coverage, rewrite_punchup, etc.). 0 = off.",
+    )
+    parser.add_argument(
+        "--external-thinking-wrap",
+        action="store_true",
+        default=True,
+        help="Map Atum09 `thinking` field into Qwen-style think blocks in assistant text.",
+    )
+    parser.add_argument(
+        "--no-external-thinking-wrap",
+        action="store_false",
+        dest="external_thinking_wrap",
+        help="Drop Atum09 thinking; assistant = visible text only.",
+    )
     parser.add_argument("--out", type=Path, default=ROOT / "data" / "train.jsonl")
     args = parser.parse_args()
 
@@ -487,6 +506,29 @@ def main() -> None:
         )
         longwriter_added += 1
     print(f"Added {longwriter_added} LongWriter rows (cap {args.max_examples})")
+
+    # 6) External HF (Atum09 coverage / punch-up — optional)
+    if args.max_external_atum09 > 0:
+        ext_pairs = load_atum09_pairs(
+            max_rows=args.max_external_atum09,
+            use_thinking_field=args.external_thinking_wrap,
+        )
+        ext_added = 0
+        for prompt, completion in ext_pairs:
+            if not prompt or not completion:
+                continue
+            if args.english_only and (has_cjk(prompt) or has_cjk(completion)):
+                continue
+            if looks_hype(prompt) or looks_hype(completion):
+                continue
+            kept.append(row(system, prompt, completion))
+            ext_added += 1
+        print(f"Added {ext_added} external Atum09 rows (cap {args.max_external_atum09})")
+        if ext_added == 0:
+            print(
+                "Warning: no Atum09 rows — run scripts/fetch_external_datasets.py --hf atum09 "
+                "or convert_external_datasets.py on Colab."
+            )
 
     args.out.parent.mkdir(parents=True, exist_ok=True)
     with args.out.open("w", encoding="utf-8") as handle:
