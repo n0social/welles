@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import torch
 from datasets import load_dataset
 from peft import LoraConfig
 from transformers import BitsAndBytesConfig
@@ -23,6 +24,10 @@ def main() -> None:
 
     dataset = load_dataset("json", data_files=str(DATA), split="train")
 
+    # Colab T4 = sm_75 — bf16 GEMM in trl fails; A100+ can use bf16.
+    use_bf16 = torch.cuda.is_available() and torch.cuda.get_device_capability()[0] >= 8
+    compute_dtype = torch.bfloat16 if use_bf16 else torch.float16
+
     trainer = SFTTrainer(
         model=BASE_MODEL,
         args=SFTConfig(
@@ -35,9 +40,13 @@ def main() -> None:
             max_length=2048,  # full screenplay scene chunks (~380 words); use 1024 for staging-only mixes
             logging_steps=10,
             save_steps=100,
-            bf16=True,
+            fp16=not use_bf16,
+            bf16=use_bf16,
             assistant_only_loss=True,
-            model_init_kwargs={"dtype": "auto"},
+            model_init_kwargs={
+                "torch_dtype": compute_dtype,
+                "device_map": {"": 0},
+            },
         ),
         train_dataset=dataset,
         peft_config=LoraConfig(
@@ -49,7 +58,7 @@ def main() -> None:
         quantization_config=BitsAndBytesConfig(
             load_in_4bit=True,
             bnb_4bit_quant_type="nf4",
-            bnb_4bit_compute_dtype="bfloat16",
+            bnb_4bit_compute_dtype=compute_dtype,
         ),
     )
 
