@@ -67,7 +67,6 @@ def main() -> None:
             bf16=use_bf16,
             assistant_only_loss=True,
             report_to="none",
-            dataset_kwargs={"skip_prepare_dataset": False},
         ),
         train_dataset=dataset,
         peft_config=LoraConfig(
