@@ -114,6 +114,12 @@ def a24_filter_keys() -> tuple[str, ...]:
 
 WRITE = "WRITE. New prose in Welles's voice.\n\n"
 
+STAGE_A24 = (
+    "STAGE. Restage this scene direction in Orson Welles's cinematic prose — "
+    "deep space, theatrical lighting, deliberate camera rhythm. "
+    "Keep slugline logic; no contemporary indie dialogue tone.\n\n"
+)
+
 # Reuse cinema filters / MovieSum XML parsing
 _SCRIPTS = Path(__file__).resolve().parent
 import sys
@@ -128,10 +134,63 @@ from ingest_cinema import (  # noqa: E402
     load_pairs,
     looks_hype,
     passes_filters,
-    row_pair,
     script_excerpt_prompt,
     word_count,
 )
+
+
+def row_pair(
+    prompt: str,
+    completion: str,
+    *,
+    source_studio: str | None = None,
+    source_title: str | None = None,
+    boosted: bool = False,
+) -> dict:
+    item: dict = {"prompt": prompt.strip(), "completion": completion.strip()}
+    if source_studio:
+        item["source_studio"] = source_studio
+    if source_title:
+        item["source_title"] = source_title
+    if boosted:
+        item["boosted"] = True
+    return item
+
+
+def _norm_boost_title(title: str) -> str:
+    return re.sub(r"[^a-z0-9]+", " ", title.lower()).strip()
+
+
+def title_matches_boost(title: str, boost_titles: tuple[str, ...]) -> bool:
+    norm = _norm_boost_title(title)
+    for raw in boost_titles:
+        needle = _norm_boost_title(raw)
+        if not needle:
+            continue
+        if needle in norm or norm in needle:
+            return True
+    return False
+
+
+def apply_boost_pairs(
+    pairs: list[dict], boost_titles: tuple[str, ...], boost_repeat: int
+) -> list[dict]:
+    """Duplicate matching pairs (by source_title or prompt film name) boost_repeat times."""
+    if boost_repeat <= 1 or not boost_titles:
+        return pairs
+    extra: list[dict] = []
+    for item in pairs:
+        title = item.get("source_title") or ""
+        if not title and "Source film:" in item.get("prompt", ""):
+            m = re.search(r"Source film:\s*'([^']+)'", item["prompt"])
+            if m:
+                title = m.group(1)
+        if title_matches_boost(title, boost_titles):
+            for _ in range(boost_repeat - 1):
+                dup = dict(item)
+                dup["boosted"] = True
+                extra.append(dup)
+    return pairs + extra
 
 DATASETS = ("moviesum", "movies", "manual")
 
@@ -195,8 +254,17 @@ def pairs_from_moviesum(
         ):
             if not passes_filters(excerpt, min_words, max_words):
                 continue
-            prompt = script_excerpt_prompt(name.rsplit("_", 1)[0])
-            pairs.append(row_pair(prompt, excerpt))
+            title = name.rsplit("_", 1)[0]
+            prompt = script_excerpt_prompt(title)
+            studio = "welles" if filt == "welles" else ("a24" if filt == "a24" else "moviesum")
+            pairs.append(
+                row_pair(
+                    prompt,
+                    excerpt,
+                    source_studio=studio,
+                    source_title=title,
+                )
+            )
             if len(pairs) >= max_pairs:
                 break
     return pairs
@@ -271,11 +339,21 @@ def pairs_from_manual(
             for chunk in chunk_manual_text(raw, min_words, max_words):
                 if has_cjk(chunk) or looks_hype(chunk):
                     continue
-                prompt = (
-                    f"{WRITE}Deliver prose in screenplay staging register — angles, light, doorways — "
-                    f"without quoted dialogue. Manual {label} drop: {title!r}."
+                if label == "a24":
+                    prompt = f"{STAGE_A24}Source excerpt: {title!r}."
+                else:
+                    prompt = (
+                        f"{WRITE}Deliver prose in screenplay staging register — angles, light, doorways — "
+                        f"without quoted dialogue. Manual welles drop: {title!r}."
+                    )
+                pairs.append(
+                    row_pair(
+                        prompt,
+                        chunk,
+                        source_studio=label,
+                        source_title=title,
+                    )
                 )
-                pairs.append(row_pair(prompt, chunk))
                 if len(pairs) >= max_pairs:
                     return pairs
     return pairs
@@ -311,7 +389,14 @@ def pairs_from_movies_hf(
             if not passes_filters(chunk, min_words, max_words):
                 continue
             prompt = script_excerpt_prompt(name)
-            pairs.append(row_pair(prompt, chunk))
+            pairs.append(
+                row_pair(
+                    prompt,
+                    chunk,
+                    source_studio="movies",
+                    source_title=name,
+                )
+            )
             if len(pairs) >= max_pairs:
                 break
     return pairs
@@ -344,7 +429,11 @@ def build_pairs(args: argparse.Namespace) -> list[dict]:
         pairs.extend(
             pairs_from_manual(args.filter, args.max_pairs, args.min_words, args.max_words)
         )
-    return pairs[: args.max_pairs]
+    boost_titles = tuple(getattr(args, "boost_titles", None) or ())
+    boost_repeat = int(getattr(args, "boost_repeat", 1) or 1)
+    pairs = apply_boost_pairs(pairs, boost_titles, boost_repeat)
+    limit = args.max_pairs * boost_repeat if boost_titles and boost_repeat > 1 else args.max_pairs
+    return pairs[:limit]
 
 
 def parse_args() -> argparse.Namespace:
@@ -368,6 +457,19 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-words", type=int, default=150)
     parser.add_argument("--out", "-o", type=Path, default=DEFAULT_OUT)
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument(
+        "--boost-titles",
+        nargs="*",
+        default=(),
+        metavar="TITLE",
+        help='Repeat extra copies of pairs for these titles (e.g. "citizen kane").',
+    )
+    parser.add_argument(
+        "--boost-repeat",
+        type=int,
+        default=2,
+        help="Total weight for boosted titles (2 = one extra copy per matching pair).",
+    )
     return parser.parse_args()
 
 

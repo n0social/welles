@@ -175,6 +175,12 @@ def main() -> None:
     parser.add_argument("--min-words", type=int, default=400)
     parser.add_argument("--max-words", type=int, default=2500)
     parser.add_argument("--gold-repeat", type=int, default=3, help="Repeat each gold pair this many times.")
+    parser.add_argument(
+        "--citizen-kane-repeat",
+        type=int,
+        default=1,
+        help="Extra passes for script rows whose prompt mentions Citizen Kane (after cache load).",
+    )
     parser.add_argument("--english-only", action="store_true", default=True)
     parser.add_argument("--include-companions", action="store_true", default=False)
     parser.add_argument("--include-legacy-gold", action="store_true", default=False)
@@ -360,15 +366,29 @@ def main() -> None:
 
     script_pairs = load_cinema_pairs(args.scripts_cache)
     script_added = 0
-    for prompt, completion in script_pairs[: max(0, args.max_scripts)]:
+
+    def _is_kane_script(prompt: str) -> bool:
+        return "citizen kane" in prompt.lower()
+
+    def _append_script_row(prompt: str, completion: str) -> None:
+        nonlocal script_added
         if not prompt or not completion:
-            continue
+            return
         if args.english_only and (has_cjk(prompt) or has_cjk(completion)):
-            continue
+            return
         if looks_hype(prompt) or looks_hype(completion):
-            continue
-        kept.append(row(system, prompt, completion))
-        script_added += 1
+            return
+        repeats = max(1, args.citizen_kane_repeat if _is_kane_script(prompt) else 1)
+        for _ in range(repeats):
+            if script_added >= max(0, args.max_scripts):
+                return
+            kept.append(row(system, prompt, completion))
+            script_added += 1
+
+    for prompt, completion in script_pairs:
+        if script_added >= max(0, args.max_scripts):
+            break
+        _append_script_row(prompt, completion)
     script_sample = ROOT / "data" / "ingest" / "script_sample.jsonl"
     welles_script_sample = ROOT / "data" / "ingest" / "welles_script_pairs_sample.jsonl"
     if script_added == 0:
@@ -378,11 +398,12 @@ def main() -> None:
         if script_sample.exists():
             fallbacks.append(script_sample)
         for fb in fallbacks:
-            for prompt, completion in load_cinema_pairs(fb)[: max(0, args.max_scripts - script_added)]:
-                kept.append(row(system, prompt, completion))
-                script_added += 1
+            for prompt, completion in load_cinema_pairs(fb):
                 if script_added >= args.max_scripts:
                     break
+                _append_script_row(prompt, completion)
+            if script_added >= args.max_scripts:
+                break
             if script_added:
                 print(f"Used script-staging rows from {fb.name} (no script cache)")
                 break

@@ -95,6 +95,8 @@ python3 scripts/prepare_data.py --fetch-cinema --max-cinema 60
 
 Full research: [`script_sources.md`](script_sources.md) (Orson Welles filmography, A24 HF findings, **copyright warnings**).
 
+**Voice / weighting plan for Sky:** [`training_voice_strategy.md`](training_voice_strategy.md) (Kane anchor, A24 STAGE vs Welles WRITE, caps).
+
 | Path | Role |
 |------|------|
 | `scripts/ingest_scripts.py` | MovieSum staging excerpts + `data/scripts/welles/` & `data/scripts/a24/` manual drops |
