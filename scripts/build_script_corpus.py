@@ -66,7 +66,16 @@ def main() -> None:
 
     if not args.skip_extract:
         for studio in [s.strip() for s in args.studios.split(",") if s.strip()]:
-            run([py, str(IMPORT), "--studio", studio, "--full-screenplay"])
+            print(f"\n--- extract studio: {studio} ---")
+            proc = subprocess.run(
+                [py, str(IMPORT), "--studio", studio, "--full-screenplay"],
+                cwd=ROOT,
+            )
+            if proc.returncode != 0:
+                print(
+                    f"WARN: import {studio} exited {proc.returncode} "
+                    "(often Git LFS — run git lfs pull). Continuing ingest for existing *_full.txt …"
+                )
 
     run(
         [

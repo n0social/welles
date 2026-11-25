@@ -144,7 +144,8 @@ def main() -> None:
     print("\nRunning extract_screenplay_pdf.py …")
     proc = subprocess.run(cmd, cwd=ROOT)
     if proc.returncode != 0:
-        raise SystemExit(proc.returncode)
+        print(f"WARN: extract_screenplay_pdf.py exited {proc.returncode}")
+        print("If PDFs are Git LFS pointers: apt-get install git-lfs && git lfs pull")
 
     print(
         f"\nExcerpts → {out_dir}/*_excerpt.txt\n"

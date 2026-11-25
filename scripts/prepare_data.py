@@ -236,8 +236,8 @@ def main() -> None:
     parser.add_argument(
         "--script-dataset",
         choices=("moviesum", "movies", "manual"),
-        default="moviesum",
-        help="When --fetch-scripts: HF/manual loader for ingest_scripts.py",
+        default="manual",
+        help="When --fetch-scripts: HF/manual loader for ingest_scripts.py (default: local PDFs).",
     )
     parser.add_argument(
         "--script-filter",
@@ -390,6 +390,11 @@ def main() -> None:
     elif args.fetch_scripts and (
         not args.scripts_cache.exists() or args.scripts_cache.stat().st_size == 0
     ):
+        if args.script_dataset != "manual":
+            print(
+                f"WARNING: {args.scripts_cache} empty; refetch uses --script-dataset "
+                f"{args.script_dataset!r}. For Welles/A24 PDFs use manual after build_script_corpus.py."
+            )
         import argparse as _ap
 
         full_script = args.script_screenplay_mode == "full"
@@ -529,6 +534,12 @@ def main() -> None:
                 "Warning: no Atum09 rows — run scripts/fetch_external_datasets.py --hf atum09 "
                 "or convert_external_datasets.py on Colab."
             )
+
+    if len(kept) == 0:
+        raise SystemExit(
+            "No training rows produced. Fix script_pairs (git lfs pull, build_script_corpus.py) "
+            "or relax caps."
+        )
 
     args.out.parent.mkdir(parents=True, exist_ok=True)
     with args.out.open("w", encoding="utf-8") as handle:
