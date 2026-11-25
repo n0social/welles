@@ -27,6 +27,7 @@ EXTRACT = Path(__file__).resolve().parent / "extract_screenplay_pdf.py"
 NAME_PATTERN = re.compile(r"^.+_\d{4}\.pdf$", re.IGNORECASE)
 KEBAB_YEAR_PATTERN = re.compile(r"^.+-\d{4}\.pdf$", re.IGNORECASE)
 PDF_MAGIC = b"%PDF"
+LFS_PREFIX = b"version https://git-lfs.github.com/spec/v1"
 
 # Legacy upload path (GitHub UI drop at repo root)
 LEGACY_A24_PDF_DIR = ROOT / "scripts"
@@ -67,11 +68,17 @@ def verify_pdf(path: Path) -> list[str]:
     ):
         issues.append(f"naming: expected Title_Year.pdf, title-YYYY.pdf, or *.pdf, got {path.name}")
     try:
-        head = path.read_bytes()[:5]
+        head = path.read_bytes()[:80]
     except OSError as exc:
         issues.append(f"read: {exc}")
         return issues
-    if head != PDF_MAGIC:
+    if head.startswith(LFS_PREFIX):
+        issues.append(
+            "Git LFS pointer only — run: git lfs install && git lfs pull "
+            "(see data/ingest/COLAB_PREP.md)"
+        )
+        return issues
+    if head[:5] != PDF_MAGIC:
         issues.append("not a PDF (missing %PDF header)")
     return issues
 

@@ -1,6 +1,22 @@
 # Colab prep — validate data before GPU
 
-## 0. Combined training mix (ours + external)
+## 0. Git LFS (required for PDF scripts on Colab)
+
+`git clone` alone leaves **pointer files**, not PDFs (`missing %PDF header`, `b'versi'` errors).
+
+Run **before** `build_script_corpus.py`:
+
+```bash
+apt-get install -y git-lfs
+git lfs install
+cd /content/welles   # your repo root
+git lfs pull
+head -c 8 data/scripts/welles/incoming/Citizen-Kane-Script.pdf
+```
+
+You must see `%PDF-1.` at the start. If you see `version`, LFS did not pull.
+
+## 1. Combined training mix (ours + external)
 
 **Ours:** Welles/A24 PDFs → `script_pairs.jsonl`, gold, style, cinema.  
 **External:** Inkwell (eval), Atum09 coverage/punch-up (train), Movie Scripts Corpus (optional offline pool in `data/external/`).
@@ -29,7 +45,7 @@ python3 scripts/review_training_data.py
 
 **Inkwell** stays **eval** only (`data/ingest/external_samples/inkwell_revision_eval.jsonl`), not merged into `train.jsonl`.
 
-## 1. Build on Colab (after `git pull` + `git lfs pull`)
+## 2. Build on Colab (after `git pull` + `git lfs pull`)
 
 ```bash
 !pip install -q pypdf datasets peft trl transformers bitsandbytes accelerate
@@ -39,7 +55,7 @@ python3 scripts/review_training_data.py
 
 Open `data/ingest/corpus_review.md` and skim **random samples** + **Kane** samples.
 
-## 2. Does this mix match your goals?
+## 3. Does this mix match your goals?
 
 | Signal | What you should see |
 |--------|---------------------|
@@ -49,7 +65,7 @@ Open `data/ingest/corpus_review.md` and skim **random samples** + **Kane** sampl
 | **structure** | Short beat-analysis blurbs (~70w), not full screenplay. |
 | **welles gold** | ~276 rows in default mix — small vs 16k scripts. |
 
-## 3. Tone-first v1 mix (recommended before first train)
+## 4. Tone-first v1 mix (recommended before first train)
 
 Screenplay rows dominate by default. To keep **initial Welles desk voice** while learning script craft:
 
@@ -63,7 +79,7 @@ python3 scripts/prepare_data.py \
 
 Or use full script corpus but train **two epochs** and eval desk prompts before Hub push.
 
-## 4. Train
+## 5. Train
 
 `notebooks/welles_colab.ipynb` or:
 
@@ -73,7 +89,7 @@ python3 scripts/train.py
 
 Checklist: `data/eval_checklist.md` (desk voice) **and** spot-read Kane scene generation.
 
-## 5. Red flags (do not train yet)
+## 6. Red flags (do not train yet)
 
 - No Kane rows in `script_pairs` (re-run extract on `Citizen-Kane-Script.pdf`).
 - Almost all completions &lt; 20 words.
