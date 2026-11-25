@@ -12,8 +12,21 @@ Each **scene chunk** from a `*_full.txt` file can emit several training rows (`-
 
 **Path to a full script:** many scenes ingested in order → `bridge` + `continue` + `verbatim` teach local and sequential text; `compose` ties **mise-en-scène** to page form; `welles_gold` stays the **desk voice** for polished prose outside raw slugline paste.
 
-After PDF upload:
+## Collect all scripts, then train (two phases)
+
+**Phase 1 — build corpus** (all PDFs → one local file):
+
 ```bash
-python3 scripts/import_uploaded_pdfs.py --studio welles --full-screenplay
-python3 scripts/ingest_scripts.py --dataset manual --filter welles --screenplay-mode full --max-pairs 0
+python3 scripts/build_script_corpus.py
+# → data/ingest/script_pairs.jsonl (gitignored; re-run when you add PDFs)
 ```
+
+**Phase 2 — mix + train:**
+
+```bash
+python3 scripts/prepare_data.py --fetch-scripts --scripts-cache data/ingest/script_pairs.jsonl \
+  --max-scripts 0 --gold-repeat 3 --max-cinema 40
+python3 scripts/train.py
+```
+
+Use `--build-train` on `build_script_corpus.py` to run prepare in one shot.

@@ -361,7 +361,14 @@ def main() -> None:
         print(f"Added {cinema_added} cinema rows (cap {args.max_cinema})")
 
     # 3b) Script staging ingest (MovieSum excerpts / manual drops — capped)
-    if args.fetch_scripts and (
+    if (
+        args.fetch_scripts
+        and args.script_dataset == "manual"
+        and args.scripts_cache.exists()
+        and args.scripts_cache.stat().st_size > 0
+    ):
+        pass  # use existing corpus; skip rebuild
+    elif args.fetch_scripts and (
         not args.scripts_cache.exists() or args.scripts_cache.stat().st_size == 0
     ):
         import argparse as _ap
@@ -411,13 +418,13 @@ def main() -> None:
             return
         repeats = max(1, args.citizen_kane_repeat if _is_kane_script(prompt) else 1)
         for _ in range(repeats):
-            if script_added >= max(0, args.max_scripts):
+            if args.max_scripts > 0 and script_added >= args.max_scripts:
                 return
             kept.append(row(system, prompt, completion))
             script_added += 1
 
     for prompt, completion in script_pairs:
-        if script_added >= max(0, args.max_scripts):
+        if args.max_scripts > 0 and script_added >= args.max_scripts:
             break
         _append_script_row(prompt, completion)
     script_sample = ROOT / "data" / "ingest" / "script_sample.jsonl"
@@ -430,16 +437,17 @@ def main() -> None:
             fallbacks.append(script_sample)
         for fb in fallbacks:
             for prompt, completion in load_cinema_pairs(fb):
-                if script_added >= args.max_scripts:
+                if args.max_scripts > 0 and script_added >= args.max_scripts:
                     break
                 _append_script_row(prompt, completion)
-            if script_added >= args.max_scripts:
+            if args.max_scripts > 0 and script_added >= args.max_scripts:
                 break
             if script_added:
                 print(f"Used script-staging rows from {fb.name} (no script cache)")
                 break
     elif script_added:
-        print(f"Added {script_added} script-staging rows (cap {args.max_scripts})")
+        cap = args.max_scripts if args.max_scripts > 0 else "all"
+        print(f"Added {script_added} script-staging rows (cap {cap})")
 
     # 4) Optional companions (argument muscle — off by default for voice-first v2)
     if args.include_companions:
