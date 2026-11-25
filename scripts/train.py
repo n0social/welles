@@ -18,6 +18,16 @@ BASE_MODEL = "Qwen/Qwen3-8B"
 HUB_ID = "n0social/welles"
 
 
+def disable_transformers_allocator_warmup() -> None:
+    """Colab T4: transformers pre-alloc can OOM before weights load."""
+    try:
+        import transformers.modeling_utils as modeling_utils
+
+        modeling_utils.caching_allocator_warmup = lambda *args, **kwargs: None  # noqa: ARG005
+    except Exception:
+        pass
+
+
 def main() -> None:
     if not DATA.exists():
         raise SystemExit(f"Missing {DATA}. Run: python scripts/prepare_data.py")
@@ -29,6 +39,9 @@ def main() -> None:
     use_bf16 = cap >= 8
     compute_dtype = torch.bfloat16 if use_bf16 else torch.float16
     max_length = 1024 if cap < 8 else 2048
+
+    if cap < 8:
+        disable_transformers_allocator_warmup()
 
     quant_config = BitsAndBytesConfig(
         load_in_4bit=True,
