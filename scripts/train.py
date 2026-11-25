@@ -6,7 +6,7 @@ from pathlib import Path
 
 import torch
 from datasets import load_dataset
-from peft import LoraConfig, prepare_model_for_kbit_training
+from peft import LoraConfig
 from transformers import AutoModelForCausalLM, BitsAndBytesConfig
 from trl import SFTConfig, SFTTrainer
 
@@ -38,22 +38,25 @@ def main() -> None:
     )
     load_kwargs: dict = {
         "quantization_config": quant_config,
-        "torch_dtype": compute_dtype,
         "device_map": {"": 0},
         "attn_implementation": "sdpa",
     }
     if cap < 8:
-        load_kwargs["max_memory"] = {0: "14GiB"}
+        # T4: skip torch_dtype on load (4-bit only); avoid prepare_model_for_kbit_training fp32 norm cast (OOM).
+        load_kwargs["max_memory"] = {0: "13GiB"}
 
     model = AutoModelForCausalLM.from_pretrained(BASE_MODEL, **load_kwargs)
-    model = prepare_model_for_kbit_training(model)
+    model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
+    if hasattr(model, "enable_input_require_grads"):
+        model.enable_input_require_grads()
 
+    lora_r = 8 if cap < 8 else 16
     trainer = SFTTrainer(
         model=model,
         args=SFTConfig(
             output_dir=str(OUT),
             learning_rate=2e-4,
-            num_train_epochs=3,
+            num_train_epochs=2 if cap < 8 else 3,
             per_device_train_batch_size=1,
             gradient_accumulation_steps=16 if cap < 8 else 8,
             gradient_checkpointing=True,
@@ -64,13 +67,15 @@ def main() -> None:
             bf16=use_bf16,
             assistant_only_loss=True,
             report_to="none",
+            dataset_kwargs={"skip_prepare_dataset": False},
         ),
         train_dataset=dataset,
         peft_config=LoraConfig(
-            r=16,
+            r=lora_r,
             lora_alpha=32,
             lora_dropout=0.05,
             task_type="CAUSAL_LM",
+            bias="none",
         ),
     )
 
