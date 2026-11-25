@@ -55,8 +55,12 @@ def parse_args() -> argparse.Namespace:
 
 def verify_pdf(path: Path) -> list[str]:
     issues: list[str] = []
-    if not (NAME_PATTERN.match(path.name) or KEBAB_YEAR_PATTERN.match(path.name)):
-        issues.append(f"naming: expected Title_Year.pdf or title-YYYY.pdf, got {path.name}")
+    if not (
+        NAME_PATTERN.match(path.name)
+        or KEBAB_YEAR_PATTERN.match(path.name)
+        or path.name.lower().endswith(".pdf")  # manual Welles uploads (e.g. Citizen-Kane-Script.pdf)
+    ):
+        issues.append(f"naming: expected Title_Year.pdf, title-YYYY.pdf, or *.pdf, got {path.name}")
     try:
         head = path.read_bytes()[:5]
     except OSError as exc:
