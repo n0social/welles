@@ -87,6 +87,10 @@ Or use full script corpus but train **two epochs** and eval desk prompts before 
 python3 scripts/train.py
 ```
 
+**T4 / Colab:** use `fp16=False` and `bf16=False` in `SFTConfig`. Only LoRA weights update; full fp32 grads are fine. `fp16=True` on Qwen3 QLoRA can crash with `NotImplementedError: ... not implemented for 'BFloat16'` (GradScaler vs bf16 activations).
+
+After changing precision flags or re-running a failed train, **Runtime → Restart session** and train in a clean kernel (do not reload the 8B model twice).
+
 Checklist: `data/eval_checklist.md` (desk voice) **and** spot-read Kane scene generation.
 
 ## 6. Red flags (do not train yet)

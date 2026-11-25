@@ -34,7 +34,9 @@ def main() -> None:
 
     dataset = load_dataset("json", data_files=str(DATA), split="train")
 
-    # Colab T4 = sm_75 — bf16 GEMM in trl fails; tight 16 GB VRAM.
+    # Colab T4 = sm_75 — no bf16 GEMM; tight 16 GB VRAM.
+    # T4: keep both fp16/bf16 off in the trainer — fp16 GradScaler + stray bf16 grads from
+    # 4-bit Qwen blows up on recent Colab torch ("_amp_foreach... not implemented for BFloat16").
     cap = torch.cuda.get_device_capability()[0] if torch.cuda.is_available() else 0
     use_bf16 = cap >= 8
     compute_dtype = torch.bfloat16 if use_bf16 else torch.float16
@@ -76,7 +78,7 @@ def main() -> None:
             max_length=max_length,
             logging_steps=10,
             save_steps=100,
-            fp16=not use_bf16,
+            fp16=False,
             bf16=use_bf16,
             assistant_only_loss=True,
             report_to="none",
