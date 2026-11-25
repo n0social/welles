@@ -253,8 +253,14 @@ def main() -> None:
     parser.add_argument(
         "--script-screenplay-mode",
         choices=("staging", "full"),
-        default="staging",
-        help="When --fetch-scripts: full = dialogue + scene chunks from *_full.txt",
+        default="full",
+        help="When --fetch-scripts: full = dialogue + scene tasks from *_full.txt (recommended).",
+    )
+    parser.add_argument(
+        "--script-task-mix",
+        type=str,
+        default="verbatim,continue,compose,bridge,structure",
+        help="Full-mode tasks per scene (see ingest_scripts.py).",
     )
     parser.add_argument(
         "--script-min-words",
@@ -374,6 +380,7 @@ def main() -> None:
             max_chunks_per_file=0,
             boost_titles=(),
             boost_repeat=1,
+            task_mix=args.script_task_mix,
         )
         script_pairs = build_script_pairs(script_args)
         args.scripts_cache.parent.mkdir(parents=True, exist_ok=True)

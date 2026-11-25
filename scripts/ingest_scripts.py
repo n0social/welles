@@ -379,6 +379,129 @@ SCREENPLAY_BLOCK = (
     "SCREENPLAY. Full scene block — keep industry format: slugline, action, character cues, dialogue.\n\n"
 )
 
+COMPOSE_EXPAND = (
+    "COMPOSE. From this staging (slugline + action), write the full scene: "
+    "blocking, character cues, dialogue as needed. Welles-scale depth and framing.\n\n"
+    "Staging:\n\n"
+)
+
+STRUCTURE_PREFIX = (
+    "STRUCTURE. Analyze beat function (setup, turn, reveal, hinge) for this scene. "
+    "Then hold the script language in mind for later writing.\n\n"
+    "Script:\n\n"
+)
+
+CONTINUE_PREFIX = (
+    "SCREENPLAY. Continue this scene in industry format. Do not restart the slugline.\n\n"
+    "So far:\n\n"
+)
+
+BRIDGE_PREFIX = (
+    "SCREENPLAY. Write the next scene. Honor what ended immediately before.\n\n"
+    "Previous scene ended with:\n\n"
+)
+
+
+def split_words_fraction(text: str, fraction: float = 0.45) -> tuple[str, str]:
+    words = text.split()
+    if len(words) < 12:
+        return text, ""
+    cut = max(8, int(len(words) * fraction))
+    head = " ".join(words[:cut])
+    tail = " ".join(words[cut:])
+    return head, tail
+
+
+def structure_completion(title: str, scene_i: int, chunk: str) -> str:
+    slug = ""
+    for line in chunk.splitlines():
+        s = line.strip()
+        if SCENE_HEADING.match(s):
+            slug = s
+            break
+    cues = [
+        line.strip()
+        for line in chunk.splitlines()
+        if line.strip()
+        and len(line.strip()) < 40
+        and line.strip().isupper()
+        and " " not in line.strip()
+    ]
+    wc = word_count(chunk)
+    return (
+        f"Scene {scene_i} — {title}. Slug: {slug or '(embedded)'}. "
+        f"~{wc} words on the page; {len(cues)} speaking cues. "
+        "Beat: a unit of staged action and speech that advances the sequence; "
+        "exit must leave a hook or change in pressure for the scene that follows."
+    )
+
+
+def full_task_pairs(
+    title: str,
+    scene_i: int,
+    chunk: str,
+    label: str,
+    task_mix: tuple[str, ...],
+    prev_tail: str | None = None,
+) -> list[dict]:
+    """Derive multiple SFT rows per scene for structure, compose, continue, and full write."""
+    out: list[dict] = []
+    meta = {"source_studio": label, "source_title": title}
+
+    if "verbatim" in task_mix:
+        out.append(
+            row_pair(
+                f"{SCREENPLAY_BLOCK}Title: {title!r}. Scene {scene_i}.",
+                chunk,
+                **meta,
+            )
+        )
+
+    if "continue" in task_mix:
+        head, tail = split_words_fraction(chunk)
+        if tail and word_count(tail) >= 25:
+            out.append(
+                row_pair(
+                    f"{CONTINUE_PREFIX}{head}",
+                    tail,
+                    **meta,
+                )
+            )
+
+    if "compose" in task_mix:
+        staging = strip_dialogue_plain(chunk)
+        if word_count(staging) >= 20 and word_count(chunk) > word_count(staging):
+            out.append(
+                row_pair(
+                    f"{COMPOSE_EXPAND}{staging}",
+                    chunk,
+                    **meta,
+                )
+            )
+
+    if "structure" in task_mix:
+        note = structure_completion(title, scene_i, chunk)
+        out.append(
+            row_pair(
+                f"{STRUCTURE_PREFIX}{chunk}",
+                note,
+                **meta,
+            )
+        )
+
+    if "bridge" in task_mix and prev_tail:
+        tail = clamp_words(prev_tail, 120)
+        if word_count(tail) >= 15:
+            out.append(
+                row_pair(
+                    f"{BRIDGE_PREFIX}{tail}",
+                    chunk,
+                    **meta,
+                )
+            )
+
+    return out
+
 
 def pairs_from_manual(
     filt: str,
@@ -389,6 +512,7 @@ def pairs_from_manual(
     screenplay_mode: str = "staging",
     keep_dialogue: bool = True,
     max_chunks_per_file: int = 0,
+    task_mix: tuple[str, ...] = ("verbatim", "continue", "compose", "bridge"),
 ) -> list[dict]:
     dirs: list[tuple[Path, str]] = []
     if filt in ("welles", "all"):
@@ -437,12 +561,29 @@ def pairs_from_manual(
                 if max_chunks_per_file:
                     chunks = chunks[:max_chunks_per_file]
 
+            prev_chunk: str | None = None
             for scene_i, chunk in enumerate(chunks, start=1):
                 if has_cjk(chunk) or looks_hype(chunk):
                     continue
                 if full_mode:
-                    prompt = f"{SCREENPLAY_BLOCK}Title: {title!r}. Scene {scene_i}."
-                elif label == "a24":
+                    prev_tail = None
+                    if prev_chunk:
+                        _, prev_tail = split_words_fraction(prev_chunk, 0.7)
+                    for item in full_task_pairs(
+                        title,
+                        scene_i,
+                        chunk,
+                        label,
+                        task_mix,
+                        prev_tail=prev_tail,
+                    ):
+                        pairs.append(item)
+                        if max_pairs and len(pairs) >= max_pairs:
+                            return pairs
+                    prev_chunk = chunk
+                    continue
+
+                if label == "a24":
                     prompt = f"{STAGE_A24}Source excerpt: {title!r}."
                 else:
                     prompt = (
@@ -538,6 +679,7 @@ def build_pairs(args: argparse.Namespace) -> list[dict]:
                 screenplay_mode=getattr(args, "screenplay_mode", "staging"),
                 keep_dialogue=getattr(args, "keep_dialogue", True),
                 max_chunks_per_file=getattr(args, "max_chunks_per_file", 0),
+                task_mix=parse_task_mix(getattr(args, "task_mix", "verbatim,continue,compose,bridge")),
             )
         )
     boost_titles = tuple(getattr(args, "boost_titles", None) or ())
@@ -547,6 +689,15 @@ def build_pairs(args: argparse.Namespace) -> list[dict]:
         return pairs
     limit = args.max_pairs * boost_repeat if boost_titles and boost_repeat > 1 else args.max_pairs
     return pairs[:limit]
+
+
+VALID_TASKS = frozenset({"verbatim", "continue", "compose", "structure", "bridge"})
+
+
+def parse_task_mix(raw: str) -> tuple[str, ...]:
+    parts = [p.strip().lower() for p in raw.split(",") if p.strip()]
+    out = [p for p in parts if p in VALID_TASKS]
+    return tuple(out) if out else ("verbatim", "continue", "compose", "bridge")
 
 
 def parse_args() -> argparse.Namespace:
@@ -585,6 +736,12 @@ def parse_args() -> argparse.Namespace:
         type=int,
         default=0,
         help="0 = all scenes/chunks from each file (full screenplay coverage).",
+    )
+    parser.add_argument(
+        "--task-mix",
+        type=str,
+        default="verbatim,continue,compose,bridge,structure",
+        help="Full mode: comma tasks per scene — verbatim, continue, compose, bridge, structure.",
     )
     parser.add_argument("--out", "-o", type=Path, default=DEFAULT_OUT)
     parser.add_argument("--dry-run", action="store_true")

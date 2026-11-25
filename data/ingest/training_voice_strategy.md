@@ -1,8 +1,16 @@
 # Training voice strategy (Sky / Welles LoRA)
 
-**Goal:** Teach **cinematic staging and mise-en-scène prose** — how Welles *directs* space, light, rhythm, and camera — not a clone of A24 dialogue tone or contemporary indie patter.
+**North star:** **Start-to-end screenplay writing** — structure and language first, **scene composition** (Welles-scale blocking, depth, lens), then chained scenes across a whole script.
 
-**Anchor:** **Citizen Kane** (1941) is the highest-weight script reference. Other Welles features reinforce the same staging register. A24 PDFs are **structure tutors** (sluglines, scene shape, action blocks) under a **Welles-voice transform** prompt, with an explicit **tone mismatch** warning below.
+**Layers:**
+
+1. **Structure & language** — full scenes in industry format (`STRUCTURE`, `SCREENPLAY` verbatim); beat and turn awareness.
+2. **Composition** — staging → full scene (`COMPOSE`: action/slugline spine expanded to dialogue and blocking).
+3. **Continuity** — in-scene `CONTINUE` and cross-scene `BRIDGE` from your uploaded PDFs (Kane heaviest).
+
+**Anchor:** **Citizen Kane** (highest weight). Welles PDFs = primary. A24 = optional **format** diversity (not voice target).
+
+Legacy **staging-only** mode (short action excerpts, dialogue stripped) is for quick experiments; **use full mode** for your goal.
 
 ---
 
@@ -80,7 +88,15 @@ Use the same system prompt (`prompts/welles_system.md`) for all rows.
      --boost-titles "citizen kane" --boost-repeat 3
    ```
 
-3. Train mix:
+3. Ingest **multi-task** rows per scene (`--task-mix`):
+   ```bash
+   python3 scripts/ingest_scripts.py --dataset manual --filter welles \
+     --screenplay-mode full --max-pairs 0 \
+     --task-mix "verbatim,continue,compose,bridge,structure" \
+     --boost-titles "citizen kane" --boost-repeat 3
+   ```
+
+4. Train mix:
    ```bash
    python3 scripts/prepare_data.py --gold-repeat 3 --max-scripts 0 \
      --script-screenplay-mode full --fetch-scripts --script-dataset manual \
