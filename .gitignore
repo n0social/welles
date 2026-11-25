@@ -8,6 +8,10 @@ data/train.jsonl
 data/ingest/cinema_pairs.jsonl
 data/ingest/script_pairs.jsonl
 data/ingest/.cache/
+data/external/
+!data/external/README.md
+data/ingest/external_samples/*.jsonl
+!data/ingest/external_samples/inkwell_revision_eval.jsonl
 data/ingest/download_log.jsonl
 # A24 incoming PDFs may be committed if you accept redistribution risk (see incoming/README.md).
 # Removed blanket ignore so opt-in `git add data/scripts/a24/incoming/*.pdf` works.

@@ -26,6 +26,21 @@ if str(_SCRIPTS) not in sys.path:
 
 from ingest_scripts import chunk_manual_text, chunk_screenplay_full, strip_dialogue_plain, word_count  # noqa: E402
 
+PDF_MAGIC = b"%PDF"
+LFS_PREFIX = b"version https://git-lfs.github.com/spec/v1"
+
+
+def pdf_readable(path: Path) -> str | None:
+    try:
+        head = path.read_bytes()[:80]
+    except OSError as exc:
+        return str(exc)
+    if head.startswith(LFS_PREFIX):
+        return "Git LFS pointer — run: git lfs install && git lfs pull"
+    if head[:5] != PDF_MAGIC:
+        return "missing %PDF header (not a real PDF)"
+    return None
+
 
 def pdf_to_text(path: Path) -> str:
     if shutil.which("pdftotext"):
@@ -90,8 +105,19 @@ def main() -> None:
         print(f"No PDFs in {args.incoming} (drop files there manually).")
         return
 
+    failed = 0
     for pdf in pdfs:
-        raw = pdf_to_text(pdf)
+        err = pdf_readable(pdf)
+        if err:
+            print(f"SKIP {pdf.name}: {err}")
+            failed += 1
+            continue
+        try:
+            raw = pdf_to_text(pdf)
+        except Exception as exc:
+            print(f"SKIP {pdf.name}: extract error — {exc}")
+            failed += 1
+            continue
         stem = stem_from_pdf(pdf)
 
         if args.mode == "full":
@@ -127,6 +153,11 @@ def main() -> None:
             continue
         out_path.write_text(header + body, encoding="utf-8")
         print(f"Wrote {out_path} ({len(chunks)} chunks)")
+
+    if failed:
+        print(f"\n{failed} PDF(s) skipped — fix LFS or re-upload PDFs.")
+        if failed == len(pdfs):
+            raise SystemExit(1)
 
 
 if __name__ == "__main__":
