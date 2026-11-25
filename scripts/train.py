@@ -6,8 +6,8 @@ from pathlib import Path
 
 import torch
 from datasets import load_dataset
-from peft import LoraConfig
-from transformers import BitsAndBytesConfig
+from peft import LoraConfig, prepare_model_for_kbit_training
+from transformers import AutoModelForCausalLM, BitsAndBytesConfig
 from trl import SFTConfig, SFTTrainer
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -24,29 +24,46 @@ def main() -> None:
 
     dataset = load_dataset("json", data_files=str(DATA), split="train")
 
-    # Colab T4 = sm_75 — bf16 GEMM in trl fails; A100+ can use bf16.
-    use_bf16 = torch.cuda.is_available() and torch.cuda.get_device_capability()[0] >= 8
+    # Colab T4 = sm_75 — bf16 GEMM in trl fails; tight 16 GB VRAM.
+    cap = torch.cuda.get_device_capability()[0] if torch.cuda.is_available() else 0
+    use_bf16 = cap >= 8
     compute_dtype = torch.bfloat16 if use_bf16 else torch.float16
+    max_length = 1024 if cap < 8 else 2048
+
+    quant_config = BitsAndBytesConfig(
+        load_in_4bit=True,
+        bnb_4bit_quant_type="nf4",
+        bnb_4bit_compute_dtype=compute_dtype,
+        bnb_4bit_use_double_quant=True,
+    )
+    load_kwargs: dict = {
+        "quantization_config": quant_config,
+        "torch_dtype": compute_dtype,
+        "device_map": {"": 0},
+        "attn_implementation": "sdpa",
+    }
+    if cap < 8:
+        load_kwargs["max_memory"] = {0: "14GiB"}
+
+    model = AutoModelForCausalLM.from_pretrained(BASE_MODEL, **load_kwargs)
+    model = prepare_model_for_kbit_training(model)
 
     trainer = SFTTrainer(
-        model=BASE_MODEL,
+        model=model,
         args=SFTConfig(
             output_dir=str(OUT),
             learning_rate=2e-4,
             num_train_epochs=3,
             per_device_train_batch_size=1,
-            gradient_accumulation_steps=8,
+            gradient_accumulation_steps=16 if cap < 8 else 8,
             gradient_checkpointing=True,
-            max_length=2048,  # full screenplay scene chunks (~380 words); use 1024 for staging-only mixes
+            max_length=max_length,
             logging_steps=10,
             save_steps=100,
             fp16=not use_bf16,
             bf16=use_bf16,
             assistant_only_loss=True,
-            model_init_kwargs={
-                "torch_dtype": compute_dtype,
-                "device_map": {"": 0},
-            },
+            report_to="none",
         ),
         train_dataset=dataset,
         peft_config=LoraConfig(
@@ -54,11 +71,6 @@ def main() -> None:
             lora_alpha=32,
             lora_dropout=0.05,
             task_type="CAUSAL_LM",
-        ),
-        quantization_config=BitsAndBytesConfig(
-            load_in_4bit=True,
-            bnb_4bit_quant_type="nf4",
-            bnb_4bit_compute_dtype=compute_dtype,
         ),
     )
 
