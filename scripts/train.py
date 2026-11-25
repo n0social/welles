@@ -28,6 +28,16 @@ def disable_transformers_allocator_warmup() -> None:
         pass
 
 
+def patch_trl_chunked_logprob_for_sm75() -> None:
+    """TRL assistant_only_loss on torch>=2.8 uses bf16→fp32 addmm; T4 (sm<80) cannot."""
+    try:
+        import trl.kernels.chunked_logprob as chunked_logprob
+
+        chunked_logprob._MM_OUT_DTYPE = False
+    except Exception:
+        pass
+
+
 def main() -> None:
     if not DATA.exists():
         raise SystemExit(f"Missing {DATA}. Run: python scripts/prepare_data.py")
@@ -44,6 +54,7 @@ def main() -> None:
 
     if cap < 8:
         disable_transformers_allocator_warmup()
+        patch_trl_chunked_logprob_for_sm75()
 
     quant_config = BitsAndBytesConfig(
         load_in_4bit=True,

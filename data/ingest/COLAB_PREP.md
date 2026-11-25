@@ -87,9 +87,21 @@ Or use full script corpus but train **two epochs** and eval desk prompts before 
 python3 scripts/train.py
 ```
 
-**T4 / Colab:** use `fp16=False` and `bf16=False` in `SFTConfig`. Only LoRA weights update; full fp32 grads are fine. `fp16=True` on Qwen3 QLoRA can crash with `NotImplementedError: ... not implemented for 'BFloat16'` (GradScaler vs bf16 activations).
+**T4 / Colab:**
 
-After changing precision flags or re-running a failed train, **Runtime → Restart session** and train in a clean kernel (do not reload the 8B model twice).
+- `SFTConfig`: `fp16=False`, `bf16=False` (LoRA-only updates; `fp16=True` can break GradScaler on bf16 grads).
+- **Before** `SFTTrainer` / `trainer.train()`: TRL `assistant_only_loss` needs a sm&lt;80 patch on PyTorch 2.8+:
+
+```python
+import trl.kernels.chunked_logprob as _cl
+_cl._MM_OUT_DTYPE = False
+```
+
+Without this: `gemm input type at::BFloat16 and output type float is only supported for CUDA ... 8.0 or higher`.
+
+`python3 scripts/train.py` applies both patches on T4 automatically.
+
+After a failed train, **Runtime → Restart session** and train in a clean kernel (do not load the 8B model twice).
 
 Checklist: `data/eval_checklist.md` (desk voice) **and** spot-read Kane scene generation.
 
